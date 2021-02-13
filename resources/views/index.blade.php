@@ -84,8 +84,16 @@
                                 <li class="dinone"><img style="margin-right: 15px;" src="img/mail_icon.png" alt="#"><a href="#">demo@gmail.com</a></li>
                                 <li class="dinone"><img style="margin-right: 15px;height: 21px;position: relative;top: -2px;" src="img/location_icon.png" alt="#"><a href="#">104 New york , USA</a></li>
                                 <li class="button_user">
-                                    <a class="button" href="{{ route('login') }}">Login</a>
-                                    <a class="button" href="{{ route('register') }}">Register</a>
+                                    @if (Route::has('login'))
+                                        @auth
+                                            <a href="{{ url('/dashboard') }}" class="button">Dashboard</a>
+                                        @else
+                                            <a class="button" href="{{ route('login') }}">Login</a>
+                                            @if (Route::has('register'))
+                                                <a class="button" href="{{ route('register') }}">Register</a>
+                                            @endif
+                                        @endauth
+                                    @endif
                                 </li>
                                 <li><a href="index"><img style="margin-right: 15px;" src="img/search_icon.png"  alt="#"></a></li>
                                 <li>
