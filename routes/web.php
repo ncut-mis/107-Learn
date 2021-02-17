@@ -20,6 +20,22 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/',[HomeController::class,'index'])->name('home');
 
+Route::get('/about',function (){
+    return view('about');
+});
+
+Route::get('/blog',function (){
+    return view('blog');
+});
+
+Route::get('/contact',function (){
+    return view('contact');
+});
+
+Route::get('/recipe',function (){
+    return view('recipe');
+});
+
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
