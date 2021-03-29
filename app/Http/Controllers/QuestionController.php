@@ -57,15 +57,17 @@ class QuestionController extends Controller
         return redirect()->route('home');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
+//    /**
+//     * Display the specified resource.
+//     *
+//     * @param  int  $id
+//     * @return Response
+//     */
     public function show($id)
     {
-        //
+        $ments=Question::where('id','=',$id)->get();
+        $dat=['ments'=>$ments];
+        return view('readquestion',$dat);
     }
 
     /**

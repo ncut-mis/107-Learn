@@ -21,6 +21,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/',[HomeController::class,'index'])->name('home');
 
+Route::get('/areas/{areas_id}',[HomeController::class,'area'])->name('areas');
+
+Route::get('/questions/{questions_id}',[QuestionController::class,'show'])->name('question.show');
+
 Route::middleware(['auth:sanctum', 'verified'])->get('/questions',[QuestionController::class,'index'])->name('questions.index');
 Route::post('/questions',[QuestionController::class,'store'])->name('questions.store');
 

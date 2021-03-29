@@ -13,11 +13,14 @@ class Search extends Component
     {
 
         $searchTerm = '%'.$this->searchTerm.'%';
-        $this->tit = Question::where('title','LIKE',$searchTerm)->get();
+        $this->tit = Question::orderBy('id','DESC')->where('title','LIKE',$searchTerm)->get();
         return view('livewire.search');
 
 //        return view('livewire.search', [
 //            'titles' => Question::where('title', $this->tit)->get(),
 //        ]);
     }
+//    public function area(){
+//
+//    }
 }

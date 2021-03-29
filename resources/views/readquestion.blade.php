@@ -36,7 +36,7 @@
 </head>
 <!-- body -->
 
-<body class="main-layout" >
+<body class="main-layout" style="height: 100%;" >
 
     <!-- loader  -->
 {{--    <div class="loader_bg">--}}
@@ -73,22 +73,22 @@
                 </nav>
          </div>
 
-        <div id="sidebar2">
-            <ul>
-                <li>
-                    <h2>Categories</h2>
-                    <ul>
-                        <font size="5" >
-                        @foreach($elements as $element)
-                            <li style="background-color: #000000;"><a href="{{ route('areas', $element->id) }}">{{$element->name}}</a></li>
-                        @endforeach
-                        </font>
-                    </ul>
-                </li>
-            </ul>
-        </div>
+{{--        <div id="sidebar2">--}}
+{{--            <ul>--}}
+{{--                <li>--}}
+{{--                    <h2>Categories</h2>--}}
+{{--                    <ul>--}}
+{{--                        <font size="5" >--}}
+{{--                        @foreach($elements as $element)--}}
+{{--                            <li style="background-color: #000000;"><a href="{{ route('areas', $element->id) }}">{{$element->name}}</a></li>--}}
+{{--                        @endforeach--}}
+{{--                        </font>--}}
+{{--                    </ul>--}}
+{{--                </li>--}}
+{{--            </ul>--}}
+{{--        </div>--}}
 
-    <div id="content">
+    <div id="content" style="height: 100%;">
     <!-- header -->
     <header>
         <div class="container-fluid">
@@ -109,7 +109,7 @@
                                 <li>
 
 
-                                    <a href=""><img style="margin-right: 15px;" src="img/search_icon.png"  alt="#"></a></li>
+                                    <a href=""><img style="margin-right: 15px;" src="{{asset('img/search_icon.png')}}"  alt="#"></a></li>
 
                                     @if (Route::has('login'))
                                         @auth
@@ -130,7 +130,7 @@
 
                                 <li>
                                     <button type="button" id="sidebarCollapse">
-                                        <img src="img/menu_icon.png" alt="#">
+                                        <img src="{{asset('img/menu_icon.png')}}" alt="#">
                                     </button>
                                 </li>
                             </ul>
@@ -148,7 +148,7 @@
 <!-- end about -->
 
 <!-- blog -->
-  <div class="blog" style="height: 100%;">
+  <div class="blog" style="position: relative;height: 100%;min-height:1000px;">
   <br class="container">
       <div class="col-md-12">
 {{--        <div class="title">--}}
@@ -156,30 +156,19 @@
 {{--          <span>when looking at its layout. The point of using Lorem</span>--}}
 {{--        </div>--}}
       </div>
-      @livewire('search')
 
-{{--      @foreach($e as $es)--}}
-{{--                <div style="position: relative;margin-left: 30%;margin-bottom:20px;width: 40%;height: 250px;border:1px #1a202c solid;border-radius: 10px">--}}
-{{--                  <div style="margin: 10px;">--}}
-{{--                      <a href="s">--}}
-{{--                          <h3>{{ $es->title }}</h3>--}}
-{{--                      </a>--}}
-{{--                      <h4>分類：{{ $es->area }} | 發問人：{{ $es->user }}</h4>--}}
-{{--                      <div>{{ $es->content }}</div>--}}
-{{--                  </div>--}}
-{{--                </div>--}}
-{{--      @endforeach--}}
+{{--      @livewire('search')--}}
+{{--      <a href="{{ route('question.show',$ments->id) }}">--}}
+      @foreach($ments as $ment)
+          <h3 style="color:#ffffff;margin-left: 30%;">{{ $ment->title }}</h3>
+      </a>
+      <h4 style="color:#ffffff;margin-left: 30%;">分類：{{ $ment->area }} | 發問人：{{ $ment->user }}</h4>
+      <h4 style="color:#ffffff;margin-left: 30%;">發布時間：{{ $ment->created_at }}</h4>
+      <div style="color:#b8daff;margin-left: 30%;">{{ $ment->content }}</div>
+      @endforeach
 
-{{--    @for($i=1;$i<=12;$i++)--}}
-{{--      <div style=";margin-left: 40em;margin-bottom:20px;width: 650px;height: 250px;border:1px #1a202c solid;border-radius: 10px">--}}
-{{--        <div style="margin: 10px;">--}}
-{{--            <a href="s">--}}
-{{--                <h3>Spicy Barger</h3>--}}
-{{--            </a>--}}
-{{--          <p>The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the </p>--}}
-{{--        </div>--}}
-{{--      </div>--}}
-{{--    @endfor--}}
+
+
 {{--   滾動出現筆   --}}
 {{--      <a href="{{route('questions.index')}}">--}}
 {{--      <div id="dg" style="z-index: 9999; position: fixed ! important; right: 100px; top: 800px;">--}}

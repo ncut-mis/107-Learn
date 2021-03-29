@@ -36,8 +36,8 @@
 }
 
 #sidebar2 li li a {
-    color: red;
-    background-color: white;
+    color: #007bff;
+    background-color: #000000;
 }
 
 #sidebar2 h2 {
@@ -46,7 +46,7 @@
     letter-spacing: -.5px;
     font-size: 1.8em;
     font-weight: 600;
-    color: green;
+    color: #e0a800;
 }
 
 #sidebar2 p {
