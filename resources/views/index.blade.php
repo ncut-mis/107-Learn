@@ -15,6 +15,8 @@
     <meta name="author" content="">
     <!-- bootstrap css -->
     <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{asset('css/test.css')}}">
+    <script src="https://cdn.ckeditor.com/ckeditor5/26.0.0/classic/ckeditor.js"></script>
     <!-- owl css -->
     <link rel="stylesheet" href="{{asset('css/owl.carousel.min.css')}}">
     <!-- style css -->
@@ -23,21 +25,26 @@
     <link rel="stylesheet" href="{{asset('css/responsive.css')}}">
     <!-- awesome fontfamily -->
     <link rel="stylesheet" href="{{asset('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css')}}">
-
+    <link rel="stylesheet" href="{{asset('https://code.jquery.com/jquery-3.6.0.min.js')}}">
     <link href="{{ asset('css/default.css') }}" rel="stylesheet" type="text/css" media="all" />
     <!--[if lt IE 9]>
+
       <script src="{{asset('https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js')}}"></script>
       <script src="{{asset('https://oss.maxcdn.com/respond/1.4.2/respond.min.js')}}"></script>
     <![endif]-->
+
 </head>
 <!-- body -->
 
 <body class="main-layout">
-    <!-- loader  -->
-    <div class="loader_bg">
-        <div class="loader"><img src="img/loading.gif" alt="" /></div>
-    </div>
 
+    <!-- loader  -->
+{{--    <div class="loader_bg">--}}
+{{--        <div class="loader"><img src="img/loading.gif" alt="" /></div>--}}
+{{--    </div>--}}
+{{--    <div id="preloader">--}}
+{{--        <div class="loader"></div>--}}
+{{--    </div>--}}
     <div class="wrapper">
     <!-- end loader -->
          <div class="sidebar">
@@ -48,20 +55,20 @@
                     </div>
                     <ul class="list-unstyled components">
                         <li class="active">
-                            <a href="">Home</a>
+                            <a href="{{route('home')}}">首頁</a>
                         </li>
                         <li>
-                            <a href="about">About</a>
+                            <a href="{{route('questions.index')}}">發問！</a>
                         </li>
-                        <li>
-                            <a href="recipe">Recipe</a>
-                        </li>
-                        <li>
-                            <a href="blog">Blog</a>
-                        </li>
-                        <li>
-                            <a href="contact">Contact Us</a>
-                        </li>
+{{--                        <li>--}}
+{{--                            <a href="recipe">Recipe</a>--}}
+{{--                        </li>--}}
+{{--                        <li>--}}
+{{--                            <a href="blog">Blog</a>--}}
+{{--                        </li>--}}
+{{--                        <li>--}}
+{{--                            <a href="contact">Contact Us</a>--}}
+{{--                        </li>--}}
                     </ul>
                 </nav>
          </div>
@@ -71,34 +78,11 @@
                 <li>
                     <h2>Categories</h2>
                     <ul>
-                        <li><a href="#">Aliquam libero</a></li>
-                        <li><a href="#">Consectetuer adipiscing elit</a></li>
-                        <li><a href="#">Metus aliquam pellentesque</a></li>
-                        <li><a href="#">Suspendisse iaculis mauris</a></li>
-                        <li><a href="#">Urnanet non molestie semper</a></li>
-                        <li><a href="#">Proin gravida orci porttitor</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <h2>Blogroll</h2>
-                    <ul>
-                        <li><a href="#">Aliquam libero</a></li>
-                        <li><a href="#">Consectetuer adipiscing elit</a></li>
-                        <li><a href="#">Metus aliquam pellentesque</a></li>
-                        <li><a href="#">Suspendisse iaculis mauris</a></li>
-                        <li><a href="#">Urnanet non molestie semper</a></li>
-                        <li><a href="#">Proin gravida orci porttitor</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <h2>Archives</h2>
-                    <ul>
-                        <li><a href="#">Aliquam libero</a></li>
-                        <li><a href="#">Consectetuer adipiscing elit</a></li>
-                        <li><a href="#">Metus aliquam pellentesque</a></li>
-                        <li><a href="#">Suspendisse iaculis mauris</a></li>
-                        <li><a href="#">Urnanet non molestie semper</a></li>
-                        <li><a href="#">Proin gravida orci porttitor</a></li>
+                        <font size="5" >
+                        @foreach($elements as $element)
+                            <li><a href="?area={{ $element->id }}"> {{$element->name}} </a></li>
+                        @endforeach
+                        </font>
                     </ul>
                 </li>
             </ul>
@@ -111,7 +95,7 @@
             <div class="row">
                 <div class="col-md-3">
                     <div class="full">
-                        <a class="logo" style="font-size: 40px;color: white;" href="">Learn</a>
+                        <a class="logo" style="font-size: 40px;color: white;" href="{{route('home')}}">Learn</a>
                     </div>
                 </div>
                 <div class="col-md-9">
@@ -122,7 +106,11 @@
 {{--                                <li class="dinone"><img style="margin-right: 15px;" src="img/mail_icon.png" alt="#"><a href="#">demo@gmail.com</a></li>--}}
 {{--                                <li class="dinone"><img style="margin-right: 15px;height: 21px;position: relative;top: -2px;" src="img/location_icon.png" alt="#"><a href="#">104 New york , USA</a></li>--}}
 
-                                <li><a href="index"><img style="margin-right: 15px;" src="img/search_icon.png"  alt="#"></a></li>
+                                <li>
+
+
+                                    <a href=""><img style="margin-right: 15px;" src="img/search_icon.png"  alt="#"></a></li>
+
                                     @if (Route::has('login'))
                                         @auth
                                         <li class="button_user">
@@ -168,15 +156,37 @@
 {{--          <span>when looking at its layout. The point of using Lorem</span>--}}
 {{--        </div>--}}
       </div>
-    @for($i=1;$i<=3;$i++)
-      <div style="margin-left: 20em;margin-bottom:20px;width: 500px;border:1px #1a202c solid;border-radius: 10px">
-        <div style="margin: 10px;">
-          <h3>Spicy Barger</h3>
-          <p>The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the </p>
-        </div>
+      @livewire('search')
+
+{{--      @foreach($e as $es)--}}
+{{--                <div style="position: relative;margin-left: 30%;margin-bottom:20px;width: 40%;height: 250px;border:1px #1a202c solid;border-radius: 10px">--}}
+{{--                  <div style="margin: 10px;">--}}
+{{--                      <a href="s">--}}
+{{--                          <h3>{{ $es->title }}</h3>--}}
+{{--                      </a>--}}
+{{--                      <h4>分類：{{ $es->area }} | 發問人：{{ $es->user }}</h4>--}}
+{{--                      <div>{{ $es->content }}</div>--}}
+{{--                  </div>--}}
+{{--                </div>--}}
+{{--      @endforeach--}}
+
+{{--    @for($i=1;$i<=12;$i++)--}}
+{{--      <div style=";margin-left: 40em;margin-bottom:20px;width: 650px;height: 250px;border:1px #1a202c solid;border-radius: 10px">--}}
+{{--        <div style="margin: 10px;">--}}
+{{--            <a href="s">--}}
+{{--                <h3>Spicy Barger</h3>--}}
+{{--            </a>--}}
+{{--          <p>The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the </p>--}}
+{{--        </div>--}}
+{{--      </div>--}}
+{{--    @endfor--}}
+      <a href="{{route('questions.index')}}">
+      <div id="dg" style="z-index: 9999; position: fixed ! important; right: 100px; top: 800px;">
+          <table width="100%" style="; width:50px; margin-right: 10%; margin-top: 60%;">
+              <div style="margin: auto;"><img src="img/pen.png"></div>
+          </table>
       </div>
-    @endfor
-  </div>
+      </a>
 
   </div>
 <!-- end blog -->
@@ -270,7 +280,7 @@
            })
          })
       </script>
-
+    @livewireScripts
 </body>
 
 </html>
