@@ -5,6 +5,8 @@
     <!-- basic -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script async charset="utf-8" src="//cdn.embedly.com/widgets/platform.js"></script>
+
     <!-- mobile metas -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1">
@@ -148,7 +150,7 @@
 <!-- end about -->
 
 <!-- blog -->
-  <div class="blog" style="height: 100%;">
+  <div class="blog" style="height: 100%;min-height:1000px;">
   <br class="container">
       <div class="col-md-12">
 {{--        <div class="title">--}}

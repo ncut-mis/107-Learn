@@ -10,9 +10,8 @@
                 </a>
                 <h4 style="color:#ffffff;">分類：{{ $title->area }} | 發問人：{{ $title->user }}</h4>
                 <h4 style="color:#ffffff;">發布時間：{{ $title->created_at }}</h4>
-                <div style="color:#b8daff;">{{ $title->content }}</div>
+                <div style="color:#b8daff;">{!! html_entity_decode($title->content)  !!}</div>
             </div>
         </div>
     @endforeach
-
 </div>

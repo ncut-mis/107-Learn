@@ -3,6 +3,8 @@
 
 <head>
     <!-- basic -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script async charset="utf-8" src="//cdn.embedly.com/widgets/platform.js"></script>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- mobile metas -->
@@ -164,10 +166,10 @@
       </a>
       <h4 style="color:#ffffff;margin-left: 30%;">分類：{{ $ment->area }} | 發問人：{{ $ment->user }}</h4>
       <h4 style="color:#ffffff;margin-left: 30%;">發布時間：{{ $ment->created_at }}</h4>
-      <div style="color:#b8daff;margin-left: 30%;">{{ $ment->content }}</div>
+      <div style="color:#b8daff;margin-left: 30%;">{!! html_entity_decode($ment->content)  !!}</div>
       @endforeach
 
-
+{{--      <figure class="media"><oembed url="https://www.youtube.com/embed/watch?v=237L3D6wLaU"></oembed></figure>--}}
 
 {{--   滾動出現筆   --}}
 {{--      <a href="{{route('questions.index')}}">--}}
@@ -271,6 +273,6 @@
          })
       </script>
     @livewireScripts
-</body>
+    </body>
 
 </html>
