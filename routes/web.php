@@ -1,8 +1,12 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\QuestionController;
+use App\Http\Livewire\Search;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -21,12 +25,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/',[HomeController::class,'index'])->name('home');
 
-Route::get('/areas/{areas_id}',[HomeController::class,'area'])->name('areas');
+Route::get('/areas/{areas_id}',[Search::class])->name('areas');
 
 Route::get('/questions/{questions_id}',[QuestionController::class,'show'])->name('question.show');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/questions',[QuestionController::class,'index'])->name('questions.index');
 Route::post('/questions',[QuestionController::class,'store'])->name('questions.store');
+
+Route::post('/comments/{id}',[CommentController::class,'store'])->name('comments.store');
 
 Route::get('/blog',function (){
     return view('blog');
@@ -43,3 +49,7 @@ Route::get('/recipe',function (){
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
+
+Route::get('/home',[ChatController::class,'index']);
+Route::get('/message/{id}', [ChatController::class,'getMessage'])->name('message');
+Route::post('message', [ChatController::class,'sendMessage']);

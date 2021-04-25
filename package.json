@@ -22,6 +22,8 @@
         "tailwindcss": "^2.0.1"
     },
     "dependencies": {
-        "@ckeditor/ckeditor5-build-classic": "^27.0.0"
+        "@ckeditor/ckeditor5-build-classic": "^27.0.0",
+        "@ckeditor/ckeditor5-media-embed": "^27.0.0",
+        "ckeditor5-youtube-embed": "^1.1.2"
     }
 }

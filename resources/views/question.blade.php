@@ -14,8 +14,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- bootstrap css -->
-{{--    <script src="https://cdn.ckeditor.com/ckeditor5/26.0.0/decoupled-document/ckeditor.js"></script>--}}
-    <script src="https://cdn.ckeditor.com/ckeditor5/26.0.0/classic/ckeditor.js"></script>
+
+
 
     <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
     <!-- owl css -->
@@ -90,7 +90,7 @@
                                 {{--                                <li class="dinone"><img style="margin-right: 15px;" src="img/mail_icon.png" alt="#"><a href="#">demo@gmail.com</a></li>--}}
                                 {{--                                <li class="dinone"><img style="margin-right: 15px;height: 21px;position: relative;top: -2px;" src="img/location_icon.png" alt="#"><a href="#">104 New york , USA</a></li>--}}
 
-                                <li><a href="index"><img style="margin-right: 15px;" src="img/search_icon.png"  alt="#"></a></li>
+                                <li><a href="index"><img style="margin-right: 15px;" src="{{asset('img/search_icon.png')}}"  alt="#"></a></li>
                                 @if (Route::has('login'))
                                     @auth
                                         <li class="button_user">
@@ -110,7 +110,7 @@
 
                                 <li>
                                     <button type="button" id="sidebarCollapse">
-                                        <img src="img/menu_icon.png" alt="#">
+                                        <img src="{{asset('img/menu_icon.png')}}" alt="#">
                                     </button>
                                 </li>
                             </ul>
@@ -280,6 +280,11 @@
         });
     </script>
 
+    <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
+    <script>
+        CKEDITOR.replace( 'editor' );
+    </script>
+
 {{--    <script>--}}
 {{--        DecoupledEditor.create( document.querySelector( '#contentw' ), {--}}
 {{--            // 這裡可以設定 plugin--}}
@@ -306,11 +311,7 @@
 {{--            } );--}}
 {{--    </script>--}}
     <script>
-        ClassicEditor
-            .create( document.querySelector( '#editor' ) )
-            .catch( error => {
-                console.error( error );
-            } );
+
     </script>
 </body>
 

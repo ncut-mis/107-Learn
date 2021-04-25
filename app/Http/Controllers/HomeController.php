@@ -9,21 +9,24 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use function PHPUnit\Framework\isEmpty;
+use function PHPUnit\Framework\isNull;
 
 class HomeController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
+     * @param $areas_id
      * @return Application|Factory|View|Response
      */
     public function index()
     {
-        $elements=Area::orderBy('id','ASC')->get();
-        $data=['elements'=>$elements];
-        $e=Question::orderBy('id','DESC')->get();
-        $data2=['e'=>$e];
-        return view('index',$data,$data2);
+            $elements=Area::orderBy('id','ASC')->get();
+            $data=['elements'=>$elements];
+            $e=Question::orderBy('id','ASC')->get();
+            $data2=['e'=>$e];
+            return view('index',$data,$data2);
     }
 //    public function area($id)
 //    {
@@ -60,7 +63,7 @@ class HomeController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      * @return Response
      */
     public function store(Request $request)
@@ -72,11 +75,11 @@ class HomeController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return Response
+     * @return Application|Factory|View|Response
      */
     public function show($id)
     {
-        //
+
     }
 
     /**
@@ -93,7 +96,7 @@ class HomeController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      * @param  int  $id
      * @return Response
      */

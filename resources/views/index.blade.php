@@ -5,7 +5,6 @@
     <!-- basic -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <script async charset="utf-8" src="//cdn.embedly.com/widgets/platform.js"></script>
 
     <!-- mobile metas -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -19,6 +18,7 @@
     <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('css/test.css')}}">
     <script src="https://cdn.ckeditor.com/ckeditor5/26.0.0/classic/ckeditor.js"></script>
+
     <!-- owl css -->
     <link rel="stylesheet" href="{{asset('css/owl.carousel.min.css')}}">
     <!-- style css -->
@@ -34,6 +34,7 @@
       <script src="{{asset('https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js')}}"></script>
       <script src="{{asset('https://oss.maxcdn.com/respond/1.4.2/respond.min.js')}}"></script>
     <![endif]-->
+
 
 </head>
 <!-- body -->
@@ -111,7 +112,7 @@
                                 <li>
 
 
-                                    <a href=""><img style="margin-right: 15px;" src="img/search_icon.png"  alt="#"></a></li>
+                                    <a href=""><img style="margin-right: 15px;" src="{{asset('img/search_icon.png')}}"  alt="#"></a></li>
 
                                     @if (Route::has('login'))
                                         @auth
@@ -132,7 +133,7 @@
 
                                 <li>
                                     <button type="button" id="sidebarCollapse">
-                                        <img src="img/menu_icon.png" alt="#">
+                                        <img src="{{asset('img/menu_icon.png')}}" alt="#">
                                     </button>
                                 </li>
                             </ul>
@@ -159,6 +160,8 @@
 {{--        </div>--}}
       </div>
       @livewire('search')
+
+
 
 {{--      @foreach($e as $es)--}}
 {{--                <div style="position: relative;margin-left: 30%;margin-bottom:20px;width: 40%;height: 250px;border:1px #1a202c solid;border-radius: 10px">--}}
@@ -263,6 +266,7 @@
 
 
       <script>
+
          $(document).ready(function() {
            var owl = $('.owl-carousel');
            owl.owlCarousel({
@@ -282,7 +286,10 @@
              }
            })
          })
+
+
       </script>
+
     @livewireScripts
 </body>
 

@@ -21203,7 +21203,7 @@ process.umask = function() { return 0; };
 /************************************************************************/
 /******/ 	// The module cache
 /******/ 	var __webpack_module_cache__ = {};
-/******/
+/******/ 	
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/ 		// Check if module is in cache
@@ -21216,20 +21216,20 @@ process.umask = function() { return 0; };
 /******/ 			loaded: false,
 /******/ 			exports: {}
 /******/ 		};
-/******/
+/******/ 	
 /******/ 		// Execute the module function
 /******/ 		__webpack_modules__[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
+/******/ 	
 /******/ 		// Flag the module as loaded
 /******/ 		module.loaded = true;
-/******/
+/******/ 	
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/
+/******/ 	
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = __webpack_modules__;
-/******/
+/******/ 	
 /******/ 	// the startup function
 /******/ 	// It's empty as some runtime module handles the default behavior
 /******/ 	__webpack_require__.x = x => {};
@@ -21245,12 +21245,12 @@ process.umask = function() { return 0; };
 /******/ 			}
 /******/ 		})();
 /******/ 	})();
-/******/
+/******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
 /******/ 	})();
-/******/
+/******/ 	
 /******/ 	/* webpack/runtime/make namespace object */
 /******/ 	(() => {
 /******/ 		// define __esModule on exports
@@ -21261,7 +21261,7 @@ process.umask = function() { return 0; };
 /******/ 			Object.defineProperty(exports, '__esModule', { value: true });
 /******/ 		};
 /******/ 	})();
-/******/
+/******/ 	
 /******/ 	/* webpack/runtime/node module decorator */
 /******/ 	(() => {
 /******/ 		__webpack_require__.nmd = (module) => {
@@ -21270,34 +21270,34 @@ process.umask = function() { return 0; };
 /******/ 			return module;
 /******/ 		};
 /******/ 	})();
-/******/
+/******/ 	
 /******/ 	/* webpack/runtime/jsonp chunk loading */
 /******/ 	(() => {
 /******/ 		// no baseURI
-/******/
+/******/ 		
 /******/ 		// object to store loaded and loading chunks
 /******/ 		// undefined = chunk not loaded, null = chunk preloaded/prefetched
 /******/ 		// Promise = chunk loading, 0 = chunk loaded
 /******/ 		var installedChunks = {
 /******/ 			"/js/app": 0
 /******/ 		};
-/******/
+/******/ 		
 /******/ 		var deferredModules = [
 /******/ 			["./resources/js/app.js"],
 /******/ 			["./resources/css/app.css"]
 /******/ 		];
 /******/ 		// no chunk on demand loading
-/******/
+/******/ 		
 /******/ 		// no prefetching
-/******/
+/******/ 		
 /******/ 		// no preloaded
-/******/
+/******/ 		
 /******/ 		// no HMR
-/******/
+/******/ 		
 /******/ 		// no HMR manifest
-/******/
+/******/ 		
 /******/ 		var checkDeferredModules = x => {};
-/******/
+/******/ 		
 /******/ 		// install a JSONP callback for chunk loading
 /******/ 		var webpackJsonpCallback = (parentChunkLoadingFunction, data) => {
 /******/ 			var [chunkIds, moreModules, runtime, executeModules] = data;
@@ -21321,18 +21321,18 @@ process.umask = function() { return 0; };
 /******/ 			while(resolves.length) {
 /******/ 				resolves.shift()();
 /******/ 			}
-/******/
+/******/ 		
 /******/ 			// add entry modules from loaded chunk to deferred list
 /******/ 			if(executeModules) deferredModules.push.apply(deferredModules, executeModules);
-/******/
+/******/ 		
 /******/ 			// run deferred modules when all chunks ready
 /******/ 			return checkDeferredModules();
 /******/ 		}
-/******/
+/******/ 		
 /******/ 		var chunkLoadingGlobal = self["webpackChunk"] = self["webpackChunk"] || [];
 /******/ 		chunkLoadingGlobal.forEach(webpackJsonpCallback.bind(null, 0));
 /******/ 		chunkLoadingGlobal.push = webpackJsonpCallback.bind(null, chunkLoadingGlobal.push.bind(chunkLoadingGlobal));
-/******/
+/******/ 		
 /******/ 		function checkDeferredModulesImpl() {
 /******/ 			var result;
 /******/ 			for(var i = 0; i < deferredModules.length; i++) {
@@ -21360,73 +21360,9 @@ process.umask = function() { return 0; };
 /******/ 			return (checkDeferredModules = checkDeferredModulesImpl)();
 /******/ 		};
 /******/ 	})();
-/******/
+/******/ 	
 /************************************************************************/
 /******/ 	// run startup
 /******/ 	__webpack_require__.x();
 /******/ })()
 ;
-
-import MediaEmbed from '@ckeditor/ckeditor5-media-embed/src/mediaembed';
-
-var IFRAME_SRC = '//cdn.iframe.ly/api/iframe';
-var API_KEY = '...';
-// Your API key from https://iframely.com/profile';
-
-var editorInstance;
-
-ClassicEditor
-    .create( document.querySelector( '#editor' ), {
-        plugins: [
-
-            // Include 'MediaEmbed' plugin among others.
-            MediaEmbed
-
-        ],
-
-        toolbar: [ 'mediaEmbed' ],
-
-        // Configure 'mediaEmbed' with Iframely previews.
-        mediaEmbed: {
-
-            // Previews are always enabled if there’s a provider for a URL (below regex catches all URLs)
-            // By default `previewsInData` are disabled, but let’s set it to `false` explicitely to be sure
-            previewsInData: false,
-
-            providers: [
-                {
-                    // hint: this is just for previews. Get actual HTML codes by making API calls from your CMS
-                    name: 'iframely previews',
-
-                    // Match all URLs or just the ones you need:
-                    url: /.+/,
-
-                    html: match => {
-                        const url = match[ 0 ];
-
-                        var iframeUrl = IFRAME_SRC + '?app=1&api_key=' + API_KEY + '&url=' + encodeURIComponent(url);
-                        // alternatively, use &key= instead of &api_key with the MD5 hash of your api_key
-                        // more about it: https://iframely.com/docs/allow-origins
-
-                        return (
-                            // If you need, set maxwidth and other styles for 'iframely-embed' class - it's yours to customize
-                            '<div class="iframely-embed">' +
-                            '<div class="iframely-responsive">' +
-                            `<iframe src="${ iframeUrl }" ` +
-                            'frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>' +
-                            '</iframe>' +
-                            '</div>' +
-                            '</div>'
-                        );
-                    }
-                }
-            ]
-        }
-    } )
-    .then( editor => {
-        console.log( 'Editor was initialized', editor );
-        // Store editor markup, etc.
-    } )
-    .catch( error => {
-        console.error( error.stack );
-    } );

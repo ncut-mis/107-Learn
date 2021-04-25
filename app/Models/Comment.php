@@ -21,4 +21,12 @@ class Comment extends Model
         'question_id' => 'integer',
         'user_id' => 'integer',
     ];
+    public function question()
+    {
+        return $this->belongsTo(Question::class);
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

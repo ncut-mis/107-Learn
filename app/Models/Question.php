@@ -26,6 +26,9 @@ class Question extends Model
         'status' => 'string',
     ];
 
-
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 
 }

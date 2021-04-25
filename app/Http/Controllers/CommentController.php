@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
@@ -36,9 +38,17 @@ class CommentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(Request $request,$id)
     {
-        //
+        Comment::create(
+            [
+                'question_id'=>$id,
+                'content'=>$request['content'],
+                'user_id'=>Auth::user()->id,
+            ]
+        );
+//        dd($request);
+        return redirect()->route('home');
     }
 
     /**
