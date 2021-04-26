@@ -6,6 +6,9 @@ use App\Http\Controllers\ChatController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Livewire\Search;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminQuestionController;
+use App\Http\Controllers\AdminAreaController;
+
 
 
 /*
@@ -53,3 +56,12 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 Route::get('/home',[ChatController::class,'index']);
 Route::get('/message/{id}', [ChatController::class,'getMessage'])->name('message');
 Route::post('message', [ChatController::class,'sendMessage']);
+
+//管理員
+Route::prefix('admin')->group(function () {
+    //問題管理
+    Route::get('/', [AdminQuestionController::class, 'index'])->name('admin.index');
+    Route::delete('question/{id}', [AdminQuestionController::class, 'destroy'])->name('admin.questions.destroy');
+    //領域管理
+    Route::get('areas', [AdminAreaController::class, 'index'])->name('admin.areas.index');
+});

@@ -156,7 +156,7 @@
       <div class="col-md-12">
 {{--        <div class="title">--}}
 {{--          <h2>Our Blog</h2>--}}
-{{--          <span>when looking at its layout. The point of using Lorem</span>--}}
+{{--          <span>when looking at its layouts. The point of using Lorem</span>--}}
 {{--        </div>--}}
       </div>
       @livewire('search')

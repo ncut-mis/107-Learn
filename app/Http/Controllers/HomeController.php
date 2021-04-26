@@ -30,11 +30,11 @@ class HomeController extends Controller
     }
 //    public function area($id)
 //    {
-//        $elements=Area::find($id);
+//        $elements=areas::find($id);
 //        dd($elements);
-//        $elements=Area::where('id','=',$id)->get();
+//        $elements=areas::where('id','=',$id)->get();
 //        dd($st);
-//        $elements=Area::orderBy('id','ASC')->get();
+//        $elements=areas::orderBy('id','ASC')->get();
 //        $data=['elements'=>$elements];
 //        foreach($elements as $element){
 //            $w=$element->name;
@@ -43,7 +43,7 @@ class HomeController extends Controller
 //            return view('index',$data,$data2);
 //        }
 //
-//        $elements=Area::orderBy('id','ASC')->get();
+//        $elements=areas::orderBy('id','ASC')->get();
 //        $data=['elements'=>$elements];
 //        $e=Question::orderBy('id','DESC')->get();
 //        $data2=['e'=>$e];
