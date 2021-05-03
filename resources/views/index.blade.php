@@ -117,7 +117,7 @@
                                     @if (Route::has('login'))
                                         @auth
                                         <li class="button_user">
-                                            <a href="#">{{ \Illuminate\Support\Facades\Auth::user()->name }}</a>
+                                            <a href="#">{{ Auth::user()->name }}</a>
                                             <a href="{{ url('/dashboard') }}" class="button">Dashboard</a>
                                         </li>
                                         @else
