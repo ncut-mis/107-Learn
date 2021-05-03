@@ -35,7 +35,7 @@
                                 <td>{{$questions->id}}</td>
                                 <td>{{$questions->user}}</td>
                                 <td>{{($questions->title)}}</td>
-                                <td>{{($questions->content)}}</td>
+                                <td> {!! html_entity_decode($questions->content) !!}</td>
                                 <td>{{($questions->status)}}</td>
 
                                 <td width="1%" style="text-align: center">

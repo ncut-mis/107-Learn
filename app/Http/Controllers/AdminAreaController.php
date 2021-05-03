@@ -37,7 +37,12 @@ class AdminAreaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Area::create(
+            [
+                'name'=>$request['name']
+            ]
+        );
+        return redirect()->route('admin/areas');
     }
 
     /**
@@ -59,7 +64,9 @@ class AdminAreaController extends Controller
      */
     public function edit($id)
     {
-        //
+//        $area=area::find($id);
+//        $data=['area'=>$area];
+//        return view('admin.areas.edit',$data);
     }
 
     /**
@@ -71,9 +78,9 @@ class AdminAreaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $area=Area::find($id);
-        $area->update($request->all());
-        return redirect()->route('admin.areas.index');
+//        $area=Area::find($id);
+//        $area->update($request->all());
+//        return redirect()->route('admin.areas.index');
     }
 
     /**
@@ -84,6 +91,7 @@ class AdminAreaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Area::destroy($id);
+        return redirect()->route('admin.areas.index');
     }
 }

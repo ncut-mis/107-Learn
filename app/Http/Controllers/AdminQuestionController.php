@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Question;
 use App\Models\User;
+use App\Models\Area;
 
 
 class AdminQuestionController extends Controller
@@ -18,6 +19,8 @@ class AdminQuestionController extends Controller
     {
         $questions=Question::orderBy('created_at','DESC')->get();
         $data=['questions'=>$questions];
+//        $elements=Area::orderBy('id','DESC')->get();
+//        $data=['elements'=>$elements];
         return view('admin.index', $data,);
     }
 
@@ -39,7 +42,16 @@ class AdminQuestionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Question::create(
+            [
+                'title'=>$request['title'],
+                'area'=>$request['area'],
+                'content'=>$request['editor'],
+                'status'=>'0',
+                'user'=>Auth::user()->name,
+            ]
+        );
+        return redirect()->route('admin.index');
     }
 
     /**

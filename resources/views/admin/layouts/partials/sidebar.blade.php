@@ -17,9 +17,10 @@
             <li >
                 <a href="{{ route('admin.index') }}"><i class="fa fa-fw fa-dashboard"></i> 問題管理</a>
             </li>
-            <li>
-                <a href="{{ route('admin.Areas.index') }}"><i class="fa fa-fw fa-edit"></i> 領域管理</a>
+            <li >
+                <a href="{{ route('admin.areas.index') }}"><i class="fa fa-fw fa-dashboard"></i> 問題管理</a>
             </li>
+
             <li>
                 <a href="/"><i class="fa fa-fw fa-edit"></i> 回前端</a>
             </li>

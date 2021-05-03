@@ -33,6 +33,7 @@ Route::get('/areas/{areas_id}',[Search::class])->name('areas');
 Route::get('/questions/{questions_id}',[QuestionController::class,'show'])->name('question.show');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/questions',[QuestionController::class,'index'])->name('questions.index');
+
 Route::post('/questions',[QuestionController::class,'store'])->name('questions.store');
 
 Route::post('/comments/{id}',[CommentController::class,'store'])->name('comments.store');
@@ -64,4 +65,6 @@ Route::prefix('admin')->group(function () {
     Route::delete('question/{id}', [AdminQuestionController::class, 'destroy'])->name('admin.questions.destroy');
     //領域管理
     Route::get('areas', [AdminAreaController::class, 'index'])->name('admin.areas.index');
+    Route::delete('areas/{id}', [AdminAreaController::class, 'destroy'])->name('admin.areas.destroy');
+    Route::post('areas/store', [AdminAreaController::class, 'store'])->name('admin.areas.store');
 });
