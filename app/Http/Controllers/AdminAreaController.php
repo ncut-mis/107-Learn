@@ -42,7 +42,10 @@ class AdminAreaController extends Controller
                 'name'=>$request['name']
             ]
         );
-        return redirect()->route('admin/areas');
+//        $data = new Area();
+//        $data->name=$request->name;
+//        $data->save();
+        return redirect()->route('admin.areas.index');
     }
 
     /**
