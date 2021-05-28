@@ -1,34 +1,35 @@
 @extends('layouts.chat')
 
 @section('content')
+
     <div class="col-md-8" id="messages" >
         <div class="message-wrapper">
             <ul class="messages">
         @foreach($users as $user)
-                    <li class="message">
-                        <div class="{{ ($user->from == Auth::id()) ? "sent" : "received" }}">
-                            <p>{{ \App\Models\User::find($user->from)->name}}</p>
-                            <p>{{$user->message}}</p>
-                            <p class="date">{{ date('d M Y, h:i a', strtotime($user->created_at)) }}</p>
-                        </div>
-                    </li>
-{{--            @if($user->to==Auth::id())--}}
-{{--                <li class="message">--}}
-{{--                    <div class="{{ ($user->from == Auth::id()) ? "sent" : "received" }}">--}}
-{{--                        <p>{{ \App\Models\User::find($user->from)->name}}</p>--}}
-{{--                        <p>{{$user->message}}</p>--}}
-{{--                        <p class="date">{{ date('d M Y, h:i a', strtotime($user->created_at)) }}</p>--}}
-{{--                    </div>--}}
-{{--                </li>--}}
-{{--            @elseif($user->from==Auth::id())--}}
-{{--                <li class="message">--}}
-{{--                    <div class="{{ ($user->from == Auth::id()) ? "sent" : "received" }}">--}}
-{{--                        <p>{{ \App\Models\User::find($user->from)->name}}</p>--}}
-{{--                        <p>{{$user->message}}</p>--}}
-{{--                        <p class="date">{{ date('d M Y, h:i a', strtotime($user->created_at)) }}</p>--}}
-{{--                    </div>--}}
-{{--                </li>--}}
-{{--            @endif--}}
+{{--                    <li class="message">--}}
+{{--                        <div class="{{ ($user->from == Auth::id()) ? "sent" : "received" }}">--}}
+{{--                            <p>{{ \App\Models\User::find($user->from)->name}}</p>--}}
+{{--                            <p>{{$user->message}}</p>--}}
+{{--                            <p class="date">{{ date('d M Y, h:i a', strtotime($user->created_at)) }}</p>--}}
+{{--                        </div>--}}
+{{--                    </li>--}}
+            @if($user->to==Auth::id())
+                <li class="message">
+                    <div class="{{ ($user->from == Auth::id()) ? "sent" : "received" }}">
+                        <p>{{ \App\Models\User::find($user->from)->name}}</p>
+                        <p>{{$user->message}}</p>
+                        <p class="date">{{ date('d M Y, h:i a', strtotime($user->created_at)) }}</p>
+                    </div>
+                </li>
+            @elseif($user->from==Auth::id())
+                <li class="message">
+                    <div class="{{ ($user->from == Auth::id()) ? "sent" : "received" }}">
+                        <p>{{ \App\Models\User::find($user->from)->name}}</p>
+                        <p>{{$user->message}}</p>
+                        <p class="date">{{ date('d M Y, h:i a', strtotime($user->created_at)) }}</p>
+                    </div>
+                </li>
+            @endif
         @endforeach
             </ul>
         </div>

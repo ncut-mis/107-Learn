@@ -48,9 +48,9 @@
 {{--    <div id="preloader">--}}
 {{--        <div class="loader"></div>--}}
 {{--    </div>--}}
-    <div class="wrapper" style="overflow:auto;height: 100%;position: relative;background-color: #000000;">
+    <div class="wrapper" style="overflow:auto;height: 100%;position: relative;background-color: #B9E9DF;">
     <!-- end loader -->
-         <div class="sidebar">
+         <div class="sidebar" style="font-family: 'Noto Serif TC', serif;">
                 <!-- Sidebar  -->
                 <nav id="sidebar">
                     <div id="dismiss">
@@ -79,11 +79,11 @@
         <div id="sidebar2">
             <ul>
                 <li>
-                    <h2>Categories</h2>
+                    <h2>領域</h2>
                     <ul>
                         <font size="5" >
                         @foreach($elements as $element)
-                            <li style="background-color: #000000;"><a href="{{ route('areas', $element->id) }}">{{$element->name}}</a></li>
+                                <div style=""><li style="background-color: #63B0A1;"><a href="{{ route('areas', $element->id) }}">{{$element->name}}</a></li></div>
                         @endforeach
                         </font>
                     </ul>

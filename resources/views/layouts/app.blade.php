@@ -173,11 +173,11 @@
             @endif
 
             <!-- Page Content -->
-            <main class="py-4">
-                {{$slot}}
-            </main>
+{{--            <main class="py-4">--}}
+{{--                {{$slot}}--}}
+{{--            </main>--}}
         </div>
-
+        @yield('content')
         @stack('modals')
 
         @livewireScripts
