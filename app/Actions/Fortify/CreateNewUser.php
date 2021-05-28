@@ -2,6 +2,7 @@
 
 namespace App\Actions\Fortify;
 
+use App\Models\Area;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -32,5 +33,11 @@ class CreateNewUser implements CreatesNewUsers
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
         ]);
+    }
+    public function index()
+    {
+        $areas=Area::orderBy('id','DESC')->get();
+        $data=['areas'=>$areas];
+        return view('admin.areas.index', $data,);
     }
 }

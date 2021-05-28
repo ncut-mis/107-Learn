@@ -9,6 +9,9 @@ use App\Http\Controllers\NotesControllerController;
 use App\Http\Livewire\Search;
 use http\Client\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminQuestionController;
+use App\Http\Controllers\AdminAreaController;
+
 
 
 /*
@@ -40,6 +43,7 @@ Route::get('/chatrooms/OK/{id}', [ChatroomController::class,'OK'])->name('yuyu')
 Route::post('/chatrooms', [ChatroomController::class,'sendMessage']);
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/questions',[QuestionController::class,'index'])->name('questions.index');
+
 Route::post('/questions',[QuestionController::class,'store'])->name('questions.store');
 
 Route::post('/comments/{id}',[CommentController::class,'store'])->name('comments.store');
@@ -66,3 +70,19 @@ Route::get('notes',[NotesController::class,'store'])->name('note');
 //Route::get('/home',[ChatController::class,'index']);
 //Route::get('/message/{id}', [ChatController::class,'getMessage'])->name('message');
 //Route::post('message/{id}', [ChatController::class,'sendMessage']);
+
+Route::get('/home',[ChatController::class,'index']);
+Route::get('/message/{id}', [ChatController::class,'getMessage'])->name('message');
+Route::post('message', [ChatController::class,'sendMessage']);
+
+//管理員
+Route::prefix('admin')->group(function () {
+    //問題管理
+    Route::get('/', [AdminQuestionController::class, 'index'])->name('admin.index');
+    Route::delete('question/{id}', [AdminQuestionController::class, 'destroy'])->name('admin.questions.destroy');
+    //領域管理
+    Route::get('areas', [AdminAreaController::class, 'index'])->name('admin.areas.index');
+    Route::delete('areas/{id}', [AdminAreaController::class, 'destroy'])->name('admin.areas.destroy');
+    Route::post('areas/store', [AdminAreaController::class, 'store'])->name('admin.areas.store');
+});
+
