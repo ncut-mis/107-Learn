@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1">
     <!-- site metas -->
-    <title>Learn | Ask?</title>
+    <title>Learn | 發問</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -43,7 +43,7 @@
     <div class="wrapper">
     <!-- end loader -->
 
-     <div class="sidebar">
+     <div class="sidebar" style="font-family: 'Noto Serif TC', serif;">
             <!-- Sidebar  -->
             <nav id="sidebar">
 
@@ -122,14 +122,16 @@
     </header>
     <!-- end header -->
 
-    <div class="yellow_bg" style="background: #0c5460;">
+    <div class="yellow_bg" style="background: #008A6C; font-family: 'Noto Serif TC', serif;">
         <div class="container">
+            <div class="item-center">
             <div class="row">
                <div class="col-md-12">
                   <div class="title">
-                     <h2>Ask?</h2>
+                     <h2>發問！</h2>
                   </div>
                </div>
+            </div>
             </div>
         </div>
     </div>
@@ -161,25 +163,27 @@
 
     <!-- footer -->
     <footer>
-        <div class="footer" style="margin-top:0; height: 750px;">
+        <div class="footer" style="margin-top:0; height: 750px;background: #A0CFC6">
             <div class="container-fluid">
                 <div class="row">
                   <div class=" col-md-12">
 {{--                    <h2>Request  A<strong class="white"> Call  Back</strong></h2>--}}
                   </div>
+                    <div class="container3">
+                    <div class="item-left3">
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                         <form class="main_form" method="post" enctype="multipart/form-data" action="{{ route('questions.store') }}" role="form">
                             @method('post')
                             @csrf
-                            <div class="row">
+                            <div class="row"style="font-family: 'Noto Serif TC', serif;">
 
 {{--                                <div style="width:300px; height:450px; background: black;position: absolute;margin-left: 20px;">--}}
 
 {{--                                </div>--}}
-                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12" style="margin-left: 380px;margin-bottom:20px;position: relative;">
-                                    <input class="form-control" placeholder="文章標題" type="text" name="title">
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12" style="margin-bottom:20px;position: relative;width: 500px">
+                                    <input class="form-control" placeholder="文章標題" type="text" name="title" style="font-family: 'Noto Serif TC', serif;">
                                 </div>
-                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12" style="margin-left: 380px;margin-bottom:20px;position: relative;">
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12" style="margin-bottom:20px;position: relative;width: 500px">
                                     <select name="area" style="">
                                         @foreach($elements as $element)
                                             <option>{{$element->name}}</option>
@@ -189,7 +193,7 @@
 {{--                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12" style="margin-left: 380px;margin-bottom:20px;position: relative;">--}}
 {{--                                    <input class="form-control" placeholder="Phone" type="text" name="Phone">--}}
 {{--                                </div>--}}
-                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12" style="margin-left: 380px;margin-bottom:20px;position: relative;">
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12" style="margin-bottom:20px;position: relative;width: 500px">
 {{--                                    <textarea id="contentw" placeholder="內文" type="text" name="contentw"></textarea>--}}
                                     <!-- The toolbar will be rendered in this container. -->
 {{--                                    <div id="toolbar-container"></div>--}}
@@ -198,13 +202,18 @@
                                         <textarea id="editor" name="editor"></textarea>
 {{--                                    </div>--}}
                                 </div>
-                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12" style="margin-left: 380px;">
-                                    <button type="submit" class="send">Send</button>
+                            </div>
+                                <div class="item-right3">
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12" style="">
+                                    <button type="submit" class="send" style="font-family: 'Noto Serif TC', serif;">送出</button>
 
                                 </div>
-
-                            </div>
+                                </div>
                         </form>
+                    </div>
+                    </div>
+                    </div>
+
                     </div>
 {{--                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">--}}
 {{--                        <div class="img-box">--}}

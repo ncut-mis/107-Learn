@@ -227,7 +227,7 @@
 
 <script>
     var w = window.location.pathname.split('/');
-    var receiver_id = w[3];
+    var receiver_id = w[2];
     var my_id = "{{ Auth::id() }}";
     scrollToBottomFunc();
     $(document).ready(function () {

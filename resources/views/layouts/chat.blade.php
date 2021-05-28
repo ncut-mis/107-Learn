@@ -178,7 +178,7 @@
         @yield('content')
     </main>
 
-
+</div>
 
 <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -220,6 +220,24 @@
             });
         });
 
+        $('.user').click(function () {
+            $('.user').removeClass('active');
+            $(this).addClass('active');
+            $(this).find('.pending').remove();
+            alert('ss');
+            // receiver_id = $(this).attr('id');
+            $.ajax({
+                type: "get",
+                url: "/chatrooms/" + receiver_id, // need to create this route
+                data: "",
+                cache: false,
+                success: function (data) {
+                    $('#messages').html(data);
+                    scrollToBottomFunc();
+                }
+            });
+        });
+
         $(document).on('keyup', '.input-text input', function (e) {
             var message = $(this).val();
 
@@ -239,6 +257,28 @@
                     error: function (jqXHR, status, err) {
                     },
                     complete: function () {
+
+                        $.ajax({
+                            type: "get",
+                            url: "/chatrooms/solver/" + receiver_id, // need to create this route
+                            data: "",
+                            cache: false,
+                            success: function (data) {
+                                $('#messages').html(data);
+
+                            }
+                        });
+                        $.ajax({
+                            type: "get",
+                            url: "/chatrooms/asker/" + receiver_id, // need to create this route
+                            data: "",
+                            cache: false,
+                            success: function (data) {
+                                $('#messages').html(data);
+
+                            }
+                        });
+                        scrollToBottomFunc();
                     }
                 })
             }

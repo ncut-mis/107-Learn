@@ -42,10 +42,15 @@
 <body class="main-layout" >
 
     <!-- loader  -->
-
-    <div class="wrapper" style="overflow:auto;height: 100%;position: relative;background-color: #000000;">
+{{--    <div class="loader_bg">--}}
+{{--        <div class="loader"><img src="img/loading.gif" alt="" /></div>--}}
+{{--    </div>--}}
+{{--    <div id="preloader">--}}
+{{--        <div class="loader"></div>--}}
+{{--    </div>--}}
+    <div class="wrapper" style="overflow:auto;height: 100%;position: relative;background-color: #B9E9DF;">
     <!-- end loader -->
-         <div class="sidebar">
+         <div class="sidebar" style="font-family: 'Noto Serif TC', serif;">
                 <!-- Sidebar  -->
                 <nav id="sidebar">
                     <div id="dismiss">
@@ -65,11 +70,11 @@
         <div id="sidebar2">
             <ul>
                 <li>
-                    <h2>Categories</h2>
+                    <h2>領域</h2>
                     <ul>
                         <font size="5" >
                         @foreach($elements as $element)
-                            <li style="background-color: #000000;"><a href="{{ route('areas', $element->id) }}">{{$element->name}}</a></li>
+                                <div style=""><li style="background-color: #63B0A1;"><a href="{{ route('areas', $element->id) }}">{{$element->name}}</a></li></div>
                         @endforeach
                         </font>
                     </ul>
@@ -142,7 +147,7 @@
       <div class="col-md-12">
 {{--        <div class="title">--}}
 {{--          <h2>Our Blog</h2>--}}
-{{--          <span>when looking at its layout. The point of using Lorem</span>--}}
+{{--          <span>when looking at its layouts. The point of using Lorem</span>--}}
 {{--        </div>--}}
       </div>
       @livewire('search')
