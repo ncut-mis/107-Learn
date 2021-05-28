@@ -8,9 +8,18 @@
                 @if (Route::has('login'))
                     @auth
                         @if($title->user != Auth::user()->name)
-                        <div align="right"><a  href="{{ route('chatrooms.index',$title->id) }}">
-                            <button type="submit" style="width: 100px;height: 20px;">開啟討論室</button>
-                        </a></div>
+                            <div align="right">
+                                <a href="{{ route('chatrooms.solver.index',$title->id) }}">
+                                    <button type="submit" style="width: 100px;height: 20px;">開啟討論室</button>
+                                </a>
+                            </div>
+                        @endif
+                        @if($title->user == Auth::user()->name)
+                            <div align="right">
+                                <a href="{{ route('chatrooms.list.index',$title->id) }}">
+                                    <button type="submit" style="width: 100px;height: 20px;">開啟討論室列表</button>
+                                </a>
+                            </div>
                         @endif
                     @endauth
                 @endif

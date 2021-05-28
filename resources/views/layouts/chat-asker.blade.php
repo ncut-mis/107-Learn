@@ -168,24 +168,66 @@
 <div id="app">
     <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
         <div class="container">
+{{--            <a class="navbar-brand" href="{{ url('/') }}">--}}
+{{--                {{ config('app.name', 'Laravel') }}--}}
+{{--            </a>--}}
+{{--            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">--}}
+{{--                <span class="navbar-toggler-icon"></span>--}}
+{{--            </button>--}}
 
+{{--            <div class="collapse navbar-collapse" id="navbarSupportedContent">--}}
+{{--                <!-- Left Side Of Navbar -->--}}
+{{--                <ul class="navbar-nav mr-auto">--}}
+
+{{--                </ul>--}}
+
+                <!-- Right Side Of Navbar -->
+{{--                <ul class="navbar-nav ml-auto">--}}
+{{--                    <!-- Authentication Links -->--}}
+{{--                    @guest--}}
+{{--                        <li class="nav-item">--}}
+{{--                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>--}}
+{{--                        </li>--}}
+{{--                        @if (Route::has('register'))--}}
+{{--                            <li class="nav-item">--}}
+{{--                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>--}}
+{{--                            </li>--}}
+{{--                        @endif--}}
+{{--                        @else--}}
+{{--                            <li class="nav-item dropdown">--}}
+{{--                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>--}}
+{{--                                    {{ Auth::user()->name }} <span class="caret"></span>--}}
+{{--                                </a>--}}
+
+{{--                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">--}}
+{{--                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();--}}
+{{--                                                     document.getElementById('logout-form').submit();">--}}
+{{--                                        {{ __('Logout') }}--}}
+{{--                                    </a>--}}
+
+{{--                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">--}}
+{{--                                        @csrf--}}
+{{--                                    </form>--}}
+{{--                                </div>--}}
+{{--                            </li>--}}
+{{--                            @endguest--}}
+{{--                </ul>--}}
+            </div>
         </div>
-
     </nav>
-</div>
 
-    <main class="py-4" style="overflow:auto;overflow-x: hidden;">
+    <main class="py-4">
         @yield('content')
     </main>
 
-
+</div>
 
 <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 <script>
     var w = window.location.pathname.split('/');
-    var receiver_id = w[2];
+    var receiver_id = w[3];
     var my_id = "{{ Auth::id() }}";
     scrollToBottomFunc();
     $(document).ready(function () {
@@ -206,16 +248,40 @@
 
         var channel = pusher.subscribe('my-channel');
         channel.bind('my-event', function (data) {
-            // window.location.href="/chatroom/"+receiver_id+"/messages/";
+            // alert(JSON.stringify(data));
+            if (my_id == data.from) {
+                $('#' + data.to).click();
+            } else if (my_id == data.to) {
+                if (receiver_id == data.from) {
+                    // if receiver is selected, reload the selected user ...
+                    $('#' + data.from).click();
+                } else {
+                    // if receiver is not seleted, add notification for that user
+                    var pending = parseInt($('#' + data.from).find('.pending').html());
+
+                    if (pending) {
+                        $('#' + data.from).find('.pending').html(pending + 1);
+                    } else {
+                        $('#' + data.from).append('<span class="pending">1</span>');
+                    }
+                }
+            }
+        });
+
+        $('.user').click(function () {
+            $('.user').removeClass('active');
+            $(this).addClass('active');
+            $(this).find('.pending').remove();
+            alert('ss');
+            // receiver_id = $(this).attr('id');
             $.ajax({
                 type: "get",
-                url: "/chatroom/" + receiver_id + "/messages", // need to create this route
+                url: "/chatrooms/" + receiver_id, // need to create this route
                 data: "",
                 cache: false,
                 success: function (data) {
-                    // $('#messages').html(data);
-                    // $('#me').html(data);
-                     $('#room').html(data);
+                    $('#messages').html(data);
+                    scrollToBottomFunc();
                 }
             });
         });
@@ -232,13 +298,33 @@
                     url: "/chatrooms", // need to create this post route
                     data: datastr,
                     cache: false,
-                    async: false,
                     success: function (data) {
 
                     },
                     error: function (jqXHR, status, err) {
                     },
                     complete: function () {
+                        $.ajax({
+                            type: "get",
+                            url: "/chatrooms/solver/" + receiver_id, // need to create this route
+                            data: "",
+                            cache: false,
+                            success: function (data) {
+                                $('#messages').html(data);
+
+                            }
+                        });
+                        $.ajax({
+                            type: "get",
+                            url: "/chatrooms/asker/" + receiver_id, // need to create this route
+                            data: "",
+                            cache: false,
+                            success: function (data) {
+                                $('#messages').html(data);
+
+                            }
+                        });
+                        scrollToBottomFunc();
                     }
                 })
             }

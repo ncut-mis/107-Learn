@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Message extends Model
 {
-    protected $fillable = ['question_id','from','to', 'message', 'is_read'];
+    protected $fillable = ['chatroom_id','from','to', 'message', 'is_read'];
 }

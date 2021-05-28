@@ -42,12 +42,7 @@
 <body class="main-layout" >
 
     <!-- loader  -->
-{{--    <div class="loader_bg">--}}
-{{--        <div class="loader"><img src="img/loading.gif" alt="" /></div>--}}
-{{--    </div>--}}
-{{--    <div id="preloader">--}}
-{{--        <div class="loader"></div>--}}
-{{--    </div>--}}
+
     <div class="wrapper" style="overflow:auto;height: 100%;position: relative;background-color: #000000;">
     <!-- end loader -->
          <div class="sidebar">
@@ -63,15 +58,6 @@
                         <li>
                             <a href="{{route('questions.index')}}">發問！</a>
                         </li>
-{{--                        <li>--}}
-{{--                            <a href="recipe">Recipe</a>--}}
-{{--                        </li>--}}
-{{--                        <li>--}}
-{{--                            <a href="blog">Blog</a>--}}
-{{--                        </li>--}}
-{{--                        <li>--}}
-{{--                            <a href="contact">Contact Us</a>--}}
-{{--                        </li>--}}
                     </ul>
                 </nav>
          </div>
@@ -160,72 +146,11 @@
 {{--        </div>--}}
       </div>
       @livewire('search')
-
-
-
-{{--      @foreach($e as $es)--}}
-{{--                <div style="position: relative;margin-left: 30%;margin-bottom:20px;width: 40%;height: 250px;border:1px #1a202c solid;border-radius: 10px">--}}
-{{--                  <div style="margin: 10px;">--}}
-{{--                      <a href="s">--}}
-{{--                          <h3>{{ $es->title }}</h3>--}}
-{{--                      </a>--}}
-{{--                      <h4>分類：{{ $es->area }} | 發問人：{{ $es->user }}</h4>--}}
-{{--                      <div>{{ $es->content }}</div>--}}
-{{--                  </div>--}}
-{{--                </div>--}}
-{{--      @endforeach--}}
-
-{{--    @for($i=1;$i<=12;$i++)--}}
-{{--      <div style=";margin-left: 40em;margin-bottom:20px;width: 650px;height: 250px;border:1px #1a202c solid;border-radius: 10px">--}}
-{{--        <div style="margin: 10px;">--}}
-{{--            <a href="s">--}}
-{{--                <h3>Spicy Barger</h3>--}}
-{{--            </a>--}}
-{{--          <p>The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the </p>--}}
-{{--        </div>--}}
-{{--      </div>--}}
-{{--    @endfor--}}
-{{--   滾動出現筆   --}}
-{{--      <a href="{{route('questions.index')}}">--}}
-{{--      <div id="dg" style="z-index: 9999; position: fixed ! important; right: 100px; top: 800px;">--}}
-{{--          <table width="100%" style="; width:50px; margin-right: 10%; margin-top: 60%;">--}}
-{{--              <div style="margin: auto;"><img src="img/pen.png"></div>--}}
-{{--          </table>--}}
-{{--      </div>--}}
-{{--      </a>--}}
-
   </div>
-<!-- end blog -->
-
-<!-- Our Client -->
-
-<!-- end Our Client -->
-
-    <!-- footer -->
-{{--    <footer>--}}
-{{--        <div class="footer">--}}
-{{--            <div class="container-fluid">--}}
-{{--                <div class="row">--}}
-{{--                    <div class="col-md-12">--}}
-{{--                        <ul class="lik">--}}
-{{--                            <li class="active"> <a href="">Home</a></li>--}}
-{{--                            <li> <a href="about">About</a></li>--}}
-{{--                            <li> <a href="recipe">Recipe</a></li>--}}
-{{--                            <li> <a href="blog">Blog</a></li>--}}
-{{--                            <li> <a href="contact">Contact us</a></li>--}}
-{{--                        </ul>--}}
-{{--                    </div>--}}
-
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    </footer>--}}
-    <!-- end footer -->
 
     </div>
     </div>
-{{--    <div class="overlay"></div>--}}
-    <!-- Javascript files-->
+
     <script src="{{asset('js/jquery.min.js')}}"></script>
     <script src="{{asset('js/popper.min.js')}}"></script>
     <script src="{{asset('js/bootstrap.bundle.min.js')}}"></script>
@@ -264,31 +189,6 @@
     }
     </style>
 
-
-      <script>
-
-         $(document).ready(function() {
-           var owl = $('.owl-carousel');
-           owl.owlCarousel({
-             margin: 10,
-             nav: true,
-             loop: true,
-             responsive: {
-               0: {
-                 items: 1
-               },
-               600: {
-                 items: 2
-               },
-               1000: {
-                 items: 5
-               }
-             }
-           })
-         })
-
-
-      </script>
 
     @livewireScripts
 </body>
