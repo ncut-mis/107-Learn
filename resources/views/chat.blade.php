@@ -29,53 +29,68 @@
         </div>
     @elseif(Route::currentRouteName()=='chatrooms.room.index')
 <div id="room">
-    <a href="{{ url()->previous()}}"> 回上一頁</a>
-        <table style="width: 100%;">
+    @if(\App\Models\Chatroom::find(Request::segment(2))->solver_user_id==\Illuminate\Support\Facades\Auth::id())
+        <a href="{{ route('home') }}">回上一頁</a>
+    @else
+        <a href="{{ route('chatrooms.list.index',\App\Models\Chatroom::find(Request::segment(2))->question_id) }}">回列表</a>
+    @endif
+        <table border="1" style="width: 100%;">
         <tr>
-            <td style="width: 70%;">
+            <td rowspan="2" style="width: 70%;">
                 <iframe src="http://localhost:8080/?whiteboardid={{ Request::segment(2) }}" frameborder="0" style="width: 100%;height: 800px;"></iframe>
             </td>
-            <td style="width: 30%;">
-        <div class="col-md-8" style="width: 100%;height: 700px;">
-            <div class="message-wrapper" style="width: 100%;">
-                <ul class="messages">
-                    @foreach($users as $user)
-                        {{--                    <li class="message">--}}
-                        {{--                        <div class="{{ ($user->from == Auth::id()) ? "sent" : "received" }}">--}}
-                        {{--                            <p>{{ \App\Models\User::find($user->from)->name}}</p>--}}
-                        {{--                            <p>{{$user->message}}</p>--}}
-                        {{--                            <p class="date">{{ date('d M Y, h:i a', strtotime($user->created_at)) }}</p>--}}
-                        {{--                        </div>--}}
-                        {{--                    </li>--}}
-                        @if($user->to==Auth::id())
-                            <li class="message">
-                                <div class="{{ ($user->from == Auth::id()) ? "sent" : "received" }}">
-                                    <p>{{ \App\Models\User::find($user->from)->name}}</p>
-                                    <p>{{$user->message}}</p>
-                                    <p class="date">{{ date('d M Y, h:i a', strtotime($user->created_at)) }}</p>
-                                </div>
-                            </li>
-                        @elseif($user->from==Auth::id())
-                            <li class="message">
-                                <div class="{{ ($user->from == Auth::id()) ? "sent" : "received" }}">
-                                    <p>{{ \App\Models\User::find($user->from)->name}}</p>
-                                    <p>{{$user->message}}</p>
-                                    <p class="date">{{ date('d M Y, h:i a', strtotime($user->created_at)) }}</p>
-                                </div>
-                            </li>
-                        @endif
-                    @endforeach
-                </ul>
+            <td>
+                @foreach($q_data as $data)
+                    標題：
+                    {{ $data->title }}</br>
+                    問題內容：</br>
+                    {!! html_entity_decode($data->content)!!}
+                    發問人：{{ $data->user }}
+@endforeach
+</td>
+</tr>
+<tr>
+<td style="width: 30%;">
+<div class="col-md-8" style="width: 100%;height: 700px;">
+<div class="message-wrapper" style="width: 100%;">
+<ul class="messages">
+@foreach($users as $user)
+    {{--                    <li class="message">--}}
+    {{--                        <div class="{{ ($user->from == Auth::id()) ? "sent" : "received" }}">--}}
+    {{--                            <p>{{ \App\Models\User::find($user->from)->name}}</p>--}}
+    {{--                            <p>{{$user->message}}</p>--}}
+    {{--                            <p class="date">{{ date('d M Y, h:i a', strtotime($user->created_at)) }}</p>--}}
+    {{--                        </div>--}}
+    {{--                    </li>--}}
+    @if($user->to==Auth::id())
+        <li class="message">
+            <div class="{{ ($user->from == Auth::id()) ? "sent" : "received" }}">
+                <p>{{ \App\Models\User::find($user->from)->name}}</p>
+                <p>{{$user->message}}</p>
+                <p class="date">{{ date('d M Y, h:i a', strtotime($user->created_at)) }}</p>
             </div>
-            <div class="input-text" style="width: 100%;">
-                <input style="width: 100%;" type="text" name="message" autocomplete="off" class="submit" autofocus>
+        </li>
+    @elseif($user->from==Auth::id())
+        <li class="message">
+            <div class="{{ ($user->from == Auth::id()) ? "sent" : "received" }}">
+                <p>{{ \App\Models\User::find($user->from)->name}}</p>
+                <p>{{$user->message}}</p>
+                <p class="date">{{ date('d M Y, h:i a', strtotime($user->created_at)) }}</p>
             </div>
-        </div>
-            </td>
-        </tr>
-        </table>
-</div>
+        </li>
     @endif
+@endforeach
+</ul>
+</div>
+<div class="input-text" style="width: 100%;">
+<input style="width: 100%;" type="text" name="message" autocomplete="off" class="submit" autofocus>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+@endif
 
 
 @endsection

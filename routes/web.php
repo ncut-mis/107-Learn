@@ -30,7 +30,7 @@ use App\Http\Controllers\AdminAreaController;
 
 Route::get('/',[HomeController::class,'index'])->name('home');
 
-Route::get('/areas/{areas_id}',[Search::class])->name('areas');
+Route::get('/areas/{areas_id}',[HomeController::class,'areas'])->name('areas');
 
 Route::get('/chatroom/{id}',[ChatroomController::class,'solver'])->name('chatrooms.solver.index');
 Route::get('/chatroom/{id}/messages',[ChatroomController::class,'room'])->name('chatrooms.room.index');

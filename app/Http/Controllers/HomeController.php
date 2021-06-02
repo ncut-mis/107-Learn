@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Area;
+use App\Models\Comment;
 use App\Models\Question;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -22,34 +23,21 @@ class HomeController extends Controller
      */
     public function index()
     {
-            $elements=Area::orderBy('id','ASC')->get();
-            $data=['elements'=>$elements];
-            $e=Question::orderBy('id','ASC')->get();
-            $data2=['e'=>$e];
-            return view('index',$data,$data2);
+            $data=Area::orderBy('id','ASC')->get();
+            $data2=Question::orderBy('id','ASC')->get();
+            $tg=Comment::all();
+            return view('index',compact('data','data2','tg'));
     }
-//    public function area($id)
-//    {
-//        $elements=areas::find($id);
-//        dd($elements);
-//        $elements=areas::where('id','=',$id)->get();
-//        dd($st);
-//        $elements=areas::orderBy('id','ASC')->get();
-//        $data=['elements'=>$elements];
-//        foreach($elements as $element){
-//            $w=$element->name;
-//            $e=Question::where('area','=',$w)->get();
-//            $data2=['e'=>$e];
-//            return view('index',$data,$data2);
-//        }
-//
-//        $elements=areas::orderBy('id','ASC')->get();
-//        $data=['elements'=>$elements];
-//        $e=Question::orderBy('id','DESC')->get();
-//        $data2=['e'=>$e];
-//        return view('livewire.search',$data,$data2);
-//
-//    }
+    public function areas($id)
+    {
+        $data=Area::orderBy('id','ASC')->get();
+
+
+            $data2=Question::where('area','=',Area::find($id)->name)->get();
+            $tg=Comment::all();
+            return view('index',compact('data','data2','tg'));
+
+    }
     /**
      * Show the form for creating a new resource.
      *

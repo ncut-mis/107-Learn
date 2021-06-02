@@ -249,35 +249,16 @@
                     type: "post",
                     url: "/chatrooms", // need to create this post route
                     data: datastr,
-                    cache: false,
-                    async: false,
-                    success: function (data) {
+                    cache:false,
 
+                    ifModified :true ,
+
+                    async:false,
+                    success: function (data) {
                     },
                     error: function (jqXHR, status, err) {
                     },
                     complete: function () {
-
-                        $.ajax({
-                            type: "get",
-                            url: "/chatrooms/solver/" + receiver_id, // need to create this route
-                            data: "",
-                            cache: false,
-                            success: function (data) {
-                                $('#messages').html(data);
-
-                            }
-                        });
-                        $.ajax({
-                            type: "get",
-                            url: "/chatrooms/asker/" + receiver_id, // need to create this route
-                            data: "",
-                            cache: false,
-                            success: function (data) {
-                                $('#messages').html(data);
-
-                            }
-                        });
                         scrollToBottomFunc();
                     }
                 })

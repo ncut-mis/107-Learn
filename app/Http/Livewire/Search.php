@@ -9,8 +9,9 @@ use App\Models\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Route;
 use Livewire\Component;
-use Illuminate\Http\Request;
+use Request;
 use Illuminate\Http\Response;
 
 use function PHPUnit\Framework\isEmpty;
@@ -23,13 +24,23 @@ class Search extends Component
     public $temp;
     public function render()
     {
+            if(Route::currentRouteName()=='home')
+            {
+                $searchTerm = '%'.$this->searchTerm.'%';
+                $this->tit = Question::orderBy('id','DESC')->where('title','LIKE',$searchTerm)->orwhere('content','LIKE',$searchTerm)->get();
 
-            $searchTerm = '%'.$this->searchTerm.'%';
-            $this->tit = Question::orderBy('id','DESC')->where('title','LIKE',$searchTerm)->orwhere('content','LIKE',$searchTerm)->get();
+                $this->temp=Comment::all();
 
-            $this->temp=Comment::all();
+                return view('livewire.search');
+            }
+            elseif (Route::currentRouteName()=='areas')
+            {
+                $searchTerm = '%'.$this->searchTerm.'%';
 
-            return view('livewire.search');
+                $this->tit = Question::orderBy('id','DESC')->where('area','=',Area::find(Request::segment(2))->name)->where('title','LIKE',$searchTerm)->orwhere('content','LIKE',$searchTerm)->get();
+                $this->temp=Comment::all();
+                return view('livewire.search');
+            }
 
     }
     public function comment(){

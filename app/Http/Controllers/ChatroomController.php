@@ -76,10 +76,15 @@ class ChatroomController extends Controller
             Message::where(['from' => $to, 'to' => $my_id])->where('chatroom_id','=',$chatroom_id)->update(['is_read' => 1]);
             $users = Message::where('chatroom_id','=',$chatroom_id)->get();
 
-            return view('chat', ['users' => $users]);
+            $c_data=Chatroom::where('id','=',$chatroom_id)->get();
+            foreach ($c_data as $d)
+            {
+                $q_data=Question::where('id','=',$d->question_id)->get();
+                return view('chat', ['users' => $users],['q_data'=>$q_data]);
+            }
+
         }
     }
-
 
     public function roomlist($question_id)
     {
@@ -87,23 +92,6 @@ class ChatroomController extends Controller
         $chatroom_data=Chatroom::where('question_id','=',$question_id)->get();
         return view('chat', ['chatroom_data' => $chatroom_data]);
 
-    }
-
-    public function index2($question_id)
-    {
-        // select all users except logged in user
-         $users = User::where('id', '!=', Auth::id())->get();
-
-        // count how many message are unread from the selected user
-//        $users=Message::where('question_id','=',$question_id)->get();
-
-//        dd($users[0]->message); print first message
-        $users = DB::select("select users.id, users.name, users.email, count(is_read) as unread
-        from users LEFT  JOIN  messages ON users.id = messages.from and is_read = 0 and messages.to = " . Auth::id() . "
-        where users.id != " . Auth::id() . "
-        group by users.id, users.name, users.email");
-
-        return view('chat-asker', ['users' => $users]);
     }
 
     public function getMessage($user_id)
@@ -132,28 +120,6 @@ class ChatroomController extends Controller
 
         return view('messages.index', ['messages' => $messages]);
     }
-
-    public function OK($user_id)
-    {
-
-        // Make read all unread message
-        $my_id = Auth::id();
-
-        // Make read all unread message
-        Message::where(['from' => $user_id, 'to' => $my_id])->update(['is_read' => 1]);
-
-        // Get all message from selected user
-        $messages = Message::where(function ($query) use ($user_id, $my_id) {
-            $query->where('from', $user_id)->where('to', $my_id);
-        })->oRwhere(function ($query) use ($user_id, $my_id) {
-            $query->where('from', $my_id)->where('to', $user_id);
-        })->get();
-
-        return view('messages.index',['messages' => $messages]);
-    }
-
-
-
 
     public function sendMessage(Request $request)
     {
