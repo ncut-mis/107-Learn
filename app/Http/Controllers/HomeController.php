@@ -10,6 +10,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use function PHPUnit\Framework\isEmpty;
 use function PHPUnit\Framework\isNull;
 
@@ -24,7 +25,7 @@ class HomeController extends Controller
     public function index()
     {
             $data=Area::orderBy('id','ASC')->get();
-            $data2=Question::orderBy('id','ASC')->get();
+            $data2=Question::orderBy('id','DESC')->get();
             $tg=Comment::all();
             return view('index',compact('data','data2','tg'));
     }
@@ -32,10 +33,49 @@ class HomeController extends Controller
     {
         $data=Area::orderBy('id','ASC')->get();
 
+        $data2=Question::orderBy('id','DESC')->where('area','=',Area::find($id)->name)->get();
+        $tg=Comment::all();
+        return view('index',compact('data','data2','tg'));
 
-            $data2=Question::where('area','=',Area::find($id)->name)->get();
-            $tg=Comment::all();
-            return view('index',compact('data','data2','tg'));
+    }
+    public function solver()
+    {
+        $data=Area::orderBy('id','ASC')->get();
+        $data2=Question::orderBy('id','DESC')->where('user','=',Auth::user()->name)->get();
+
+        $tg=Comment::all();
+        return view('index',compact('data','data2','tg'));
+
+    }
+    public function asker()
+    {
+        $data=Area::orderBy('id','ASC')->get();
+
+        $data2=Question::orderBy('id','DESC')->where('user','=',Auth::user()->name)->get();
+
+        $tg=Comment::all();
+        return view('index',compact('data','data2','tg'));
+
+    }
+
+    public function areas_solver($id,$id2)
+    {
+        $data=Area::orderBy('id','ASC')->get();
+
+
+        $data2=Question::orderBy('id','DESC')->where('area','=',Area::find($id)->name)->get();
+        $tg=Comment::all();
+        return view('index',compact('data','data2','tg'));
+
+    }
+    public function areas_asker($id,$id2)
+    {
+        $data=Area::orderBy('id','ASC')->get();
+
+
+        $data2=Question::orderBy('id','DESC')->where('user','=',Auth::user()->name)->where('area','=',Area::find($id2)->name)->get();
+        $tg=Comment::all();
+        return view('index',compact('data','data2','tg'));
 
     }
     /**

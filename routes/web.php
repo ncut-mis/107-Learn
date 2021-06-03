@@ -26,11 +26,16 @@ use App\Http\Controllers\AdminAreaController;
 
 //Route::get('/', function () {
 //    return view('welcome');
-//});
 
 Route::get('/',[HomeController::class,'index'])->name('home');
 
 Route::get('/areas/{areas_id}',[HomeController::class,'areas'])->name('areas');
+
+Route::get('/users/{user_id}/solver',[HomeController::class,'solver'])->name('users.solver');
+Route::get('/users/{user_id}/asker',[HomeController::class,'asker'])->name('users.asker');
+
+Route::get('/users/{user_id}/areas/{areas_id}/solver',[HomeController::class,'areas_solver'])->name('users.areas.solver');
+Route::get('/users/{user_id}/areas/{areas_id}/asker/',[HomeController::class,'areas_asker'])->name('users.areas.asker');
 
 Route::get('/chatroom/{id}',[ChatroomController::class,'solver'])->name('chatrooms.solver.index');
 Route::get('/chatroom/{id}/messages',[ChatroomController::class,'room'])->name('chatrooms.room.index');
@@ -44,6 +49,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/questions',[QuestionContr
 Route::post('/questions',[QuestionController::class,'store'])->name('questions.store');
 
 Route::post('/comments/{id}',[CommentController::class,'store'])->name('comments.store');
+//});
 
 Route::get('/blog',function (){
     return view('blog');

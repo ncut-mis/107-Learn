@@ -60,6 +60,16 @@
                         <li class="active">
                             <a href="{{route('home')}}">首頁</a>
                         </li>
+                        @if (Route::has('login'))
+                            @auth
+                            <li>
+                                <a href="{{route('users.asker',Auth::user()->id)}}">我發問的問題</a>
+                            </li>
+                            <li>
+                                <a href="{{route('users.solver',Auth::user()->id)}}">我幫人解的問題</a>
+                            </li>
+                            @endauth
+                        @endif
                         <li>
                             <a href="{{route('questions.index')}}">發問！</a>
                         </li>
@@ -70,11 +80,17 @@
         <div id="sidebar2">
             <ul>
                 <li>
-                    <h2>領域</h2>
+                    <h2>問題分類</h2>
                     <ul>
                         <font size="5" >
                         @foreach($data as $element)
+                            @if(Route::currentRouteName()=='users.solver'||Route::currentRouteName()=='users.areas.solver')
+                                    <div style=""><li style="background-color: #63B0A1;"><a href="{{ route('users.areas.solver', [Auth::user()->id,$element->id]) }}">{{$element->name}}</a></li></div>
+                            @elseif(Route::currentRouteName()=='users.asker'||Route::currentRouteName()=='users.areas.asker')
+                                    <div style=""><li style="background-color: #63B0A1;"><a href="{{ route('users.areas.asker', [Auth::user()->id,$element->id]) }}">{{$element->name}}</a></li></div>
+                            @else
                                 <div style=""><li style="background-color: #63B0A1;"><a href="{{ route('areas', $element->id) }}">{{$element->name}}</a></li></div>
+                            @endif
                         @endforeach
                         </font>
                     </ul>
@@ -107,17 +123,17 @@
 
                                     @if (Route::has('login'))
                                         @auth
-                                        <li class="button_user">
-                                            <a href="#">{{ Auth::user()->name }}</a>
-                                            <a href="{{ url('/dashboard') }}" class="button">Dashboard</a>
-                                        </li>
+                                            <li class="button_user">
+                                                <a href="#">{{ Auth::user()->name }}</a>
+                                                <a href="{{ url('/dashboard') }}" class="button">Dashboard</a>
+                                            </li>
                                         @else
-                                        <li class="button_user">
-                                            <a class="button" href="{{ route('login') }}">Login</a>
-                                            @if (Route::has('register'))
-                                                <a class="button" href="{{ route('register') }}">Register</a>
-                                            @endif
-                                        </li>
+                                            <li class="button_user">
+                                                <a class="button" href="{{ route('login') }}">Login</a>
+                                                @if (Route::has('register'))
+                                                    <a class="button" href="{{ route('register') }}">Register</a>
+                                                @endif
+                                            </li>
                                         @endauth
                                     @endif
 
@@ -144,11 +160,12 @@
 <!-- blog -->
   <div class="blog" style="height: 100%;min-height:1000px;">
   <br class="container">
-      <div class="col-md-12">
+      <div class="col-md-12" >
 {{--        <div class="title">--}}
 {{--          <h2>Our Blog</h2>--}}
 {{--          <span>when looking at its layouts. The point of using Lorem</span>--}}
 {{--        </div>--}}
+          <h1 style="padding-left: 5%">All question of you ask in here.</h1>
       </div>
       <div>
           @foreach($data2 as $title)

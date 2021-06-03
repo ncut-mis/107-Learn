@@ -46,7 +46,7 @@
                     問題內容：</br>
                     {!! html_entity_decode($data->content)!!}
                     發問人：{{ $data->user }}
-@endforeach
+                @endforeach
 </td>
 </tr>
 <tr>
