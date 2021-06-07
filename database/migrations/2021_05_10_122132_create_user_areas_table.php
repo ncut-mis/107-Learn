@@ -16,7 +16,7 @@ class CreateUserAreasTable extends Migration
         Schema::create('user_areas', function (Blueprint $table) {
             $table->id();
             $table->string('user_id');
-            $table->string('area_id')->nullable();
+            $table->string('area_id');
         });
     }
 

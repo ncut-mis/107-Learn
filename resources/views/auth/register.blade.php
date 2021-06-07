@@ -25,15 +25,6 @@
             </div>
 
             <div class="mt-4">
-                <x-jet-label for="password" value="{{ __('擅長領域') }}" />
-{{--                    @foreach($areas as $areas )--}}
-                        <input type="checkbox" id="user_areas" name="user_areas"required/> {{ __('$領域名稱') }}
-{{--                    @endforeach--}}
-                <input type="checkbox" id="user_areas" name="user_areas"required/> {{ __('$領域名稱') }}
-                <input type="checkbox" id="user_areas" name="user_areas"required/> {{ __('$領域名稱') }}
-            </div>
-
-            <div class="mt-4">
                 <x-jet-label for="password_confirmation" value="{{ __('確認密碼') }}" />
                 <x-jet-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" />
             </div>

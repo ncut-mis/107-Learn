@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Area;
+use App\Models\Chatroom;
 use App\Models\Comment;
 use App\Models\Question;
 use Illuminate\Contracts\Foundation\Application;
@@ -11,8 +12,6 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
-use function PHPUnit\Framework\isEmpty;
-use function PHPUnit\Framework\isNull;
 
 class HomeController extends Controller
 {
@@ -24,11 +23,41 @@ class HomeController extends Controller
      */
     public function index()
     {
-            $data=Area::orderBy('id','ASC')->get();
-            $data2=Question::orderBy('id','DESC')->get();
-            $tg=Comment::all();
-            return view('index',compact('data','data2','tg'));
+        $data=Area::orderBy('id','ASC')->get();
+        $data2=Question::orderBy('id','DESC')->get();
+        $tg=Comment::all();
+        return view('index',compact('data','data2','tg'));
     }
+
+    public function search(Request $request)
+    {
+        $data=Area::orderBy('id','ASC')->get();
+        $searchTerm = '%'.$request->search_for.'%';
+        $data2 = Question::orderBy('id','DESC')->where('title','LIKE',$searchTerm)->orwhere('content','LIKE',$searchTerm)->get();
+        $tg=Comment::all();
+
+        return view('index',compact('data','data2','tg'));
+    }
+
+    public function areas_search(Request $request,$id)
+    {
+        $data=Area::orderBy('id','ASC')->get();
+        $searchTerm = '%'.$request->search_for.'%';
+//        $data2 = Question::orderBy('id','DESC')->where('area','=',Area::find($id)->name)->where('title','LIKE',$searchTerm)->orwhere('content','LIKE',$searchTerm)->get();
+        $tg=Comment::all();
+
+        $data2 = Question::where('area','=',Area::find($id)->name)->where(function ($query) use ($searchTerm) {
+
+            $query->where('title', 'LIKE', $searchTerm);
+
+            $query->orwhere('content', 'LIKE', $searchTerm);
+
+        })->get();
+
+        return view('index',compact('data','data2','tg'));
+    }
+
+
     public function areas($id)
     {
         $data=Area::orderBy('id','ASC')->get();
@@ -41,11 +70,19 @@ class HomeController extends Controller
     public function solver()
     {
         $data=Area::orderBy('id','ASC')->get();
-        $data2=Question::orderBy('id','DESC')->where('user','=',Auth::user()->name)->get();
+        $temp=Chatroom::orderBy('question_id','DESC')->where('solver_user_id','=',Auth::user()->id)->get();
+        if (Chatroom::where('solver_user_id','=',Auth::user()->id)->get()->isEmpty()) {
+            return view('index',compact('data','temp'));
+        }
+        else{
+            foreach ($temp as $t)
+            {
+                $data2=Question::orderBy('id','DESC')->where('id','=',$t->question_id)->get();
+                $tg=Comment::all();
 
-        $tg=Comment::all();
-        return view('index',compact('data','data2','tg'));
-
+            }
+            return view('index',compact('data','temp','data2','tg'));
+        }
     }
     public function asker()
     {
@@ -58,17 +95,25 @@ class HomeController extends Controller
 
     }
 
-    public function areas_solver($id,$id2)
+    public function areas_solver($id2)
     {
         $data=Area::orderBy('id','ASC')->get();
+        $temp=Chatroom::orderBy('question_id','DESC')->where('solver_user_id','=',Auth::user()->id)->get();
+        if (Chatroom::where('solver_user_id','=',Auth::user()->id)->get()->isEmpty())
+        {
+            return view('index',compact('data','temp'));
+        }
+        else {
+            foreach ($temp as $t) {
+                $data2 = Question::orderBy('id', 'DESC')->where('id', '=', $t->question_id)->where('area', '=', Area::find($id2)->name)->get();
+                $tg = Comment::all();
 
-
-        $data2=Question::orderBy('id','DESC')->where('area','=',Area::find($id)->name)->get();
-        $tg=Comment::all();
-        return view('index',compact('data','data2','tg'));
+            }
+            return view('index', compact('data', 'temp', 'data2', 'tg'));
+        }
 
     }
-    public function areas_asker($id,$id2)
+    public function areas_asker($id2)
     {
         $data=Area::orderBy('id','ASC')->get();
 
