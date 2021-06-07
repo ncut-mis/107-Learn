@@ -85,7 +85,12 @@ class AdminQuestionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $questions = Question::find($id);
+
+        $questions->status = '1';
+
+        $questions->save();
+        return redirect()->route('admin.index');
     }
 
     /**
