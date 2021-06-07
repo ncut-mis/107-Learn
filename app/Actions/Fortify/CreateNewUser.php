@@ -34,10 +34,4 @@ class CreateNewUser implements CreatesNewUsers
             'password' => Hash::make($input['password']),
         ]);
     }
-    public function index()
-    {
-        $areas=Area::orderBy('id','DESC')->get();
-        $data=['areas'=>$areas];
-        return view('admin.areas.index', $data,);
-    }
 }

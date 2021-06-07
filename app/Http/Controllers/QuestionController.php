@@ -49,7 +49,7 @@ class QuestionController extends Controller
                 'title'=>$request['title'],
                 'area'=>$request['area'],
                 'content'=>$request['editor'],
-                'status'=>'0',
+                'status'=>'1',
                 'user'=>Auth::user()->name,
             ]
         );
