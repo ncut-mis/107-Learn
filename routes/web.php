@@ -29,18 +29,23 @@ use App\Http\Controllers\AdminAreaController;
 
 Route::get('/',[HomeController::class,'index'])->name('home');
 
+
+Route::get('/search',[HomeController::class,'search'])->name('search');
+Route::get('/areas/{areas_id}/search',[HomeController::class,'areas_search'])->name('areas.search');
+
+
 Route::get('/areas/{areas_id}',[HomeController::class,'areas'])->name('areas');
 
-Route::get('/users/{user_id}/solver',[HomeController::class,'solver'])->name('users.solver');
-Route::get('/users/{user_id}/asker',[HomeController::class,'asker'])->name('users.asker');
+Route::middleware(['auth:sanctum', 'verified'])->get('/users/solver',[HomeController::class,'solver'])->name('users.solver');
+Route::middleware(['auth:sanctum', 'verified'])->get('/users/asker',[HomeController::class,'asker'])->name('users.asker');
 
-Route::get('/users/{user_id}/areas/{areas_id}/solver',[HomeController::class,'areas_solver'])->name('users.areas.solver');
-Route::get('/users/{user_id}/areas/{areas_id}/asker/',[HomeController::class,'areas_asker'])->name('users.areas.asker');
+Route::middleware(['auth:sanctum', 'verified'])->get('/users/areas/{areas_id}/solver',[HomeController::class,'areas_solver'])->name('users.areas.solver');
+Route::middleware(['auth:sanctum', 'verified'])->get('/users/areas/{areas_id}/asker/',[HomeController::class,'areas_asker'])->name('users.areas.asker');
 
-Route::get('/chatroom/{id}',[ChatroomController::class,'solver'])->name('chatrooms.solver.index');
-Route::get('/chatroom/{id}/messages',[ChatroomController::class,'room'])->name('chatrooms.room.index');
+Route::middleware(['auth:sanctum', 'verified'])->get('/chatroom/{id}',[ChatroomController::class,'solver'])->name('chatrooms.solver.index');
+Route::middleware(['auth:sanctum', 'verified'])->get('/chatroom/{id}/messages',[ChatroomController::class,'room'])->name('chatrooms.room.index');
 
-Route::get('/question/{id}/chatrooms',[ChatroomController::class,'roomlist'])->name('chatrooms.list.index');
+Route::middleware(['auth:sanctum', 'verified'])->get('/question/{id}/chatrooms',[ChatroomController::class,'roomlist'])->name('chatrooms.list.index');
 
 Route::post('/chatrooms', [ChatroomController::class,'sendMessage']);
 

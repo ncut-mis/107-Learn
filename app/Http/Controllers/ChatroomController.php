@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Message;
+use App\Models\Area;
 use App\Models\Chatroom;
 use App\Models\Question;
+use App\Models\UserAreas;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -32,8 +34,8 @@ class ChatroomController extends Controller
         {
             $user_name=$data->user;
             $user_data=User::where('name','=',$user_name)->get();
-            foreach ($user_data as $data){
-                $user_id=$data->id;
+            foreach ($user_data as $u_data){
+                $user_id=$u_data->id;
                 if($a==null)
                 {
                     Chatroom::create(
@@ -43,6 +45,19 @@ class ChatroomController extends Controller
                             'asker_user_id'=>$user_id
                         ]
                     );
+
+                    $area_data=Area::where('name','=',$data->area)->get();
+                    foreach ($area_data as $a_data){
+                        if(UserAreas::where('area_id','=',$a_data->id)->where('user_id','=',Auth::id())->get()->isEmpty()){
+                            UserAreas::create(
+                                [
+                                    'user_id'=>Auth::id(),
+                                    'area_id'=>$a_data->id
+                                ]
+                            );
+                        }
+                    }
+
                     $chatroom_id=Chatroom::where('question_id','=',$question_id)->where('solver_user_id','=',Auth::id())->get();
                 }
                 else{

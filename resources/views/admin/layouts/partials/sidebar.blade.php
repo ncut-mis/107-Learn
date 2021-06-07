@@ -12,19 +12,19 @@
         <a class="navbar-brand" href="{{ route('admin.index') }}">管理後台</a>
     </div>
     <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
-{{--    <div class="collapse navbar-collapse navbar-ex1-collapse">--}}
+    <div class="collapse navbar-collapse navbar-ex1-collapse">
         <ul class="nav navbar-nav side-nav">
             <li >
                 <a href="{{ route('admin.index') }}"><i class="fa fa-fw fa-dashboard"></i> 問題管理</a>
             </li>
             <li >
-                <a href="{{ route('admin.areas.index') }}"><i class="fa fa-fw fa-dashboard"></i> 領域管理</a>
+                <a href="{{ route('admin.areas.index') }}"><i class="fa fa-fw fa-dashboard"></i> 問題管理</a>
             </li>
 
             <li>
                 <a href="/"><i class="fa fa-fw fa-edit"></i> 回前端</a>
             </li>
         </ul>
-{{--    </div>--}}
+    </div>
     <!-- /.navbar-collapse -->
 </nav>

@@ -10,6 +10,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Pusher\Pusher;
 
 class QuestionController extends Controller
 {
@@ -54,7 +55,27 @@ class QuestionController extends Controller
             ]
         );
 //        dd($request);
-        return redirect()->route('home');
+
+        $options = array(
+            'cluster' => 'ap3',
+            'useTLS' => true
+        );
+
+        $pusher = new Pusher(
+            env('PUSHER_APP_KEY'),
+            env('PUSHER_APP_SECRET'),
+            env('PUSHER_APP_ID'),
+            $options
+        );
+
+        $area_data=Area::where('name','=',$request['area'])->get();
+//        $data = ['from' => $from, 'question_id'=>$request->receiver_id,'to' => $to]; // sending from and to user id when pressed enter
+        foreach ($area_data as $a_data){
+            $data = ['title' => $request->title,'content'=>$request->editor,'area'=>$a_data->id];
+            $pusher->trigger('question-channel', 'question-event', $data);
+            return redirect()->route('home');
+        }
+
     }
 
 //    /**

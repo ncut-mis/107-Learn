@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('css/test.css')}}">
     <script src="https://cdn.ckeditor.com/ckeditor5/26.0.0/classic/ckeditor.js"></script>
+    <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
 
     <!-- owl css -->
     <link rel="stylesheet" href="{{asset('css/owl.carousel.min.css')}}">
@@ -57,17 +58,31 @@
                         <i class="fa fa-arrow-left"></i>
                     </div>
                     <ul class="list-unstyled components">
-                        <li class="active">
+                        @if(Route::currentRouteName()=='home')
+                            <li class="active">
+                        @else
+                            <li>
+                        @endif
                             <a href="{{route('home')}}">首頁</a>
                         </li>
                         @if (Route::has('login'))
                             @auth
-                            <li>
-                                <a href="{{route('users.asker',Auth::user()->id)}}">我發問的問題</a>
-                            </li>
-                            <li>
-                                <a href="{{route('users.solver',Auth::user()->id)}}">我幫人解的問題</a>
-                            </li>
+
+                                @if(Route::currentRouteName()=='users.asker')
+                                    <li class="active">
+                                @else
+                                    <li>
+                                @endif
+                                        <a href="{{route('users.asker')}}">我發問的問題</a>
+                                    </li>
+
+                                @if(Route::currentRouteName()=='users.solver')
+                                    <li class="active">
+                                @else
+                                    <li>
+                                @endif
+                                        <a href="{{route('users.solver')}}">我幫人解的問題</a>
+                                    </li>
                             @endauth
                         @endif
                         <li>
@@ -85,9 +100,9 @@
                         <font size="5" >
                         @foreach($data as $element)
                             @if(Route::currentRouteName()=='users.solver'||Route::currentRouteName()=='users.areas.solver')
-                                    <div style=""><li style="background-color: #63B0A1;"><a href="{{ route('users.areas.solver', [Auth::user()->id,$element->id]) }}">{{$element->name}}</a></li></div>
+                                    <div style=""><li style="background-color: #63B0A1;"><a href="{{ route('users.areas.solver', $element->id) }}">{{$element->name}}</a></li></div>
                             @elseif(Route::currentRouteName()=='users.asker'||Route::currentRouteName()=='users.areas.asker')
-                                    <div style=""><li style="background-color: #63B0A1;"><a href="{{ route('users.areas.asker', [Auth::user()->id,$element->id]) }}">{{$element->name}}</a></li></div>
+                                    <div style=""><li style="background-color: #63B0A1;"><a href="{{ route('users.areas.asker', $element->id) }}">{{$element->name}}</a></li></div>
                             @else
                                 <div style=""><li style="background-color: #63B0A1;"><a href="{{ route('areas', $element->id) }}">{{$element->name}}</a></li></div>
                             @endif
@@ -103,6 +118,7 @@
     <header>
         <div class="container-fluid" style="position: absolute;">
             <div class="row">
+
                 <div class="col-md-3">
                     <div class="full">
                         <a class="logo" style="font-size: 40px;color: white;" href="{{route('home')}}">Learn</a>
@@ -115,18 +131,43 @@
 {{--                                <li class="dinone">Contact Us : <img style="margin-right: 15px;margin-left: 15px;" src="img/phone_icon.png" alt="#"><a href="#">987-654-3210</a></li>--}}
 {{--                                <li class="dinone"><img style="margin-right: 15px;" src="img/mail_icon.png" alt="#"><a href="#">demo@gmail.com</a></li>--}}
 {{--                                <li class="dinone"><img style="margin-right: 15px;height: 21px;position: relative;top: -2px;" src="img/location_icon.png" alt="#"><a href="#">104 New york , USA</a></li>--}}
-                                <li><input style="font-size:18px;" type="text" placeholder="請輸入標題或內文..."></li>
-                                <li>
-
-
-                                    <a href=""><img style="margin-right: 15px;" src="{{asset('img/search_icon.png')}}"  alt="#"></a></li>
+                                @if (Route::currentRouteName()=='home'||Route::currentRouteName()=='search')
+                                    <form style="margin:0px; display:inline;" method="get" action="{{ route('search') }}">
+                                        @csrf
+                                        <li>
+                                            <input style="font-size:18px;" name="search_for" type="text" placeholder="請輸入標題或內文...">
+                                        </li>
+                                        <li>
+                                            <button type="submit" style="background-color: transparent;">
+                                                <img style="margin-right: 15px;" src="{{asset('img/search_icon.png')}}"  alt="#">
+                                            </button>
+                                        </li>
+                                    </form>
+                                @elseif (Route::currentRouteName()=='areas'||Route::currentRouteName()=='areas.search')
+                                    <form style="margin:0px; display:inline;" method="get" action="{{ route('areas.search',Request::segment(2)) }}">
+                                        @csrf
+                                        <li>
+                                            <input style="font-size:18px;" name="search_for" type="text" placeholder="請輸入標題或內文...">
+                                        </li>
+                                        <li>
+                                            <button type="submit" style="background-color: transparent;">
+                                                <img style="margin-right: 15px;" src="{{asset('img/search_icon.png')}}"  alt="#">
+                                            </button>
+                                        </li>
+                                    </form>
+                                @endif
 
                                     @if (Route::has('login'))
                                         @auth
                                             <li class="button_user">
                                                 <a href="#">{{ Auth::user()->name }}</a>
-                                                <a href="{{ url('/dashboard') }}" class="button">Dashboard</a>
+                                                <form style="margin:0px; display:inline;" method="POST" name="logout" action="{{ route('logout') }}">
+                                                    @csrf
+                                                    <a href="javascript:document.logout.submit()">Logout</a>
+                                                </form>
+{{--                                                <a href="{{ route('logout') }}" class="button" onclick="event.preventDefault(); this.closest('form').submit();">Logout</a>--}}
                                             </li>
+
                                         @else
                                             <li class="button_user">
                                                 <a class="button" href="{{ route('login') }}">Login</a>
@@ -147,6 +188,7 @@
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </header>
@@ -157,18 +199,35 @@
 {{--</div>--}}
 <!-- end about -->
 
+
 <!-- blog -->
   <div class="blog" style="height: 100%;min-height:1000px;">
+      @if(Route::currentRouteName()=='users.asker')
+        <h1 style="padding-left: 5%">所有你問過的問題，都在這裡 / All the questions you have asked are here.</h1>
+      @elseif(Route::currentRouteName()=='users.solver')
+          @if(\App\Models\Chatroom::where('solver_user_id','=',Auth::user()->id)->get()->isEmpty())
+              <h1 style="padding-left: 5%">你還沒有幫人解過題目喔！快去幫助別人吧！</h1>
+          @else
+              <h1 style="padding-left: 5%">所有你幫人解過的問題，都在這裡 / All the questions you have solved are here.</h1>
+          @endif
+      @endif
   <br class="container">
+
       <div class="col-md-12" >
 {{--        <div class="title">--}}
 {{--          <h2>Our Blog</h2>--}}
 {{--          <span>when looking at its layouts. The point of using Lorem</span>--}}
 {{--        </div>--}}
-          <h1 style="padding-left: 5%">All question of you ask in here.</h1>
+
       </div>
       <div>
-          @foreach($data2 as $title)
+          @if(Route::currentRouteName()=='users.solver')
+          @if(\App\Models\Chatroom::where('solver_user_id','=',Auth::user()->id)->get()->isEmpty())
+          @else
+          @foreach($temp as $t)
+
+              @foreach( $a=\App\Models\Question::where('id','=',$t->question_id)->get() as $title)
+
               <div style="background-color:#63B0A1;position: relative;margin-left: 5%;margin-bottom:20px;width: 70%;height: auto;border:1px #1a202c solid;border-radius: 10px">
                   <div style="margin: 10px;">
                       <div class="container" style="margin: 0px;padding: 0px;"><div class="item-left"><h1 style="font-size:30px;">{{ $title->title }}</h1></div>
@@ -222,6 +281,181 @@
                   @endif
               </div>
           @endforeach
+                  @endforeach
+          @endif
+          @elseif(Route::currentRouteName()=='users.areas.solver')
+              @if(\App\Models\Chatroom::where('solver_user_id','=',Auth::user()->id)->get()->isEmpty())
+              @else
+                  @foreach($temp as $t)
+
+                      @foreach( $a=\App\Models\Question::where('id','=',$t->question_id)->where('area','=',\App\Models\Area::find(Request::segment(3))->name)->get() as $title)
+
+                          <div style="background-color:#63B0A1;position: relative;margin-left: 5%;margin-bottom:20px;width: 70%;height: auto;border:1px #1a202c solid;border-radius: 10px">
+                              <div style="margin: 10px;">
+                                  <div class="container" style="margin: 0px;padding: 0px;"><div class="item-left"><h1 style="font-size:30px;">{{ $title->title }}</h1></div>
+                                      @if (Route::has('login'))
+                                          @auth
+                                              @if($title->user != Auth::user()->name)
+                                                  <div class="item-right"align="right">
+                                                      <a href="{{ route('chatrooms.solver.index',$title->id) }}">
+                                                          <button class="btn-opencr" type="submit" style="width: 200px;height: 50px;">開啟討論室</button>
+                                                      </a>
+                                                  </div>
+                                              @endif
+                                              @if($title->user == Auth::user()->name)
+                                                  <div class="item-right"align="right">
+                                                      <a href="{{ route('chatrooms.list.index',$title->id) }}">
+                                                          <button class="btn-crlist" type="submit" style="width: 250px;height: 50px;">開啟討論室列表</button>
+                                                      </a>
+                                                  </div>
+                                              @endif
+                                          @endauth
+                                      @endif</div>
+                                  <h4 style="color:#FFFFFF;font-size:25px;">分類：{{ $title->area }} | 發問人：{{ $title->user }}</h4>
+                                  <h4 style="color:#FFFFFF;font-size:25px;">發布時間：{{ $title->created_at }}</h4>
+
+                                  <div style="color:#2F649D;">{!! html_entity_decode($title->content)  !!}</div>
+                                  <style>p{font-size:22px;}</style>
+                              </div>
+                              <div style="background-color:#63B0A1;position: relative;font-size:20px;">留言</div>
+                              @foreach($tg as $t)
+                                  @if($title->id==$t->question_id)
+                                      <div style="color:#F2EDAB;margin-left: 3%;font-size:20px;" >{{ \App\Models\User::find($t->user_id)->name }}：{{ $t->content }}</div>
+                                  @endif
+                              @endforeach
+                              @if (Route::has('login'))
+                                  @auth
+                                      <form method="post" enctype="multipart/form-data" action="{{ route('comments.store',$title->id) }}" role="form">
+                                          @method('post')
+                                          @csrf
+                                          <div>
+                                              </br>
+                                          </div>
+                                          <div class="container2">
+                                              <div style="font-size:18px;padding-right: 1%"><input placeholder="在此說點什麼.." autocomplete="off" style="" type="text" name="content"></div>
+                                              <div><button class="btn-send" type="submit">送出</button></div>
+                                          </div>
+                                          <div>
+                                              </br>
+                                          </div>
+                                      </form>
+                                  @endauth
+                              @endif
+                          </div>
+                      @endforeach
+                  @endforeach
+              @endif
+          @elseif(Route::currentRouteName()=='users.asker'||Route::currentRouteName()=='users.areas.asker')
+              @foreach($data2 as $title)
+                  <div style="background-color:#63B0A1;position: relative;margin-left: 5%;margin-bottom:20px;width: 70%;height: auto;border:1px #1a202c solid;border-radius: 10px">
+                      <div style="margin: 10px;">
+                          <div class="container" style="margin: 0px;padding: 0px;"><div class="item-left"><h1 style="font-size:30px;">{{ $title->title }}</h1></div>
+                              @if (Route::has('login'))
+                                  @auth
+                                      @if($title->user != Auth::user()->name)
+                                          <div class="item-right"align="right">
+                                              <a href="{{ route('chatrooms.solver.index',$title->id) }}">
+                                                  <button class="btn-opencr" type="submit" style="width: 200px;height: 50px;">開啟討論室</button>
+                                              </a>
+                                          </div>
+                                      @endif
+                                      @if($title->user == Auth::user()->name)
+                                          <div class="item-right"align="right">
+                                              <a href="{{ route('chatrooms.list.index',$title->id) }}">
+                                                  <button class="btn-crlist" type="submit" style="width: 250px;height: 50px;">開啟討論室列表</button>
+                                              </a>
+                                          </div>
+                                      @endif
+                                  @endauth
+                              @endif</div>
+                          <h4 style="color:#FFFFFF;font-size:25px;">分類：{{ $title->area }} | 發問人：{{ $title->user }}</h4>
+                          <h4 style="color:#FFFFFF;font-size:25px;">發布時間：{{ $title->created_at }}</h4>
+
+                          <div style="color:#2F649D;">{!! html_entity_decode($title->content)  !!}</div>
+                          <style>p{font-size:22px;}</style>
+                      </div>
+                      <div style="background-color:#63B0A1;position: relative;font-size:20px;">留言</div>
+                      @foreach($tg as $t)
+                          @if($title->id==$t->question_id)
+                              <div style="color:#F2EDAB;margin-left: 3%;font-size:20px;" >{{ \App\Models\User::find($t->user_id)->name }}：{{ $t->content }}</div>
+                          @endif
+                      @endforeach
+                      @if (Route::has('login'))
+                          @auth
+                              <form method="post" enctype="multipart/form-data" action="{{ route('comments.store',$title->id) }}" role="form">
+                                  @method('post')
+                                  @csrf
+                                  <div>
+                                      </br>
+                                  </div>
+                                  <div class="container2">
+                                      <div style="font-size:18px;padding-right: 1%"><input placeholder="在此說點什麼.." autocomplete="off" style="" type="text" name="content"></div>
+                                      <div><button class="btn-send" type="submit">送出</button></div>
+                                  </div>
+                                  <div>
+                                      </br>
+                                  </div>
+                              </form>
+                          @endauth
+                      @endif
+                  </div>
+              @endforeach
+          @elseif(Route::currentRouteName()=='home'||Route::currentRouteName()=='areas'||Route::currentRouteName()=='search'||Route::currentRouteName()=='areas.search')
+              @foreach($data2 as $title)
+                  <div style="background-color:#63B0A1;position: relative;margin-left: 5%;margin-bottom:20px;width: 70%;height: auto;border:1px #1a202c solid;border-radius: 10px">
+                      <div style="margin: 10px;">
+                          <div class="container" style="margin: 0px;padding: 0px;"><div class="item-left"><h1 style="font-size:30px;">{{ $title->title }}</h1></div>
+                              @if (Route::has('login'))
+                                  @auth
+                                      @if($title->user != Auth::user()->name)
+                                          <div class="item-right"align="right">
+                                              <a href="{{ route('chatrooms.solver.index',$title->id) }}">
+                                                  <button class="btn-opencr" type="submit" style="width: 200px;height: 50px;">開啟討論室</button>
+                                              </a>
+                                          </div>
+                                      @endif
+                                      @if($title->user == Auth::user()->name)
+                                          <div class="item-right"align="right">
+                                              <a href="{{ route('chatrooms.list.index',$title->id) }}">
+                                                  <button class="btn-crlist" type="submit" style="width: 250px;height: 50px;">開啟討論室列表</button>
+                                              </a>
+                                          </div>
+                                      @endif
+                                  @endauth
+                              @endif</div>
+                          <h4 style="color:#FFFFFF;font-size:25px;">分類：{{ $title->area }} | 發問人：{{ $title->user }}</h4>
+                          <h4 style="color:#FFFFFF;font-size:25px;">發布時間：{{ $title->created_at }}</h4>
+
+                          <div style="color:#2F649D;">{!! html_entity_decode($title->content)  !!}</div>
+                          <style>p{font-size:22px;}</style>
+                      </div>
+                      <div style="background-color:#63B0A1;position: relative;font-size:20px;">留言</div>
+                      @foreach($tg as $t)
+                          @if($title->id==$t->question_id)
+                              <div style="color:#F2EDAB;margin-left: 3%;font-size:20px;" >{{ \App\Models\User::find($t->user_id)->name }}：{{ $t->content }}</div>
+                          @endif
+                      @endforeach
+                      @if (Route::has('login'))
+                          @auth
+                              <form method="post" enctype="multipart/form-data" action="{{ route('comments.store',$title->id) }}" role="form">
+                                  @method('post')
+                                  @csrf
+                                  <div>
+                                      </br>
+                                  </div>
+                                  <div class="container2">
+                                      <div style="font-size:18px;padding-right: 1%"><input placeholder="在此說點什麼.." autocomplete="off" style="" type="text" name="content"></div>
+                                      <div><button class="btn-send" type="submit">送出</button></div>
+                                  </div>
+                                  <div>
+                                      </br>
+                                  </div>
+                              </form>
+                          @endauth
+                      @endif
+                  </div>
+              @endforeach
+          @endif
       </div>
   </div>
 
@@ -265,9 +499,65 @@
         height: auto;
     }
     </style>
+    <script>
 
+        // var notifyConfig = {
+        //     body: '\\ ^o^ /', // 設定內容
+        //     icon: '/images/favicon.ico', // 設定 icon
+        // };
+        // if (Notification.permission === 'granted') {
+        //     var n = new Notification("桌面推送", {
+        //         icon: 'img/icon.png',
+        //         body: '這是我的第一條桌面通知。',
+        //         image: 'img/1.jpg'
+        //     });
+        // }
+    if (Notification.permission === 'default' || Notification.permission === 'undefined') {
+    Notification.requestPermission(function(permission) {
+    // permission 可為「granted」（同意）、「denied」（拒絕）和「default」（未授權）
+    // 在這裡可針對使用者的授權做處理
+    });
+    }
 
-    @livewireScripts
+    if (Notification.permission === 'granted'){
+        // var n = new Notification("桌面推送", {
+        //     icon: 'img/icon.png',
+        //     body: '這是我的第一條桌面通知。',
+        //     image:'img/1.jpg'
+        // });
+        //
+        // n.onclick = function(e) { // 綁定點擊事件
+        //     e.preventDefault(); // prevent the browser from focusing the Notification's tab
+        //     window.open('http://127.0.0.1:8000/'); // 打開特定網頁
+        // }
+
+        $(document).ready(function () {
+        Pusher.logToConsole = true;
+
+        var pusher = new Pusher('3dbe93ac3efe1bf6487e', {
+            cluster: 'ap3',
+            forceTLS: true
+        });
+
+        var channel = pusher.subscribe('question-channel');
+        channel.bind('question-event', function (data) {
+
+                var n = new Notification(data.title, {
+                    icon: 'img/icon.png',
+                    body: data.content,
+                    image:'img/1.jpg'
+                });
+
+                n.onclick = function(e) { // 綁定點擊事件
+                    e.preventDefault(); // prevent the browser from focusing the Notification's tab
+                    window.open('http://127.0.0.1:8000/'); // 打開特定網頁
+                }
+
+        });
+
+        });
+    }
+    </script>
 </body>
 
 </html>

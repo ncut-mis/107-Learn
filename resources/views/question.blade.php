@@ -55,6 +55,25 @@
                     <li>
                         <a href="{{route('home')}}">首頁</a>
                     </li>
+                    @if (Route::has('login'))
+                        @auth
+                            @if(Route::currentRouteName()=='users.asker')
+                                <li class="active">
+                            @else
+                                <li>
+                            @endif
+                                    <a href="{{route('users.asker',Auth::user()->id)}}">我發問的問題</a>
+                                </li>
+
+                            @if(Route::currentRouteName()=='users.solver')
+                                <li class="active">
+                            @else
+                                <li>
+                            @endif
+                                    <a href="{{route('users.solver',Auth::user()->id)}}">我幫人解的問題</a>
+                                </li>
+                        @endauth
+                    @endif
                     <li class="active">
                         <a href="{{route('questions.index')}}">發問！</a>
                     </li>
@@ -163,16 +182,16 @@
 
     <!-- footer -->
     <footer>
-        <div class="footer" style="margin-top:0; height: 750px;background: #A0CFC6">
-            <div class="container-fluid">
+        <div class="footer" style="margin-top:0px; height: auto;background: #A0CFC6">
+            <div class="container-fluid" style="margin-top: 0px;">
                 <div class="row">
-                  <div class=" col-md-12">
+{{--                  <div class=" col-md-12">--}}
 {{--                    <h2>Request  A<strong class="white"> Call  Back</strong></h2>--}}
-                  </div>
-                    <div class="container3">
-                    <div class="item-left3">
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                        <form class="main_form" method="post" enctype="multipart/form-data" action="{{ route('questions.store') }}" role="form">
+{{--                  </div>--}}
+                    <div class="container3" style="margin-top:0px;">
+                    <div class="item-left3" style="margin-top:0px;">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12" style="margin-top:0px;">
+                        <form style="" class="main_form" method="post" enctype="multipart/form-data" action="{{ route('questions.store') }}" role="form">
                             @method('post')
                             @csrf
                             <div class="row"style="font-family: 'Noto Serif TC', serif;">
@@ -205,7 +224,7 @@
                             </div>
                                 <div class="item-right3">
                                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12" style="">
-                                    <button type="submit" class="send" style="font-family: 'Noto Serif TC', serif;">送出</button>
+                                    <button type="submit" class="send" style="font-family: 'Noto Serif TC', serif;margin-bottom: 5%">送出</button>
 
                                 </div>
                                 </div>
