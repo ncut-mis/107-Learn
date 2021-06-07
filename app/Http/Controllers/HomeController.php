@@ -24,7 +24,7 @@ class HomeController extends Controller
     public function index()
     {
         $data=Area::orderBy('id','ASC')->get();
-        $data2=Question::orderBy('id','DESC')->get();
+        $data2=Question::orderBy('id','DESC')->where('status','=','1')->get();
         $tg=Comment::all();
         return view('index',compact('data','data2','tg'));
     }
@@ -33,7 +33,13 @@ class HomeController extends Controller
     {
         $data=Area::orderBy('id','ASC')->get();
         $searchTerm = '%'.$request->search_for.'%';
-        $data2 = Question::orderBy('id','DESC')->where('title','LIKE',$searchTerm)->orwhere('content','LIKE',$searchTerm)->get();
+        $data2 = Question::where('status','=','1')->where(function ($query) use ($searchTerm) {
+
+            $query->where('title', 'LIKE', $searchTerm);
+
+            $query->orwhere('content', 'LIKE', $searchTerm);
+
+        })->get();
         $tg=Comment::all();
 
         return view('index',compact('data','data2','tg'));
@@ -46,7 +52,7 @@ class HomeController extends Controller
 //        $data2 = Question::orderBy('id','DESC')->where('area','=',Area::find($id)->name)->where('title','LIKE',$searchTerm)->orwhere('content','LIKE',$searchTerm)->get();
         $tg=Comment::all();
 
-        $data2 = Question::where('area','=',Area::find($id)->name)->where(function ($query) use ($searchTerm) {
+        $data2 = Question::where('area','=',Area::find($id)->name)->where('status','=','1')->where(function ($query) use ($searchTerm) {
 
             $query->where('title', 'LIKE', $searchTerm);
 
@@ -62,7 +68,7 @@ class HomeController extends Controller
     {
         $data=Area::orderBy('id','ASC')->get();
 
-        $data2=Question::orderBy('id','DESC')->where('area','=',Area::find($id)->name)->get();
+        $data2=Question::orderBy('id','DESC')->where('area','=',Area::find($id)->name)->where('status','=','1')->get();
         $tg=Comment::all();
         return view('index',compact('data','data2','tg'));
 
@@ -70,14 +76,14 @@ class HomeController extends Controller
     public function solver()
     {
         $data=Area::orderBy('id','ASC')->get();
-        $temp=Chatroom::orderBy('question_id','DESC')->where('solver_user_id','=',Auth::user()->id)->get();
+        $temp=Chatroom::orderBy('question_id','DESC')->where('solver_user_id','=',Auth::user()->id)->where('status','=','1')->get();
         if (Chatroom::where('solver_user_id','=',Auth::user()->id)->get()->isEmpty()) {
             return view('index',compact('data','temp'));
         }
         else{
             foreach ($temp as $t)
             {
-                $data2=Question::orderBy('id','DESC')->where('id','=',$t->question_id)->get();
+                $data2=Question::orderBy('id','DESC')->where('id','=',$t->question_id)->where('status','=','1')->get();
                 $tg=Comment::all();
 
             }
@@ -88,7 +94,7 @@ class HomeController extends Controller
     {
         $data=Area::orderBy('id','ASC')->get();
 
-        $data2=Question::orderBy('id','DESC')->where('user','=',Auth::user()->name)->get();
+        $data2=Question::orderBy('id','DESC')->where('user','=',Auth::user()->name)->where('status','=','1')->get();
 
         $tg=Comment::all();
         return view('index',compact('data','data2','tg'));
@@ -98,14 +104,14 @@ class HomeController extends Controller
     public function areas_solver($id2)
     {
         $data=Area::orderBy('id','ASC')->get();
-        $temp=Chatroom::orderBy('question_id','DESC')->where('solver_user_id','=',Auth::user()->id)->get();
+        $temp=Chatroom::orderBy('question_id','DESC')->where('solver_user_id','=',Auth::user()->id)->where('status','=','1')->get();
         if (Chatroom::where('solver_user_id','=',Auth::user()->id)->get()->isEmpty())
         {
             return view('index',compact('data','temp'));
         }
         else {
             foreach ($temp as $t) {
-                $data2 = Question::orderBy('id', 'DESC')->where('id', '=', $t->question_id)->where('area', '=', Area::find($id2)->name)->get();
+                $data2 = Question::orderBy('id', 'DESC')->where('id', '=', $t->question_id)->where('area', '=', Area::find($id2)->name)->where('status','=','1')->get();
                 $tg = Comment::all();
 
             }
@@ -118,7 +124,7 @@ class HomeController extends Controller
         $data=Area::orderBy('id','ASC')->get();
 
 
-        $data2=Question::orderBy('id','DESC')->where('user','=',Auth::user()->name)->where('area','=',Area::find($id2)->name)->get();
+        $data2=Question::orderBy('id','DESC')->where('user','=',Auth::user()->name)->where('area','=',Area::find($id2)->name)->where('status','=','1')->get();
         $tg=Comment::all();
         return view('index',compact('data','data2','tg'));
 

@@ -221,18 +221,12 @@
 
       </div>
       <div>
-<<<<<<< HEAD
           @foreach($data2 as $title)
-              @if($title->status=='1')
-=======
           @if(Route::currentRouteName()=='users.solver')
           @if(\App\Models\Chatroom::where('solver_user_id','=',Auth::user()->id)->get()->isEmpty())
           @else
           @foreach($temp as $t)
-
               @foreach( $a=\App\Models\Question::where('id','=',$t->question_id)->get() as $title)
-
->>>>>>> 0e5b438e1656dcfbd642a93c324c86250e4f8a14
               <div style="background-color:#63B0A1;position: relative;margin-left: 5%;margin-bottom:20px;width: 70%;height: auto;border:1px #1a202c solid;border-radius: 10px">
                   <div style="margin: 10px;">
                       <div class="container" style="margin: 0px;padding: 0px;"><div class="item-left"><h1 style="font-size:30px;">{{ $title->title }}</h1></div>
@@ -285,17 +279,15 @@
                       @endauth
                   @endif
               </div>
-              @endif
+              @endforeach
           @endforeach
-                  @endforeach
           @endif
+
           @elseif(Route::currentRouteName()=='users.areas.solver')
-              @if(\App\Models\Chatroom::where('solver_user_id','=',Auth::user()->id)->get()->isEmpty())
+          @if(\App\Models\Chatroom::where('solver_user_id','=',Auth::user()->id)->get()->isEmpty())
               @else
                   @foreach($temp as $t)
-
                       @foreach( $a=\App\Models\Question::where('id','=',$t->question_id)->where('area','=',\App\Models\Area::find(Request::segment(3))->name)->get() as $title)
-
                           <div style="background-color:#63B0A1;position: relative;margin-left: 5%;margin-bottom:20px;width: 70%;height: auto;border:1px #1a202c solid;border-radius: 10px">
                               <div style="margin: 10px;">
                                   <div class="container" style="margin: 0px;padding: 0px;"><div class="item-left"><h1 style="font-size:30px;">{{ $title->title }}</h1></div>
@@ -462,6 +454,7 @@
                   </div>
               @endforeach
           @endif
+          @endforeach
       </div>
   </div>
 
@@ -506,7 +499,7 @@
     }
     </style>
     <script>
-
+        \App\Models\UserAreas::where('user_id','=',Auth::id())
         // var notifyConfig = {
         //     body: '\\ ^o^ /', // 設定內容
         //     icon: '/images/favicon.ico', // 設定 icon
