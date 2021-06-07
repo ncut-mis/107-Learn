@@ -45,6 +45,13 @@
                                     <button class="btn btn-sm btn-danger" type="submit">刪除</button>
                                 </form>
                                 </td>
+                                <td width="1%" style="text-align: center">
+                                    <form method="post" action="{{ route('admin.questions.update', $questions->id) }}"style="display:inline" role="form">
+                                        @method('post')
+                                        @csrf
+                                        <button class="btn btn-sm" type="submit">隱藏</button>
+                                    </form>
+                                </td>
                             </tr>
                         @endforeach
                     </table>

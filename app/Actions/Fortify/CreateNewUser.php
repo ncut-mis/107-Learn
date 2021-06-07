@@ -36,10 +36,4 @@ class CreateNewUser implements CreatesNewUsers
         ]);
 
     }
-    public function index()
-    {
-        $areas=Area::orderBy('id','DESC')->get();
-        $data=['areas'=>$areas];
-        return view('admin.areas.index', $data,);
-    }
 }

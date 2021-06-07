@@ -79,6 +79,7 @@ Route::prefix('admin')->group(function () {
     //問題管理
     Route::get('/', [AdminQuestionController::class, 'index'])->name('admin.index');
     Route::delete('question/{id}', [AdminQuestionController::class, 'destroy'])->name('admin.questions.destroy');
+    Route::post('question/{id}/update', [AdminQuestionController::class, 'update'])->name('admin.questions.update');
     //領域管理
     Route::get('areas', [AdminAreaController::class, 'index'])->name('admin.areas.index');
     Route::delete('areas/{id}', [AdminAreaController::class, 'destroy'])->name('admin.areas.destroy');
