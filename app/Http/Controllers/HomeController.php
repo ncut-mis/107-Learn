@@ -24,7 +24,7 @@ class HomeController extends Controller
     public function index()
     {
         $data=Area::orderBy('id','ASC')->get();
-        $data2=Question::orderBy('id','DESC')->where('status','=','1')->get();
+        $data2=Question::where('status','=','1')->orderBy('id','DESC')->get();
         $tg=Comment::all();
         return view('index',compact('data','data2','tg'));
     }
