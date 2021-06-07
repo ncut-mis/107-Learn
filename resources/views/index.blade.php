@@ -160,7 +160,7 @@
                                     @if (Route::has('login'))
                                         @auth
                                             <li class="button_user">
-                                                <a href="#">{{ Auth::user()->name }}</a>
+                                                <a href='/user/profile'>{{ Auth::user()->name }}</a>
                                                 <form style="margin:0px; display:inline;" method="POST" name="logout" action="{{ route('logout') }}">
                                                     @csrf
                                                     <a href="javascript:document.logout.submit()">Logout</a>
