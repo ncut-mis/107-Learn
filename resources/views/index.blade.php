@@ -221,7 +221,7 @@
 
       </div>
       <div>
-          @foreach($data2 as $title)
+
           @if(Route::currentRouteName()=='users.solver')
           @if(\App\Models\Chatroom::where('solver_user_id','=',Auth::user()->id)->get()->isEmpty())
           @else
@@ -454,7 +454,6 @@
                   </div>
               @endforeach
           @endif
-          @endforeach
       </div>
   </div>
 
@@ -499,7 +498,6 @@
     }
     </style>
     <script>
-        \App\Models\UserAreas::where('user_id','=',Auth::id())
         // var notifyConfig = {
         //     body: '\\ ^o^ /', // 設定內容
         //     icon: '/images/favicon.ico', // 設定 icon
