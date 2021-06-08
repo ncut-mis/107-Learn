@@ -45,7 +45,7 @@
                             </tr>
                         @endforeach
                     </table>
-                    <form action="{{ route('admin.areas.store', $areas->name) }}" method="POST" style="display:inline">
+                    <form action="{{ route('admin.areas.store') }}" method="POST" style="display:inline">
                         @method('post')
                         @csrf
                         新增領域:<input type="text" name="name">
