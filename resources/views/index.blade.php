@@ -5,7 +5,7 @@
     <!-- basic -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- mobile metas -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1">
@@ -235,14 +235,14 @@
                                   @if($title->user != Auth::user()->name)
                                       <div class="item-right"align="right">
                                           <a href="{{ route('chatrooms.solver.index',$title->id) }}">
-                                              <button class="btn-opencr" type="submit" style="width: 200px;height: 50px;">開啟討論室</button>
+                                              <button class="btn-opencr" type="submit" style="width: 200px;height: 50px;" onclick="javascript:return enter();">開啟討論室</button>
                                           </a>
                                       </div>
                                   @endif
                                   @if($title->user == Auth::user()->name)
                                       <div class="item-right"align="right">
                                           <a href="{{ route('chatrooms.list.index',$title->id) }}">
-                                              <button class="btn-crlist" type="submit" style="width: 250px;height: 50px;">開啟討論室列表</button>
+                                              <button class="btn-crlist" type="submit" style="width: 250px;height: 50px;" onclick="javascript:return enter();">開啟討論室列表</button>
                                           </a>
                                       </div>
                                   @endif
@@ -296,14 +296,14 @@
                                               @if($title->user != Auth::user()->name)
                                                   <div class="item-right"align="right">
                                                       <a href="{{ route('chatrooms.solver.index',$title->id) }}">
-                                                          <button class="btn-opencr" type="submit" style="width: 200px;height: 50px;">開啟討論室</button>
+                                                          <button class="btn-opencr" type="submit" style="width: 200px;height: 50px;" onclick="javascript:return enter();">開啟討論室</button>
                                                       </a>
                                                   </div>
                                               @endif
                                               @if($title->user == Auth::user()->name)
                                                   <div class="item-right"align="right">
                                                       <a href="{{ route('chatrooms.list.index',$title->id) }}">
-                                                          <button class="btn-crlist" type="submit" style="width: 250px;height: 50px;">開啟討論室列表</button>
+                                                          <button class="btn-crlist" type="submit" style="width: 250px;height: 50px;" onclick="javascript:return enter();">開啟討論室列表</button>
                                                       </a>
                                                   </div>
                                               @endif
@@ -353,14 +353,14 @@
                                       @if($title->user != Auth::user()->name)
                                           <div class="item-right"align="right">
                                               <a href="{{ route('chatrooms.solver.index',$title->id) }}">
-                                                  <button class="btn-opencr" type="submit" style="width: 200px;height: 50px;">開啟討論室</button>
+                                                  <button class="btn-opencr" type="submit" style="width: 200px;height: 50px;" onclick="javascript:return enter();">開啟討論室</button>
                                               </a>
                                           </div>
                                       @endif
                                       @if($title->user == Auth::user()->name)
                                           <div class="item-right"align="right">
                                               <a href="{{ route('chatrooms.list.index',$title->id) }}">
-                                                  <button class="btn-crlist" type="submit" style="width: 250px;height: 50px;">開啟討論室列表</button>
+                                                  <button class="btn-crlist" type="submit" style="width: 250px;height: 50px;" onclick="javascript:return enter();">開啟討論室列表</button>
                                               </a>
                                           </div>
                                       @endif
@@ -408,14 +408,14 @@
                                       @if($title->user != Auth::user()->name)
                                           <div class="item-right"align="right">
                                               <a href="{{ route('chatrooms.solver.index',$title->id) }}">
-                                                  <button class="btn-opencr" type="submit" style="width: 200px;height: 50px;">開啟討論室</button>
+                                                  <button class="btn-opencr" type="submit" style="width: 200px;height: 50px;" onclick="javascript:return enter();">開啟討論室</button>
                                               </a>
                                           </div>
                                       @endif
                                       @if($title->user == Auth::user()->name)
                                           <div class="item-right"align="right">
                                               <a href="{{ route('chatrooms.list.index',$title->id) }}">
-                                                  <button class="btn-crlist" type="submit" style="width: 250px;height: 50px;">開啟討論室列表</button>
+                                                  <button class="btn-crlist" type="submit" style="width: 250px;height: 50px;" onclick="javascript:return enter();">開啟討論室列表</button>
                                               </a>
                                           </div>
                                       @endif
@@ -468,23 +468,30 @@
     <script src="{{asset('js/jquery.mCustomScrollbar.concat.min.js')}}"></script>
     <script src="{{asset('js/jquery-3.0.0.min.js')}}"></script>
     <script type="text/javascript">
-        $(document).ready(function() {
-            $("#sidebar").mCustomScrollbar({
-                theme: "minimal"
-            });
-
-            $('#dismiss, .overlay').on('click', function() {
-                $('#sidebar').removeClass('active');
-                $('.overlay').removeClass('active');
-            });
-
-            $('#sidebarCollapse').on('click', function() {
-                $('#sidebar').addClass('active');
-                $('.overlay').addClass('active');
-                $('.collapse.in').toggleClass('in');
-                $('a[aria-expanded=true]').attr('aria-expanded', 'false');
-            });
+        $("#sidebar").mCustomScrollbar({
+            theme: "minimal"
         });
+
+        $('#dismiss, .overlay').on('click', function() {
+            $('#sidebar').removeClass('active');
+            $('.overlay').removeClass('active');
+        });
+
+        $('#sidebarCollapse').on('click', function() {
+            $('#sidebar').addClass('active');
+            $('.overlay').addClass('active');
+            $('.collapse.in').toggleClass('in');
+            $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+        });
+
+        function enter() {
+            var msg = "是否確定要進入？";
+            if (confirm(msg)===true){
+                return true;
+            }else{
+                return false;
+            }
+        }
     </script>
 
     <style>
@@ -497,7 +504,14 @@
         height: auto;
     }
     </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script>
+        $(document).ready(function () {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
         // var notifyConfig = {
         //     body: '\\ ^o^ /', // 設定內容
         //     icon: '/images/favicon.ico', // 設定 icon
@@ -528,7 +542,9 @@
         //     window.open('http://127.0.0.1:8000/'); // 打開特定網頁
         // }
 
-        $(document).ready(function () {
+
+
+
         Pusher.logToConsole = true;
 
         var pusher = new Pusher('3dbe93ac3efe1bf6487e', {
@@ -538,7 +554,29 @@
 
         var channel = pusher.subscribe('question-channel');
         channel.bind('question-event', function (data) {
+            var datastr = "data_area=" + data.area + "&data_title=" + data.title + "&data_content=" + data.content;
+            $.ajax({
+                type: "post",
+                url: "/noti", // need to create this route
+                data: datastr,
+                cache: false,
+                success: function (data) {
 
+                },
+                error: function (jqXHR, status, err) {
+                    alert("Found error when using Ajax!!");
+                },
+                complete: function () {
+
+                }
+            });
+        });
+
+        var notichannel = pusher.subscribe('noti-channel');
+        notichannel.bind('noti-event', function (data) {
+
+            if(data.status==='1')
+            {
                 var n = new Notification(data.title, {
                     icon: 'img/icon.png',
                     body: data.content,
@@ -549,11 +587,16 @@
                     e.preventDefault(); // prevent the browser from focusing the Notification's tab
                     window.open('http://127.0.0.1:8000/'); // 打開特定網頁
                 }
+            }
+            else {
 
+            }
         });
 
+
+
+        }
         });
-    }
     </script>
 </body>
 

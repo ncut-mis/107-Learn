@@ -6,12 +6,14 @@ use App\Models\Area;
 use App\Models\Chatroom;
 use App\Models\Comment;
 use App\Models\Question;
+use App\Models\UserAreas;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Pusher\Pusher;
 
 class HomeController extends Controller
 {
@@ -27,6 +29,38 @@ class HomeController extends Controller
         $data2=Question::where('status','=','1')->orderBy('id','DESC')->get();
         $tg=Comment::all();
         return view('index',compact('data','data2','tg'));
+    }
+
+    public function noti(Request $request)
+    {
+
+        $options = array(
+            'cluster' => 'ap3',
+            'useTLS' => true
+        );
+
+        $pusher = new Pusher(
+            env('PUSHER_APP_KEY'),
+            env('PUSHER_APP_SECRET'),
+            env('PUSHER_APP_ID'),
+            $options
+        );
+//        $bl_userareas_data=UserAreas::where('user_id','=',Auth::id())->where('area_id','=',)->get();
+        if(UserAreas::where('user_id','=',Auth::id())->where('area_id','=',$request['data_area'])->get()->isEmpty())
+        {
+            $status='0';
+            $data = ['status' => $status,'content'=>$request['data_content'],'title'=>$request['data_title'] ];
+            $pusher->trigger('noti-channel', 'noti-event', $data);
+
+        }
+        else
+        {
+            $status='1';
+            $data = ['status' => $status,'content'=>$request['data_content'],'title'=>$request['data_title'] ];
+            $pusher->trigger('noti-channel', 'noti-event', $data);
+
+        }
+
     }
 
     public function search(Request $request)
@@ -76,7 +110,7 @@ class HomeController extends Controller
     public function solver()
     {
         $data=Area::orderBy('id','ASC')->get();
-        $temp=Chatroom::orderBy('question_id','DESC')->where('solver_user_id','=',Auth::user()->id)->where('status','=','1')->get();
+        $temp=Chatroom::orderBy('question_id','DESC')->where('solver_user_id','=',Auth::user()->id)->get();
         if (Chatroom::where('solver_user_id','=',Auth::user()->id)->get()->isEmpty()) {
             return view('index',compact('data','temp'));
         }
@@ -104,7 +138,7 @@ class HomeController extends Controller
     public function areas_solver($id2)
     {
         $data=Area::orderBy('id','ASC')->get();
-        $temp=Chatroom::orderBy('question_id','DESC')->where('solver_user_id','=',Auth::user()->id)->where('status','=','1')->get();
+        $temp=Chatroom::orderBy('question_id','DESC')->where('solver_user_id','=',Auth::user()->id)->get();
         if (Chatroom::where('solver_user_id','=',Auth::user()->id)->get()->isEmpty())
         {
             return view('index',compact('data','temp'));

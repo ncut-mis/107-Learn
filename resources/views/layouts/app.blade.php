@@ -12,7 +12,17 @@
 
         <!-- Styles -->
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+        <!-- Bootstrap Core CSS -->
+        <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
 
+        <!-- Custom CSS -->
+        <link href="{{ asset('css/sb-admin.css') }}" rel="stylesheet">
+
+        <!-- Morris Charts CSS -->
+        <link href="{{ asset('css/plugins/morris.css') }}" rel="stylesheet">
+
+        <!-- Custom Fonts -->
+        <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
         @livewireStyles
 
         <!-- Scripts -->

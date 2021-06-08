@@ -12,10 +12,12 @@ class Area extends Model
 
     protected $fillable = [
         'name',
+        'count'
     ];
 
     protected $casts = [
         'name' => 'string',
+        'count' => 'integer',
     ];
 
 }
