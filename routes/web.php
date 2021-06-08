@@ -5,6 +5,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NotesController;
 use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\UserAreasController;
 use App\Http\Livewire\Search;
 use http\Client\Request;
 use Illuminate\Support\Facades\Route;
@@ -31,10 +32,13 @@ Route::get('/',[HomeController::class,'index'])->name('home');
 
 
 Route::get('/search',[HomeController::class,'search'])->name('search');
+Route::get('/areas/{areas_id}',[HomeController::class,'areas'])->name('areas');
+
 Route::get('/areas/{areas_id}/search',[HomeController::class,'areas_search'])->name('areas.search');
 
+Route::delete('/areas/{areas_id}/destroy',[UserAreasController::class,'destroy'])->name('usergood.areas.destroy');
 
-Route::get('/areas/{areas_id}',[HomeController::class,'areas'])->name('areas');
+Route::post('/noti',[HomeController::class,'noti'])->name('noti');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/users/solver',[HomeController::class,'solver'])->name('users.solver');
 Route::middleware(['auth:sanctum', 'verified'])->get('/users/asker',[HomeController::class,'asker'])->name('users.asker');

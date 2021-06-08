@@ -45,7 +45,6 @@ class ChatroomController extends Controller
                             'asker_user_id'=>$user_id
                         ]
                     );
-
                     $area_data=Area::where('name','=',$data->area)->get();
                     foreach ($area_data as $a_data){
                         if(UserAreas::where('area_id','=',$a_data->id)->where('user_id','=',Auth::id())->get()->isEmpty()){
@@ -61,6 +60,17 @@ class ChatroomController extends Controller
                     $chatroom_id=Chatroom::where('question_id','=',$question_id)->where('solver_user_id','=',Auth::id())->get();
                 }
                 else{
+                    $area_data=Area::where('name','=',$data->area)->get();
+                    foreach ($area_data as $a_data){
+                        if(UserAreas::where('area_id','=',$a_data->id)->where('user_id','=',Auth::id())->get()->isEmpty()){
+                            UserAreas::create(
+                                [
+                                    'user_id'=>Auth::id(),
+                                    'area_id'=>$a_data->id
+                                ]
+                            );
+                        }
+                    }
                     $chatroom_id=Chatroom::where('question_id','=',$question_id)->where('solver_user_id','=',Auth::id())->get();
                 }
                 foreach ($chatroom_id as $id)
@@ -175,6 +185,7 @@ class ChatroomController extends Controller
             env('PUSHER_APP_ID'),
             $options
         );
+
 
 //        $data = ['from' => $from, 'question_id'=>$request->receiver_id,'to' => $to]; // sending from and to user id when pressed enter
         $data = ['from' => $from,'chatroom_id'=>$request->receiver_id,'to' => $to];

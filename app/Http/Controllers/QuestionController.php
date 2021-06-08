@@ -22,8 +22,8 @@ class QuestionController extends Controller
     public function index()
     {
         $elements=Area::orderBy('id','DESC')->get();
-        $data=['elements'=>$elements];
-        return view('question',$data);
+
+        return view('question',compact('elements'));
     }
 
     /**
@@ -54,7 +54,7 @@ class QuestionController extends Controller
                 'user'=>Auth::user()->name,
             ]
         );
-//        dd($request);
+
 
         $options = array(
             'cluster' => 'ap3',
@@ -69,6 +69,7 @@ class QuestionController extends Controller
         );
 
         $area_data=Area::where('name','=',$request['area'])->get();
+        Area::where('name','=',$request['area'])->increment('count');
 //        $data = ['from' => $from, 'question_id'=>$request->receiver_id,'to' => $to]; // sending from and to user id when pressed enter
         foreach ($area_data as $a_data){
             $data = ['title' => $request->title,'content'=>$request->editor,'area'=>$a_data->id];
