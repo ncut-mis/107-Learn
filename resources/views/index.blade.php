@@ -430,7 +430,15 @@
                       <div style="background-color:#63B0A1;position: relative;font-size:20px;">留言</div>
                       @foreach($tg as $t)
                           @if($title->id==$t->question_id)
-                              <div style="color:#F2EDAB;margin-left: 3%;font-size:20px;" >{{ \App\Models\User::find($t->user_id)->name }}：{{ $t->content }}</div>
+                              <form action="{{ route('comments.destroy',$t->id) }}" method="post">
+                                  @method('DELETE')
+                                  @csrf
+                                  <div style="color:#F2EDAB;margin-left: 3%;font-size:20px;" >{{ \App\Models\User::find($t->user_id)->name }}：{{ $t->content }}
+                                      @if($t->user_id===Auth::id())
+                                          <button type="submit" class="btn btn-sm btn-danger" >刪除</button>
+                                      @endif
+                                  </div>
+                              </form>
                           @endif
                       @endforeach
                       @if (Route::has('login'))
@@ -506,6 +514,7 @@
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script>
+
         $(document).ready(function () {
             $.ajaxSetup({
                 headers: {

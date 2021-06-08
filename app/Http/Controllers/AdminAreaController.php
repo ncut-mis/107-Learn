@@ -15,8 +15,7 @@ class AdminAreaController extends Controller
     public function index()
     {
         $areas=Area::orderBy('id','DESC')->get();
-        $data=['areas'=>$areas];
-        return view('admin.areas.index', $data,);
+        return view('admin.areas.index', compact('areas'));
     }
 
     /**

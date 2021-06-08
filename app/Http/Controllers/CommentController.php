@@ -47,7 +47,6 @@ class CommentController extends Controller
                 'user_id'=>Auth::user()->id,
             ]
         );
-//        dd($request);
         return redirect()->route('home');
     }
 
@@ -93,6 +92,7 @@ class CommentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Comment::destroy($id);
+        return redirect()->back();
     }
 }
