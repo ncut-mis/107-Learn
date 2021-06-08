@@ -54,7 +54,7 @@ class QuestionController extends Controller
                 'user'=>Auth::user()->name,
             ]
         );
-        
+
 
         $options = array(
             'cluster' => 'ap3',
