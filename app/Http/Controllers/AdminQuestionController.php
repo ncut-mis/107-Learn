@@ -87,7 +87,7 @@ class AdminQuestionController extends Controller
     {
         $questions = Question::find($id);
 
-        $questions->status = '1';
+        $questions->status = '0';
 
         $questions->save();
         return redirect()->route('admin.index');

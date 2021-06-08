@@ -35,13 +35,20 @@
                                 <form action="{{ route('admin.areas.destroy', $areas->id) }}" method="POST" style="display:inline">
                                     @method('DELETE')
                                     @csrf
-                                    <button class="btn btn-sm btn-danger" type="submit">刪除</button>
+                                    @foreach($data2 as $qs)
+                                    @if($areas->name!=$qs->area)
+                                            <button class="btn btn-sm btn-danger" type="submit">刪除</button>
+                                        @else
+                                            <button class="btn btn-sm btn-danger" disabled="disabled" type="submit">刪除</button>
+                                    @endif
+                                    @endforeach
+
                                 </form>
                                 </td>
                             </tr>
                         @endforeach
                     </table>
-                    <form action="{{ route('admin.areas.store', $areas->name) }}" method="POST" style="display:inline">
+                    <form action="{{ route('admin.areas.store') }}" method="POST" style="display:inline">
                         @method('post')
                         @csrf
                         新增領域:<input type="text" name="name">

@@ -76,7 +76,7 @@ class HomeController extends Controller
     public function solver()
     {
         $data=Area::orderBy('id','ASC')->get();
-        $temp=Chatroom::orderBy('question_id','DESC')->where('solver_user_id','=',Auth::user()->id)->where('status','=','1')->get();
+        $temp=Chatroom::orderBy('question_id','DESC')->where('solver_user_id','=',Auth::user()->id)->get();
         if (Chatroom::where('solver_user_id','=',Auth::user()->id)->get()->isEmpty()) {
             return view('index',compact('data','temp'));
         }
@@ -104,7 +104,7 @@ class HomeController extends Controller
     public function areas_solver($id2)
     {
         $data=Area::orderBy('id','ASC')->get();
-        $temp=Chatroom::orderBy('question_id','DESC')->where('solver_user_id','=',Auth::user()->id)->where('status','=','1')->get();
+        $temp=Chatroom::orderBy('question_id','DESC')->where('solver_user_id','=',Auth::user()->id)->get();
         if (Chatroom::where('solver_user_id','=',Auth::user()->id)->get()->isEmpty())
         {
             return view('index',compact('data','temp'));

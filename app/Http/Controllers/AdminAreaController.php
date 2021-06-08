@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Question;
 use Illuminate\Http\Request;
 use App\Models\Area;
 
@@ -15,8 +16,8 @@ class AdminAreaController extends Controller
     public function index()
     {
         $areas=Area::orderBy('id','DESC')->get();
-        $data=['areas'=>$areas];
-        return view('admin.areas.index', $data,);
+        $data2=Question::all();
+        return view('admin.areas.index',compact('areas','data2'));
     }
 
     /**
@@ -35,11 +36,11 @@ class AdminAreaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $area)
     {
         Area::create(
             [
-                'name'=>$request['name']
+                'name'=>$area['name']
             ]
         );
 //        $data = new Area();
