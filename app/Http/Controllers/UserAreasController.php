@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Area;
 use App\Models\UserAreas;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -38,9 +39,15 @@ class UserAreasController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return Response
      */
-    public function store(Request $request,$id)
+    public function store(Request $request)
     {
-
+        UserAreas::create(
+            [
+                'user_id'=>Auth::id(),
+                'area_id'=>Area::where('name','=',$request['area'])->first()->id,
+            ]
+        );
+        return redirect(url('/user/profile'));
     }
 
     /**

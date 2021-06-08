@@ -16,11 +16,29 @@
             }
         }
     </script>
+
+{{--    <script>--}}
+{{--        var pusher = new Pusher('3dbe93ac3efe1bf6487e', {--}}
+{{--            cluster: 'ap3',--}}
+{{--            forceTLS: true--}}
+{{--        });--}}
+
+{{--        var channel = pusher.subscribe('my-channel');--}}
+{{--        channel.bind('my-event', function (data) {--}}
+{{--            if ( {{ \App\Models\UserAreas::where('area_id','=',data.area) }} ) {--}}
+
+{{--            }--}}
+{{--        };--}}
+{{--    </script>--}}
+
     <div>
 
         <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
             <div class="mt-10 sm:mt-0">
                 使用者擅長領域：
+                @if(\App\Models\UserAreas::where('user_id','=',Auth::id())->get()->isEmpty())
+                    <div style="margin: 10px;">您目前還沒有任何擅長領域！請新增以接收問題通知！</div>
+                @else
                 @foreach(\App\Models\UserAreas::where('user_id','=',Auth::id())->get() as $ua_data)
                     <div style="margin: 10px;">
                         {{ \App\Models\Area::find($ua_data->area_id)->name }}
@@ -31,6 +49,21 @@
                         </form>
                     </div>
                 @endforeach
+                @endif
+                新增擅長領域:
+                <form action="{{ route('usergood.areas.store') }}" method="post">
+                    @method('post')
+                    @csrf
+                    <select style="display:block " name="area">
+                        @foreach(\App\Models\Area::all() as $a_data)
+                            @if(\App\Models\UserAreas::where('user_id','=',Auth::id())->where('area_id','=',$a_data->id)->get()->isEmpty())
+                                <option>{{ $a_data->name }}</option>
+                            @else
+                            @endif
+                        @endforeach
+                    </select>
+                    <button style="margin-top: 5px" class="btn btn-sm btn-success" type="submit">新增</button>
+                </form>
             </div>
             <x-jet-section-border />
             @if (Laravel\Fortify\Features::canUpdateProfileInformation())

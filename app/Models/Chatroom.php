@@ -15,11 +15,13 @@ class Chatroom extends Model
         'question_id',
         'solver_user_id',
         'asker_user_id',
+        'status'
     ];
 
     protected $casts = [
         'question_id' => 'integer',
         'solver_user_id' => 'integer',
-        'asker_user_id' => 'integer'
+        'asker_user_id' => 'integer',
+        'status' => 'integer'
     ];
 }

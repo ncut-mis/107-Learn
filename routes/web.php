@@ -35,6 +35,7 @@ Route::get('/areas/{areas_id}',[HomeController::class,'areas'])->name('areas');
 
 Route::get('/areas/{areas_id}/search',[HomeController::class,'areas_search'])->name('areas.search');
 
+Route::post('/areas/store',[UserAreasController::class,'store'])->name('usergood.areas.store');
 Route::delete('/areas/{areas_id}/destroy',[UserAreasController::class,'destroy'])->name('usergood.areas.destroy');
 
 Route::post('/noti',[HomeController::class,'noti'])->name('noti');
@@ -56,6 +57,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/questions',[QuestionContr
 
 Route::post('/questions',[QuestionController::class,'store'])->name('questions.store');
 
+Route::delete('/comments/{id}',[CommentController::class,'destroy'])->name('comments.destroy');
 Route::post('/comments/{id}',[CommentController::class,'store'])->name('comments.store');
 //});
 
