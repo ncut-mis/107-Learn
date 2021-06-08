@@ -30,7 +30,6 @@ use App\Http\Controllers\AdminAreaController;
 
 Route::get('/',[HomeController::class,'index'])->name('home');
 
-
 Route::get('/search',[HomeController::class,'search'])->name('search');
 Route::get('/areas/{areas_id}',[HomeController::class,'areas'])->name('areas');
 

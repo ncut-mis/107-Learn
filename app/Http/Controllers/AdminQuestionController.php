@@ -42,16 +42,16 @@ class AdminQuestionController extends Controller
      */
     public function store(Request $request)
     {
-        Question::create(
-            [
-                'title'=>$request['title'],
-                'area'=>$request['area'],
-                'content'=>$request['editor'],
-                'status'=>'0',
-                'user'=>Auth::user()->name,
-            ]
-        );
-        return redirect()->route('admin.index');
+//        Question::create(
+//            [
+//                'title'=>$request['title'],
+//                'area'=>$request['area'],
+//                'content'=>$request['editor'],
+//                'status'=>'0',
+//                'user'=>Auth::user()->name,
+//            ]
+//        );
+//        return redirect()->route('admin.index');
     }
 
     /**
@@ -87,7 +87,7 @@ class AdminQuestionController extends Controller
     {
         $questions = Question::find($id);
 
-        $questions->status = '0';
+        $questions->status = '2';
 
         $questions->save();
         return redirect()->route('admin.index');

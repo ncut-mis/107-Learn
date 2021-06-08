@@ -35,14 +35,11 @@
                                 <form action="{{ route('admin.areas.destroy', $areas->id) }}" method="POST" style="display:inline">
                                     @method('DELETE')
                                     @csrf
-                                    @foreach($data2 as $qs)
-                                    @if($areas->name!=$qs->area)
-                                            <button class="btn btn-sm btn-danger" type="submit">刪除</button>
-                                        @else
-                                            <button class="btn btn-sm btn-danger" disabled="disabled" type="submit">刪除</button>
+                                    @if($areas->count===0)
+                                        <button class="btn btn-sm btn-danger" type="submit">刪除</button>
+                                    @else
+                                        <button title="此領域已有題目，不可刪除" class="btn btn-sm btn-danger" disabled="disabled" type="submit" >刪除</button>
                                     @endif
-                                    @endforeach
-
                                 </form>
                                 </td>
                             </tr>
