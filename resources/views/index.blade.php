@@ -83,6 +83,9 @@
                                 @endif
                                         <a href="{{route('users.solver')}}">我幫人解的問題</a>
                                     </li>
+{{--                                            <li>--}}
+{{--                                                <a href="{{route('draft', \Illuminate\Support\Facades\Auth::user()->id)}}">草稿</a>--}}
+{{--                                            </li>--}}
                             @endauth
                         @endif
                         <li>
