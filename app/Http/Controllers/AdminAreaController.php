@@ -39,7 +39,8 @@ class AdminAreaController extends Controller
     {
         Area::create(
             [
-                'name'=>$area['name']
+                'name'=>$area['name'],
+                'count'=>'0',
             ]
         );
 //        $data = new Area();
