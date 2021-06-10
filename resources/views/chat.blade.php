@@ -24,7 +24,7 @@
                             </div>
                             <a href="{{route('chatrooms.room.index',$data->id)}}">進入討論室</a>
                             @if(\App\Models\Question::find($data->question_id)->status != 3)
-                                <a style="margin-left: 5%" href="{{route('select.best.chatroom',$data->id)}}">結束問題</a>
+                                <a style="margin-left: 5%" href="{{route('select.best.chatroom',$data->id)}}">設為最佳解</a>
                             @endif
                         </li>
                     @endforeach
