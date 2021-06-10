@@ -16,6 +16,8 @@ class Question extends Model
         'user',
         'area',
         'status',
+        'created_at',
+        'updated_at'
     ];
 
     protected $casts = [
@@ -23,7 +25,9 @@ class Question extends Model
         'content' => 'string',
         'user' => 'string',
         'area' => 'string',
-        'status' => 'string',
+        'status' => 'integer',
+        'created_at'=> 'datetime',
+        'updated_at'=> 'datetime'
     ];
 
     public function comments()

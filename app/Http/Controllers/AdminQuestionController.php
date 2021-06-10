@@ -101,6 +101,7 @@ class AdminQuestionController extends Controller
      */
     public function destroy($id)
     {
+        Area::where('name','=',Question::find($id)->area)->decrement('count');
         Question::destroy($id);
         return redirect()->route('admin.index');
     }

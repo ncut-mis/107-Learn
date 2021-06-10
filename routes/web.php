@@ -50,16 +50,19 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/chatroom/{id}',[ChatroomC
 Route::middleware(['auth:sanctum', 'verified'])->get('/chatroom/{id}/messages',[ChatroomController::class,'room'])->name('chatrooms.room.index');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/question/{id}/chatrooms',[ChatroomController::class,'roomlist'])->name('chatrooms.list.index');
+Route::middleware(['auth:sanctum', 'verified'])->get('/chatroom/{id}/best',[ChatroomController::class,'select'])->name('select.best.chatroom');
+
 
 Route::post('/chatrooms', [ChatroomController::class,'sendMessage']);
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/questions',[QuestionController::class,'index'])->name('questions.index');
 
 Route::post('/questions',[QuestionController::class,'store'])->name('questions.store');
+Route::get('/questions/{id}',[QuestionController::class,'the_question'])->name('the_questions');
 
 Route::delete('/comments/{id}',[CommentController::class,'destroy'])->name('comments.destroy');
 Route::post('/comments/{id}',[CommentController::class,'store'])->name('comments.store');
-//});
+Route::middleware(['auth:sanctum', 'verified'])->post('/comment/{id}/best',[CommentController::class,'select'])->name('select.best.comment');
 
 Route::get('/blog',function (){
     return view('blog');

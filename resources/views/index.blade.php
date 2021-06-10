@@ -230,58 +230,106 @@
           @else
           @foreach($temp as $t)
               @foreach( $a=\App\Models\Question::where('id','=',$t->question_id)->get() as $title)
-              <div style="background-color:#63B0A1;position: relative;margin-left: 5%;margin-bottom:20px;width: 70%;height: auto;border:1px #1a202c solid;border-radius: 10px">
-                  <div style="margin: 10px;">
-                      <div class="container" style="margin: 0px;padding: 0px;"><div class="item-left"><h1 style="font-size:30px;">{{ $title->title }}</h1></div>
-                          @if (Route::has('login'))
-                              @auth
-                                  @if($title->user != Auth::user()->name)
-                                      <div class="item-right"align="right">
-                                          <a href="{{ route('chatrooms.solver.index',$title->id) }}">
-                                              <button class="btn-opencr" type="submit" style="width: 200px;height: 50px;" onclick="javascript:return enter();">開啟討論室</button>
-                                          </a>
+                  @if($title->status===3)
+                              <div style="background-color:darkgrey;position: relative;margin-left: 5%;margin-bottom:20px;width: 70%;height: auto;border:1px #1a202c solid;border-radius: 10px">
+                                  <div style="margin: 10px;">
+                                      <div class="container" style="margin: 0px;padding: 0px;"><div class="item-left"><h1 style="font-size:30px;">{{ $title->title }}</h1></div>
+                                          @if (Route::has('login'))
+                                              @auth
+                                                  <div class="item-right"align="right">
+                                                      <a href="{{ route('chatrooms.list.index',$title->id) }}">
+                                                          <button class="btn-crlist" type="submit" style="width: 250px;height: 50px;" onclick="javascript:return enter();">開啟討論室列表</button>
+                                                      </a>
+                                                  </div>
+                                              @endauth
+                                          @endif
                                       </div>
+                                      <h4 style="color:#FFFFFF;font-size:25px;">分類：{{ $title->area }} | 發問人：{{ $title->user }}</h4>
+                                      <h4 style="color:#FFFFFF;font-size:25px;">發布時間：{{ $title->created_at }}</h4>
+                                      <div style="color:#2F649D;">{!! html_entity_decode($title->content)  !!}</div>
+                                      <style>p{font-size:22px;}</style>
+                                  </div>
+                                  <div style="background-color:darkgrey;position: relative;font-size:20px;">留言</div>
+                                  @foreach($tg as $t)
+                                      @if($title->id==$t->question_id)
+                                          <div style="color:#F2EDAB;margin-left: 3%;font-size:20px;" >{{ \App\Models\User::find($t->user_id)->name }}：{{ $t->content }}</div>
+                                      @endif
+                                  @endforeach
+                                  @if (Route::has('login'))
+                                      @auth
+                                          <form method="post" enctype="multipart/form-data" action="{{ route('comments.store',$title->id) }}" role="form">
+                                              @method('post')
+                                              @csrf
+                                              <div>
+                                                  </br>
+                                              </div>
+                                              <div class="container2">
+                                                  <div style="font-size:18px;padding-right: 1%"><input placeholder="在此說點什麼.." autocomplete="off" style="" type="text" name="content"></div>
+                                                  <div><button class="btn-send" type="submit">送出</button></div>
+                                              </div>
+                                              <div style="display: block"  align="right"><h3 style="display: inline">問題已解決✅</h3></div>
+                                              <div>
+                                                  </br>
+                                              </div>
+                                          </form>
+                                      @endauth
                                   @endif
-                                  @if($title->user == Auth::user()->name)
-                                      <div class="item-right"align="right">
-                                          <a href="{{ route('chatrooms.list.index',$title->id) }}">
-                                              <button class="btn-crlist" type="submit" style="width: 250px;height: 50px;" onclick="javascript:return enter();">開啟討論室列表</button>
-                                          </a>
-                                      </div>
-                                  @endif
-                              @endauth
-                          @endif</div>
-                      <h4 style="color:#FFFFFF;font-size:25px;">分類：{{ $title->area }} | 發問人：{{ $title->user }}</h4>
-                      <h4 style="color:#FFFFFF;font-size:25px;">發布時間：{{ $title->created_at }}</h4>
+                              </div>
+                          @else
+                              <div style="background-color:#63B0A1;position: relative;margin-left: 5%;margin-bottom:20px;width: 70%;height: auto;border:1px #1a202c solid;border-radius: 10px">
+                                  <div style="margin: 10px;">
+                                      <div class="container" style="margin: 0px;padding: 0px;"><div class="item-left"><h1 style="font-size:30px;">{{ $title->title }}</h1></div>
+                                          @if (Route::has('login'))
+                                              @auth
+                                                  @if($title->user != Auth::user()->name)
+                                                      <div class="item-right"align="right">
+                                                          <a href="{{ route('chatrooms.solver.index',$title->id) }}">
+                                                              <button class="btn-opencr" type="submit" style="width: 200px;height: 50px;" onclick="javascript:return enter();">開啟討論室</button>
+                                                          </a>
+                                                      </div>
+                                                  @endif
+                                                  @if($title->user == Auth::user()->name)
+                                                      <div class="item-right"align="right">
+                                                          <a href="{{ route('chatrooms.list.index',$title->id) }}">
+                                                              <button class="btn-crlist" type="submit" style="width: 250px;height: 50px;" onclick="javascript:return enter();">開啟討論室列表</button>
+                                                          </a>
+                                                      </div>
+                                                  @endif
 
-                      <div style="color:#2F649D;">{!! html_entity_decode($title->content)  !!}</div>
-                      <style>p{font-size:22px;}</style>
-                  </div>
-                  <div style="background-color:#63B0A1;position: relative;font-size:20px;">留言</div>
-                  @foreach($tg as $t)
-                      @if($title->id==$t->question_id)
-                          <div style="color:#F2EDAB;margin-left: 3%;font-size:20px;" >{{ \App\Models\User::find($t->user_id)->name }}：{{ $t->content }}</div>
-                      @endif
-                  @endforeach
-                  @if (Route::has('login'))
-                      @auth
-                          <form method="post" enctype="multipart/form-data" action="{{ route('comments.store',$title->id) }}" role="form">
-                              @method('post')
-                              @csrf
-                              <div>
-                                  </br>
+                                              @endauth
+                                          @endif</div>
+                                      <h4 style="color:#FFFFFF;font-size:25px;">分類：{{ $title->area }} | 發問人：{{ $title->user }}</h4>
+                                      <h4 style="color:#FFFFFF;font-size:25px;">發布時間：{{ $title->created_at }}</h4>
+
+                                      <div style="color:#2F649D;">{!! html_entity_decode($title->content)  !!}</div>
+                                      <style>p{font-size:22px;}</style>
+                                  </div>
+                                  <div style="background-color:#63B0A1;position: relative;font-size:20px;">留言</div>
+                                  @foreach($tg as $t)
+                                      @if($title->id==$t->question_id)
+                                          <div style="color:#F2EDAB;margin-left: 3%;font-size:20px;" >{{ \App\Models\User::find($t->user_id)->name }}：{{ $t->content }}</div>
+                                      @endif
+                                  @endforeach
+                                  @if (Route::has('login'))
+                                      @auth
+                                          <form method="post" enctype="multipart/form-data" action="{{ route('comments.store',$title->id) }}" role="form">
+                                              @method('post')
+                                              @csrf
+                                              <div>
+                                                  </br>
+                                              </div>
+                                              <div class="container2">
+                                                  <div style="font-size:18px;padding-right: 1%"><input placeholder="在此說點什麼.." autocomplete="off" style="" type="text" name="content"></div>
+                                                  <div><button class="btn-send" type="submit">送出</button></div>
+                                              </div>
+                                              <div>
+                                                  </br>
+                                              </div>
+                                          </form>
+                                      @endauth
+                                  @endif
                               </div>
-                              <div class="container2">
-                                  <div style="font-size:18px;padding-right: 1%"><input placeholder="在此說點什麼.." autocomplete="off" style="" type="text" name="content"></div>
-                                  <div><button class="btn-send" type="submit">送出</button></div>
-                              </div>
-                              <div>
-                                  </br>
-                              </div>
-                          </form>
-                      @endauth
-                  @endif
-              </div>
+                          @endif
               @endforeach
           @endforeach
           @endif
@@ -291,178 +339,314 @@
               @else
                   @foreach($temp as $t)
                       @foreach( $a=\App\Models\Question::where('id','=',$t->question_id)->where('area','=',\App\Models\Area::find(Request::segment(3))->name)->get() as $title)
-                          <div style="background-color:#63B0A1;position: relative;margin-left: 5%;margin-bottom:20px;width: 70%;height: auto;border:1px #1a202c solid;border-radius: 10px">
-                              <div style="margin: 10px;">
-                                  <div class="container" style="margin: 0px;padding: 0px;"><div class="item-left"><h1 style="font-size:30px;">{{ $title->title }}</h1></div>
-                                      @if (Route::has('login'))
-                                          @auth
-                                              @if($title->user != Auth::user()->name)
-                                                  <div class="item-right"align="right">
-                                                      <a href="{{ route('chatrooms.solver.index',$title->id) }}">
-                                                          <button class="btn-opencr" type="submit" style="width: 200px;height: 50px;" onclick="javascript:return enter();">開啟討論室</button>
-                                                      </a>
-                                                  </div>
-                                              @endif
-                                              @if($title->user == Auth::user()->name)
+                          @if($title->status===3)
+                              <div style="background-color:darkgrey;position: relative;margin-left: 5%;margin-bottom:20px;width: 70%;height: auto;border:1px #1a202c solid;border-radius: 10px">
+                                  <div style="margin: 10px;">
+                                      <div class="container" style="margin: 0px;padding: 0px;"><div class="item-left"><h1 style="font-size:30px;">{{ $title->title }}</h1></div>
+                                          @if (Route::has('login'))
+                                              @auth
                                                   <div class="item-right"align="right">
                                                       <a href="{{ route('chatrooms.list.index',$title->id) }}">
                                                           <button class="btn-crlist" type="submit" style="width: 250px;height: 50px;" onclick="javascript:return enter();">開啟討論室列表</button>
                                                       </a>
                                                   </div>
-                                              @endif
-                                          @endauth
-                                      @endif</div>
-                                  <h4 style="color:#FFFFFF;font-size:25px;">分類：{{ $title->area }} | 發問人：{{ $title->user }}</h4>
-                                  <h4 style="color:#FFFFFF;font-size:25px;">發布時間：{{ $title->created_at }}</h4>
-
-                                  <div style="color:#2F649D;">{!! html_entity_decode($title->content)  !!}</div>
-                                  <style>p{font-size:22px;}</style>
-                              </div>
-                              <div style="background-color:#63B0A1;position: relative;font-size:20px;">留言</div>
-                              @foreach($tg as $t)
-                                  @if($title->id==$t->question_id)
-                                      <div style="color:#F2EDAB;margin-left: 3%;font-size:20px;" >{{ \App\Models\User::find($t->user_id)->name }}：{{ $t->content }}</div>
+                                              @endauth
+                                          @endif
+                                      </div>
+                                      <h4 style="color:#FFFFFF;font-size:25px;">分類：{{ $title->area }} | 發問人：{{ $title->user }}</h4>
+                                      <h4 style="color:#FFFFFF;font-size:25px;">發布時間：{{ $title->created_at }}</h4>
+                                      <div style="color:#2F649D;">{!! html_entity_decode($title->content)  !!}</div>
+                                      <style>p{font-size:22px;}</style>
+                                  </div>
+                                  <div style="background-color:darkgrey;position: relative;font-size:20px;">留言</div>
+                                  @foreach($tg as $t)
+                                      @if($title->id==$t->question_id)
+                                          <div style="color:#F2EDAB;margin-left: 3%;font-size:20px;" >{{ \App\Models\User::find($t->user_id)->name }}：{{ $t->content }}</div>
+                                      @endif
+                                  @endforeach
+                                  @if (Route::has('login'))
+                                      @auth
+                                          <form method="post" enctype="multipart/form-data" action="{{ route('comments.store',$title->id) }}" role="form">
+                                              @method('post')
+                                              @csrf
+                                              <div>
+                                                  </br>
+                                              </div>
+                                              <div class="container2">
+                                                  <div style="font-size:18px;padding-right: 1%"><input placeholder="在此說點什麼.." autocomplete="off" style="" type="text" name="content"></div>
+                                                  <div><button class="btn-send" type="submit">送出</button></div>
+                                              </div>
+                                              <div style="display: block"  align="right"><h3 style="display: inline">問題已解決✅</h3></div>
+                                              <div>
+                                                  </br>
+                                              </div>
+                                          </form>
+                                      @endauth
                                   @endif
-                              @endforeach
-                              @if (Route::has('login'))
-                                  @auth
-                                      <form method="post" enctype="multipart/form-data" action="{{ route('comments.store',$title->id) }}" role="form">
-                                          @method('post')
-                                          @csrf
-                                          <div>
-                                              </br>
-                                          </div>
-                                          <div class="container2">
-                                              <div style="font-size:18px;padding-right: 1%"><input placeholder="在此說點什麼.." autocomplete="off" style="" type="text" name="content"></div>
-                                              <div><button class="btn-send" type="submit">送出</button></div>
-                                          </div>
-                                          <div>
-                                              </br>
-                                          </div>
-                                      </form>
-                                  @endauth
-                              @endif
-                          </div>
+                              </div>
+                          @else
+                              <div style="background-color:#63B0A1;position: relative;margin-left: 5%;margin-bottom:20px;width: 70%;height: auto;border:1px #1a202c solid;border-radius: 10px">
+                                  <div style="margin: 10px;">
+                                      <div class="container" style="margin: 0px;padding: 0px;"><div class="item-left"><h1 style="font-size:30px;">{{ $title->title }}</h1></div>
+                                          @if (Route::has('login'))
+                                              @auth
+                                                  @if($title->user != Auth::user()->name)
+                                                      <div class="item-right"align="right">
+                                                          <a href="{{ route('chatrooms.solver.index',$title->id) }}">
+                                                              <button class="btn-opencr" type="submit" style="width: 200px;height: 50px;" onclick="javascript:return enter();">開啟討論室</button>
+                                                          </a>
+                                                      </div>
+                                                  @endif
+                                                  @if($title->user == Auth::user()->name)
+                                                      <div class="item-right"align="right">
+                                                          <a href="{{ route('chatrooms.list.index',$title->id) }}">
+                                                              <button class="btn-crlist" type="submit" style="width: 250px;height: 50px;" onclick="javascript:return enter();">開啟討論室列表</button>
+                                                          </a>
+                                                      </div>
+                                                  @endif
+
+                                              @endauth
+                                          @endif</div>
+                                      <h4 style="color:#FFFFFF;font-size:25px;">分類：{{ $title->area }} | 發問人：{{ $title->user }}</h4>
+                                      <h4 style="color:#FFFFFF;font-size:25px;">發布時間：{{ $title->created_at }}</h4>
+
+                                      <div style="color:#2F649D;">{!! html_entity_decode($title->content)  !!}</div>
+                                      <style>p{font-size:22px;}</style>
+                                  </div>
+                                  <div style="background-color:#63B0A1;position: relative;font-size:20px;">留言</div>
+                                  @foreach($tg as $t)
+                                      @if($title->id==$t->question_id)
+                                          <div style="color:#F2EDAB;margin-left: 3%;font-size:20px;" >{{ \App\Models\User::find($t->user_id)->name }}：{{ $t->content }}</div>
+                                      @endif
+                                  @endforeach
+                                  @if (Route::has('login'))
+                                      @auth
+                                          <form method="post" enctype="multipart/form-data" action="{{ route('comments.store',$title->id) }}" role="form">
+                                              @method('post')
+                                              @csrf
+                                              <div>
+                                                  </br>
+                                              </div>
+                                              <div class="container2">
+                                                  <div style="font-size:18px;padding-right: 1%"><input placeholder="在此說點什麼.." autocomplete="off" style="" type="text" name="content"></div>
+                                                  <div><button class="btn-send" type="submit">送出</button></div>
+                                              </div>
+                                              <div>
+                                                  </br>
+                                              </div>
+                                          </form>
+                                      @endauth
+                                  @endif
+                              </div>
+                          @endif
                       @endforeach
                   @endforeach
               @endif
           @elseif(Route::currentRouteName()=='users.asker'||Route::currentRouteName()=='users.areas.asker')
               @foreach($data2 as $title)
-                  <div style="background-color:#63B0A1;position: relative;margin-left: 5%;margin-bottom:20px;width: 70%;height: auto;border:1px #1a202c solid;border-radius: 10px">
-                      <div style="margin: 10px;">
-                          <div class="container" style="margin: 0px;padding: 0px;"><div class="item-left"><h1 style="font-size:30px;">{{ $title->title }}</h1></div>
-                              @if (Route::has('login'))
-                                  @auth
-                                      @if($title->user != Auth::user()->name)
-                                          <div class="item-right"align="right">
-                                              <a href="{{ route('chatrooms.solver.index',$title->id) }}">
-                                                  <button class="btn-opencr" type="submit" style="width: 200px;height: 50px;" onclick="javascript:return enter();">開啟討論室</button>
-                                              </a>
-                                          </div>
-                                      @endif
-                                      @if($title->user == Auth::user()->name)
+                  @if($title->status===3)
+                      <div style="background-color:darkgrey;position: relative;margin-left: 5%;margin-bottom:20px;width: 70%;height: auto;border:1px #1a202c solid;border-radius: 10px">
+                          <div style="margin: 10px;">
+                              <div class="container" style="margin: 0px;padding: 0px;"><div class="item-left"><h1 style="font-size:30px;">{{ $title->title }}</h1></div>
+                                  @if (Route::has('login'))
+                                      @auth
                                           <div class="item-right"align="right">
                                               <a href="{{ route('chatrooms.list.index',$title->id) }}">
                                                   <button class="btn-crlist" type="submit" style="width: 250px;height: 50px;" onclick="javascript:return enter();">開啟討論室列表</button>
                                               </a>
                                           </div>
-                                      @endif
-                                  @endauth
-                              @endif</div>
-                          <h4 style="color:#FFFFFF;font-size:25px;">分類：{{ $title->area }} | 發問人：{{ $title->user }}</h4>
-                          <h4 style="color:#FFFFFF;font-size:25px;">發布時間：{{ $title->created_at }}</h4>
-
-                          <div style="color:#2F649D;">{!! html_entity_decode($title->content)  !!}</div>
-                          <style>p{font-size:22px;}</style>
-                      </div>
-                      <div style="background-color:#63B0A1;position: relative;font-size:20px;">留言</div>
-                      @foreach($tg as $t)
-                          @if($title->id==$t->question_id)
-                              <div style="color:#F2EDAB;margin-left: 3%;font-size:20px;" >{{ \App\Models\User::find($t->user_id)->name }}：{{ $t->content }}</div>
+                                      @endauth
+                                  @endif
+                              </div>
+                              <h4 style="color:#FFFFFF;font-size:25px;">分類：{{ $title->area }} | 發問人：{{ $title->user }}</h4>
+                              <h4 style="color:#FFFFFF;font-size:25px;">發布時間：{{ $title->created_at }}</h4>
+                              <div style="color:#2F649D;">{!! html_entity_decode($title->content)  !!}</div>
+                              <style>p{font-size:22px;}</style>
+                          </div>
+                          <div style="background-color:darkgrey;position: relative;font-size:20px;">留言</div>
+                          @foreach($tg as $t)
+                              @if($title->id==$t->question_id)
+                                  <div style="color:#F2EDAB;margin-left: 3%;font-size:20px;" >{{ \App\Models\User::find($t->user_id)->name }}：{{ $t->content }}</div>
+                              @endif
+                          @endforeach
+                          @if (Route::has('login'))
+                              @auth
+                                  <form method="post" enctype="multipart/form-data" action="{{ route('comments.store',$title->id) }}" role="form">
+                                      @method('post')
+                                      @csrf
+                                      <div>
+                                          </br>
+                                      </div>
+                                      <div class="container2">
+                                          <div style="font-size:18px;padding-right: 1%"><input placeholder="在此說點什麼.." autocomplete="off" style="" type="text" name="content"></div>
+                                          <div><button class="btn-send" type="submit">送出</button></div>
+                                      </div>
+                                      <div style="display: block"  align="right"><h3 style="display: inline">問題已解決✅</h3></div>
+                                      <div>
+                                          </br>
+                                      </div>
+                                  </form>
+                              @endauth
                           @endif
-                      @endforeach
-                      @if (Route::has('login'))
-                          @auth
-                              <form method="post" enctype="multipart/form-data" action="{{ route('comments.store',$title->id) }}" role="form">
-                                  @method('post')
-                                  @csrf
-                                  <div>
-                                      </br>
-                                  </div>
-                                  <div class="container2">
-                                      <div style="font-size:18px;padding-right: 1%"><input placeholder="在此說點什麼.." autocomplete="off" style="" type="text" name="content"></div>
-                                      <div><button class="btn-send" type="submit">送出</button></div>
-                                  </div>
-                                  <div>
-                                      </br>
-                                  </div>
-                              </form>
-                          @endauth
-                      @endif
-                  </div>
+                      </div>
+                  @else
+                      <div style="background-color:#63B0A1;position: relative;margin-left: 5%;margin-bottom:20px;width: 70%;height: auto;border:1px #1a202c solid;border-radius: 10px">
+                          <div style="margin: 10px;">
+                              <div class="container" style="margin: 0px;padding: 0px;"><div class="item-left"><h1 style="font-size:30px;">{{ $title->title }}</h1></div>
+                                  @if (Route::has('login'))
+                                      @auth
+                                          @if($title->user != Auth::user()->name)
+                                              <div class="item-right"align="right">
+                                                  <a href="{{ route('chatrooms.solver.index',$title->id) }}">
+                                                      <button class="btn-opencr" type="submit" style="width: 200px;height: 50px;" onclick="javascript:return enter();">開啟討論室</button>
+                                                  </a>
+                                              </div>
+                                          @endif
+                                          @if($title->user == Auth::user()->name)
+                                              <div class="item-right"align="right">
+                                                  <a href="{{ route('chatrooms.list.index',$title->id) }}">
+                                                      <button class="btn-crlist" type="submit" style="width: 250px;height: 50px;" onclick="javascript:return enter();">開啟討論室列表</button>
+                                                  </a>
+                                              </div>
+                                          @endif
+
+                                      @endauth
+                                  @endif</div>
+                              <h4 style="color:#FFFFFF;font-size:25px;">分類：{{ $title->area }} | 發問人：{{ $title->user }}</h4>
+                              <h4 style="color:#FFFFFF;font-size:25px;">發布時間：{{ $title->created_at }}</h4>
+
+                              <div style="color:#2F649D;">{!! html_entity_decode($title->content)  !!}</div>
+                              <style>p{font-size:22px;}</style>
+                          </div>
+                          <div style="background-color:#63B0A1;position: relative;font-size:20px;">留言</div>
+                          @foreach($tg as $t)
+                              @if($title->id==$t->question_id)
+                                  <div style="color:#F2EDAB;margin-left: 3%;font-size:20px;" >{{ \App\Models\User::find($t->user_id)->name }}：{{ $t->content }}</div>
+                              @endif
+                          @endforeach
+                          @if (Route::has('login'))
+                              @auth
+                                  <form method="post" enctype="multipart/form-data" action="{{ route('comments.store',$title->id) }}" role="form">
+                                      @method('post')
+                                      @csrf
+                                      <div>
+                                          </br>
+                                      </div>
+                                      <div class="container2">
+                                          <div style="font-size:18px;padding-right: 1%"><input placeholder="在此說點什麼.." autocomplete="off" style="" type="text" name="content"></div>
+                                          <div><button class="btn-send" type="submit">送出</button></div>
+                                      </div>
+                                      <div>
+                                          </br>
+                                      </div>
+                                  </form>
+                              @endauth
+                          @endif
+                      </div>
+                  @endif
               @endforeach
           @elseif(Route::currentRouteName()=='home'||Route::currentRouteName()=='areas'||Route::currentRouteName()=='search'||Route::currentRouteName()=='areas.search')
               @foreach($data2 as $title)
-                  <div style="background-color:#63B0A1;position: relative;margin-left: 5%;margin-bottom:20px;width: 70%;height: auto;border:1px #1a202c solid;border-radius: 10px">
-                      <div style="margin: 10px;">
-                          <div class="container" style="margin: 0px;padding: 0px;"><div class="item-left"><h1 style="font-size:30px;">{{ $title->title }}</h1></div>
-                              @if (Route::has('login'))
-                                  @auth
-                                      @if($title->user != Auth::user()->name)
-                                          <div class="item-right"align="right">
-                                              <a href="{{ route('chatrooms.solver.index',$title->id) }}">
-                                                  <button class="btn-opencr" type="submit" style="width: 200px;height: 50px;" onclick="javascript:return enter();">開啟討論室</button>
-                                              </a>
-                                          </div>
-                                      @endif
-                                      @if($title->user == Auth::user()->name)
+                  @if($title->status===3)
+                      <div style="background-color:darkgrey;position: relative;margin-left: 5%;margin-bottom:20px;width: 70%;height: auto;border:1px #1a202c solid;border-radius: 10px">
+                          <div style="margin: 10px;">
+                              <div class="container" style="margin: 0px;padding: 0px;"><div class="item-left"><h1 style="font-size:30px;">{{ $title->title }}</h1></div>
+                                  @if (Route::has('login'))
+                                      @auth
                                           <div class="item-right"align="right">
                                               <a href="{{ route('chatrooms.list.index',$title->id) }}">
                                                   <button class="btn-crlist" type="submit" style="width: 250px;height: 50px;" onclick="javascript:return enter();">開啟討論室列表</button>
                                               </a>
                                           </div>
-                                      @endif
-                                  @endauth
-                              @endif</div>
-                          <h4 style="color:#FFFFFF;font-size:25px;">分類：{{ $title->area }} | 發問人：{{ $title->user }}</h4>
-                          <h4 style="color:#FFFFFF;font-size:25px;">發布時間：{{ $title->created_at }}</h4>
-
-                          <div style="color:#2F649D;">{!! html_entity_decode($title->content)  !!}</div>
-                          <style>p{font-size:22px;}</style>
-                      </div>
-                      <div style="background-color:#63B0A1;position: relative;font-size:20px;">留言</div>
-                      @foreach($tg as $t)
-                          @if($title->id==$t->question_id)
-                              <form action="{{ route('comments.destroy',$t->id) }}" method="post">
-                                  @method('DELETE')
-                                  @csrf
-                                  <div style="color:#F2EDAB;margin-left: 3%;font-size:20px;" >{{ \App\Models\User::find($t->user_id)->name }}：{{ $t->content }}
-                                      @if($t->user_id===Auth::id())
-                                          <button type="submit" class="btn btn-sm btn-danger" >刪除</button>
-                                      @endif
-                                  </div>
-                              </form>
+                                      @endauth
+                                  @endif
+                              </div>
+                              <h4 style="color:#FFFFFF;font-size:25px;">分類：{{ $title->area }} | 發問人：{{ $title->user }}</h4>
+                              <h4 style="color:#FFFFFF;font-size:25px;">發布時間：{{ $title->created_at }}</h4>
+                              <div style="color:#2F649D;">{!! html_entity_decode($title->content)  !!}</div>
+                              <style>p{font-size:22px;}</style>
+                          </div>
+                          <div style="background-color:darkgrey;position: relative;font-size:20px;">留言</div>
+                          @foreach($tg as $t)
+                              @if($title->id==$t->question_id)
+                                  <div style="color:#F2EDAB;margin-left: 3%;font-size:20px;" >{{ \App\Models\User::find($t->user_id)->name }}：{{ $t->content }}</div>
+                              @endif
+                          @endforeach
+                          @if (Route::has('login'))
+                              @auth
+                                  <form method="post" enctype="multipart/form-data" action="{{ route('comments.store',$title->id) }}" role="form">
+                                      @method('post')
+                                      @csrf
+                                      <div>
+                                          </br>
+                                      </div>
+                                      <div class="container2">
+                                          <div style="font-size:18px;padding-right: 1%"><input placeholder="在此說點什麼.." autocomplete="off" style="" type="text" name="content"></div>
+                                          <div><button class="btn-send" type="submit">送出</button></div>
+                                      </div>
+                                      <div style="display: block"  align="right"><h3 style="display: inline">問題已解決✅</h3></div>
+                                      <div>
+                                          </br>
+                                      </div>
+                                  </form>
+                              @endauth
                           @endif
-                      @endforeach
-                      @if (Route::has('login'))
-                          @auth
-                              <form method="post" enctype="multipart/form-data" action="{{ route('comments.store',$title->id) }}" role="form">
-                                  @method('post')
-                                  @csrf
-                                  <div>
-                                      </br>
-                                  </div>
-                                  <div class="container2">
-                                      <div style="font-size:18px;padding-right: 1%"><input placeholder="在此說點什麼.." autocomplete="off" style="" type="text" name="content"></div>
-                                      <div><button class="btn-send" type="submit">送出</button></div>
-                                  </div>
-                                  <div>
-                                      </br>
-                                  </div>
-                              </form>
-                          @endauth
-                      @endif
-                  </div>
+                      </div>
+                  @else
+                      <div style="background-color:#63B0A1;position: relative;margin-left: 5%;margin-bottom:20px;width: 70%;height: auto;border:1px #1a202c solid;border-radius: 10px">
+                          <div style="margin: 10px;">
+                              <div class="container" style="margin: 0px;padding: 0px;"><div class="item-left"><h1 style="font-size:30px;">{{ $title->title }}</h1></div>
+                                  @if (Route::has('login'))
+                                      @auth
+                                          @if($title->user != Auth::user()->name)
+                                              <div class="item-right"align="right">
+                                                  <a href="{{ route('chatrooms.solver.index',$title->id) }}">
+                                                      <button class="btn-opencr" type="submit" style="width: 200px;height: 50px;" onclick="javascript:return enter();">開啟討論室</button>
+                                                  </a>
+                                              </div>
+                                          @endif
+                                          @if($title->user == Auth::user()->name)
+                                              <div class="item-right"align="right">
+                                                  <a href="{{ route('chatrooms.list.index',$title->id) }}">
+                                                      <button class="btn-crlist" type="submit" style="width: 250px;height: 50px;" onclick="javascript:return enter();">開啟討論室列表</button>
+                                                  </a>
+                                              </div>
+                                          @endif
+
+                                      @endauth
+                                  @endif</div>
+                              <h4 style="color:#FFFFFF;font-size:25px;">分類：{{ $title->area }} | 發問人：{{ $title->user }}</h4>
+                              <h4 style="color:#FFFFFF;font-size:25px;">發布時間：{{ $title->created_at }}</h4>
+
+                              <div style="color:#2F649D;">{!! html_entity_decode($title->content)  !!}</div>
+                              <style>p{font-size:22px;}</style>
+                          </div>
+                          <div style="background-color:#63B0A1;position: relative;font-size:20px;">留言</div>
+                          @foreach($tg as $t)
+                              @if($title->id==$t->question_id)
+                                  <div style="color:#F2EDAB;margin-left: 3%;font-size:20px;" >{{ \App\Models\User::find($t->user_id)->name }}：{{ $t->content }}</div>
+                              @endif
+                          @endforeach
+                          @if (Route::has('login'))
+                              @auth
+                                  <form method="post" enctype="multipart/form-data" action="{{ route('comments.store',$title->id) }}" role="form">
+                                      @method('post')
+                                      @csrf
+                                      <div>
+                                          </br>
+                                      </div>
+                                      <div class="container2">
+                                          <div style="font-size:18px;padding-right: 1%"><input placeholder="在此說點什麼.." autocomplete="off" style="" type="text" name="content"></div>
+                                          <div><button class="btn-send" type="submit">送出</button></div>
+                                      </div>
+                                      <div>
+                                          </br>
+                                      </div>
+                                  </form>
+                              @endauth
+                          @endif
+                      </div>
+                  @endif
               @endforeach
           @endif
       </div>

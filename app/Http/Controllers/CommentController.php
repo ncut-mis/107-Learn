@@ -23,6 +23,16 @@ class CommentController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     * @param $id
+     * @return Application|Factory|View|Response
+     */
+    public function select($id)
+    {
+
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return Response

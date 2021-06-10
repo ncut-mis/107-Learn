@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Message;
 use App\Models\Area;
 use App\Models\Chatroom;
+use App\Models\Comment;
 use App\Models\Question;
 use App\Models\UserAreas;
 use App\User;
@@ -113,10 +114,21 @@ class ChatroomController extends Controller
 
     public function roomlist($question_id)
     {
-        $my_id = Auth::id();
         $chatroom_data=Chatroom::where('question_id','=',$question_id)->get();
         return view('chat', ['chatroom_data' => $chatroom_data]);
+    }
 
+    public function select($chatroom_id)
+    {
+        Chatroom::where('id','=',$chatroom_id)->update(['status' => 1]);
+        Question::where('id','=',Chatroom::find($chatroom_id)->question_id)->update(['status' => 3]);
+
+//        $data=Area::orderBy('id','ASC')->get();
+//        $data2=Question::find(Chatroom::find($chatroom_id)->question_id);
+//        $tg=Comment::all();
+        $question_id=Chatroom::find($chatroom_id)->question_id;
+
+        return redirect()->route('the_questions',$question_id);
     }
 
     public function getMessage($user_id)

@@ -38,7 +38,7 @@
                                     @if($areas->count===0)
                                         <button class="btn btn-sm btn-danger" type="submit">刪除</button>
                                     @else
-                                        <button title="此領域已有題目，不可刪除" class="btn btn-sm btn-danger" disabled="disabled" type="submit" >刪除</button>
+                                        <button title="此領域已有題目，不可刪除" class="btn btn-sm btn-danger" style="visibility: hidden;" type="submit" >刪除</button>
                                     @endif
                                 </form>
                                 </td>
