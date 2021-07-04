@@ -25,7 +25,12 @@
                             <a href="{{route('chatrooms.room.index',$data->id)}}">進入討論室</a>
                             @if(\App\Models\Question::find($data->question_id)->status != 3)
                                 <a style="margin-left: 5%" href="{{route('select.best.chatroom',$data->id)}}">設為最佳解</a>
+                            @else
+                                @if($data->status === 1)
+                                    <a style="margin-left: 5%">此為本題的最佳回應✅</a>
+                                @endif
                             @endif
+
                         </li>
                     @endforeach
                 </ul>
@@ -43,15 +48,17 @@
             <td rowspan="2" style="width: 70%;">
                 <iframe src="http://localhost:8080/?whiteboardid={{ Request::segment(2) }}" frameborder="0" style="width: 100%;height: 800px;"></iframe>
             </td>
-            <td>
+
                 @foreach($q_data as $data)
-                    標題：
-                    {{ $data->title }}</br>
-                    問題內容：</br>
-                    {!! html_entity_decode($data->content)!!}
-                    發問人：{{ $data->user }}
+                        <td>
+                            標題：
+                            {{ $data->title }}</br>
+                            問題內容：</br>
+                            {!! html_entity_decode($data->content)!!}
+                            發問人：{{ $data->user }}
+                        </td>
                 @endforeach
-            </td>
+
         </tr>
         <tr>
             <td style="width: 30%;">

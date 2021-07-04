@@ -92,7 +92,7 @@ class QuestionController extends Controller
         Area::where('name','=',$request['area'])->increment('count');
 //        $data = ['from' => $from, 'question_id'=>$request->receiver_id,'to' => $to]; // sending from and to user id when pressed enter
         foreach ($area_data as $a_data){
-            foreach (UserAreas::where('area_id','=',$a_data->id)->get() as $alluser)
+            foreach (UserAreas::where('area_id','=',$a_data->id)->where('user_id','<>',Auth::id())->get() as $alluser)
             {
                 $email=User::find($alluser->user_id)->email;
                 $area='您在Learn中有一則來自「 '.$request->area.' 」領域的問題';

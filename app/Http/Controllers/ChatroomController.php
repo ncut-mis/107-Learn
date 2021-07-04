@@ -43,7 +43,8 @@ class ChatroomController extends Controller
                         [
                             'question_id'=>$question_id,
                             'solver_user_id'=>Auth::id(),
-                            'asker_user_id'=>$user_id
+                            'asker_user_id'=>$user_id,
+                            'status'=>0
                         ]
                     );
                     $area_data=Area::where('name','=',$data->area)->get();

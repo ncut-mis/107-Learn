@@ -252,7 +252,15 @@
                                   <div style="background-color:darkgrey;position: relative;font-size:20px;">留言</div>
                                   @foreach($tg as $t)
                                       @if($title->id==$t->question_id)
-                                          <div style="color:#F2EDAB;margin-left: 3%;font-size:20px;" >{{ \App\Models\User::find($t->user_id)->name }}：{{ $t->content }}</div>
+                                          <form action="{{ route('comments.destroy',$t->id) }}" method="post">
+                                              @method('DELETE')
+                                              @csrf
+                                              <div style="color:#F2EDAB;margin-left: 3%;font-size:20px;" >{{ \App\Models\User::find($t->user_id)->name }}：{{ $t->content }}
+                                                  @if($t->user_id===Auth::id())
+                                                      <button disabled="disabled" type="submit" class="btn btn-sm btn-danger" >刪除</button>
+                                                  @endif
+                                              </div>
+                                          </form>
                                       @endif
                                   @endforeach
                                   @if (Route::has('login'))
@@ -264,10 +272,10 @@
                                                   </br>
                                               </div>
                                               <div class="container2">
-                                                  <div style="font-size:18px;padding-right: 1%"><input placeholder="在此說點什麼.." autocomplete="off" style="" type="text" name="content"></div>
-                                                  <div><button class="btn-send" type="submit">送出</button></div>
+                                                  <div style="font-size:18px;padding-right: 1%"><input disabled="disabled" placeholder="在此說點什麼.." autocomplete="off" style="" type="text" name="content"></div>
+                                                  <div><button disabled="disabled" class="btn-send" type="submit">送出</button></div>
                                               </div>
-                                              <div style="display: block"  align="right"><h3 style="display: inline">問題已解決✅</h3></div>
+                                              <div style="display: block" align="right"><h3 style="display: inline">問題已解決✅</h3></div>
                                               <div>
                                                   </br>
                                               </div>
@@ -307,7 +315,15 @@
                                   <div style="background-color:#63B0A1;position: relative;font-size:20px;">留言</div>
                                   @foreach($tg as $t)
                                       @if($title->id==$t->question_id)
-                                          <div style="color:#F2EDAB;margin-left: 3%;font-size:20px;" >{{ \App\Models\User::find($t->user_id)->name }}：{{ $t->content }}</div>
+                                          <form action="{{ route('comments.destroy',$t->id) }}" method="post">
+                                              @method('DELETE')
+                                              @csrf
+                                              <div style="color:#F2EDAB;margin-left: 3%;font-size:20px;" >{{ \App\Models\User::find($t->user_id)->name }}：{{ $t->content }}
+                                                  @if($t->user_id===Auth::id())
+                                                      <button type="submit" class="btn btn-sm btn-danger" >刪除</button>
+                                                  @endif
+                                              </div>
+                                          </form>
                                       @endif
                                   @endforeach
                                   @if (Route::has('login'))
@@ -361,7 +377,15 @@
                                   <div style="background-color:darkgrey;position: relative;font-size:20px;">留言</div>
                                   @foreach($tg as $t)
                                       @if($title->id==$t->question_id)
-                                          <div style="color:#F2EDAB;margin-left: 3%;font-size:20px;" >{{ \App\Models\User::find($t->user_id)->name }}：{{ $t->content }}</div>
+                                          <form action="{{ route('comments.destroy',$t->id) }}" method="post">
+                                              @method('DELETE')
+                                              @csrf
+                                              <div style="color:#F2EDAB;margin-left: 3%;font-size:20px;" >{{ \App\Models\User::find($t->user_id)->name }}：{{ $t->content }}
+                                                  @if($t->user_id===Auth::id())
+                                                      <button disabled="disabled" type="submit" class="btn btn-sm btn-danger" >刪除</button>
+                                                  @endif
+                                              </div>
+                                          </form>
                                       @endif
                                   @endforeach
                                   @if (Route::has('login'))
@@ -373,8 +397,8 @@
                                                   </br>
                                               </div>
                                               <div class="container2">
-                                                  <div style="font-size:18px;padding-right: 1%"><input placeholder="在此說點什麼.." autocomplete="off" style="" type="text" name="content"></div>
-                                                  <div><button class="btn-send" type="submit">送出</button></div>
+                                                  <div style="font-size:18px;padding-right: 1%"><input disabled="disabled" placeholder="在此說點什麼.." autocomplete="off" style="" type="text" name="content"></div>
+                                                  <div><button disabled="disabled" class="btn-send" type="submit">送出</button></div>
                                               </div>
                                               <div style="display: block"  align="right"><h3 style="display: inline">問題已解決✅</h3></div>
                                               <div>
@@ -416,7 +440,15 @@
                                   <div style="background-color:#63B0A1;position: relative;font-size:20px;">留言</div>
                                   @foreach($tg as $t)
                                       @if($title->id==$t->question_id)
-                                          <div style="color:#F2EDAB;margin-left: 3%;font-size:20px;" >{{ \App\Models\User::find($t->user_id)->name }}：{{ $t->content }}</div>
+                                          <form action="{{ route('comments.destroy',$t->id) }}" method="post">
+                                              @method('DELETE')
+                                              @csrf
+                                              <div style="color:#F2EDAB;margin-left: 3%;font-size:20px;" >{{ \App\Models\User::find($t->user_id)->name }}：{{ $t->content }}
+                                                  @if($t->user_id===Auth::id())
+                                                      <button type="submit" class="btn btn-sm btn-danger" >刪除</button>
+                                                  @endif
+                                              </div>
+                                          </form>
                                       @endif
                                   @endforeach
                                   @if (Route::has('login'))
@@ -466,7 +498,15 @@
                           <div style="background-color:darkgrey;position: relative;font-size:20px;">留言</div>
                           @foreach($tg as $t)
                               @if($title->id==$t->question_id)
-                                  <div style="color:#F2EDAB;margin-left: 3%;font-size:20px;" >{{ \App\Models\User::find($t->user_id)->name }}：{{ $t->content }}</div>
+                                  <form action="{{ route('comments.destroy',$t->id) }}" method="post">
+                                      @method('DELETE')
+                                      @csrf
+                                      <div style="color:#F2EDAB;margin-left: 3%;font-size:20px;" >{{ \App\Models\User::find($t->user_id)->name }}：{{ $t->content }}
+                                          @if($t->user_id===Auth::id())
+                                              <button disabled="disabled" type="submit" class="btn btn-sm btn-danger" >刪除</button>
+                                          @endif
+                                      </div>
+                                  </form>
                               @endif
                           @endforeach
                           @if (Route::has('login'))
@@ -478,8 +518,8 @@
                                           </br>
                                       </div>
                                       <div class="container2">
-                                          <div style="font-size:18px;padding-right: 1%"><input placeholder="在此說點什麼.." autocomplete="off" style="" type="text" name="content"></div>
-                                          <div><button class="btn-send" type="submit">送出</button></div>
+                                          <div style="font-size:18px;padding-right: 1%"><input disabled="disabled" placeholder="在此說點什麼.." autocomplete="off" style="" type="text" name="content"></div>
+                                          <div><button disabled="disabled" class="btn-send" type="submit">送出</button></div>
                                       </div>
                                       <div style="display: block"  align="right"><h3 style="display: inline">問題已解決✅</h3></div>
                                       <div>
@@ -521,7 +561,15 @@
                           <div style="background-color:#63B0A1;position: relative;font-size:20px;">留言</div>
                           @foreach($tg as $t)
                               @if($title->id==$t->question_id)
-                                  <div style="color:#F2EDAB;margin-left: 3%;font-size:20px;" >{{ \App\Models\User::find($t->user_id)->name }}：{{ $t->content }}</div>
+                                  <form action="{{ route('comments.destroy',$t->id) }}" method="post">
+                                      @method('DELETE')
+                                      @csrf
+                                      <div style="color:#F2EDAB;margin-left: 3%;font-size:20px;" >{{ \App\Models\User::find($t->user_id)->name }}：{{ $t->content }}
+                                          @if($t->user_id===Auth::id())
+                                              <button type="submit" class="btn btn-sm btn-danger" >刪除</button>
+                                          @endif
+                                      </div>
+                                  </form>
                               @endif
                           @endforeach
                           @if (Route::has('login'))
@@ -569,7 +617,15 @@
                           <div style="background-color:darkgrey;position: relative;font-size:20px;">留言</div>
                           @foreach($tg as $t)
                               @if($title->id==$t->question_id)
-                                  <div style="color:#F2EDAB;margin-left: 3%;font-size:20px;" >{{ \App\Models\User::find($t->user_id)->name }}：{{ $t->content }}</div>
+                                  <form action="{{ route('comments.destroy',$t->id) }}" method="post">
+                                      @method('DELETE')
+                                      @csrf
+                                      <div style="color:#F2EDAB;margin-left: 3%;font-size:20px;" >{{ \App\Models\User::find($t->user_id)->name }}：{{ $t->content }}
+                                          @if($t->user_id===Auth::id())
+                                              <button disabled="disabled" type="submit" class="btn btn-sm btn-danger" >刪除</button>
+                                          @endif
+                                      </div>
+                                  </form>
                               @endif
                           @endforeach
                           @if (Route::has('login'))
@@ -581,8 +637,8 @@
                                           </br>
                                       </div>
                                       <div class="container2">
-                                          <div style="font-size:18px;padding-right: 1%"><input placeholder="在此說點什麼.." autocomplete="off" style="" type="text" name="content"></div>
-                                          <div><button class="btn-send" type="submit">送出</button></div>
+                                          <div style="font-size:18px;padding-right: 1%"><input disabled="disabled" placeholder="在此說點什麼.." autocomplete="off" style="" type="text" name="content"></div>
+                                          <div><button disabled="disabled" class="btn-send" type="submit">送出</button></div>
                                       </div>
                                       <div style="display: block"  align="right"><h3 style="display: inline">問題已解決✅</h3></div>
                                       <div>
@@ -624,7 +680,22 @@
                           <div style="background-color:#63B0A1;position: relative;font-size:20px;">留言</div>
                           @foreach($tg as $t)
                               @if($title->id==$t->question_id)
-                                  <div style="color:#F2EDAB;margin-left: 3%;font-size:20px;" >{{ \App\Models\User::find($t->user_id)->name }}：{{ $t->content }}</div>
+                                  <form action="{{ route('comments.destroy',$t->id) }}" method="post">
+                                      @method('DELETE')
+                                      @csrf
+                                      <div style="margin:0px;display:inline;color:#F2EDAB;margin-left: 3%;font-size:20px;" >{{ \App\Models\User::find($t->user_id)->name }}：{{ $t->content }}
+                                          @if($t->user_id===Auth::id())
+                                              <button type="submit" class="btn btn-sm btn-danger" >刪除</button>
+                                          @endif
+                                      </div>
+                                  </form>
+{{--                                  <form style="margin:0px;display:inline;" action="{{ route('select.best.comment',$t->id) }}" method="post">--}}
+{{--                                      @method('post')--}}
+{{--                                      @csrf--}}
+{{--                                          @if($t->user_id != $title->user)--}}
+{{--                                              <button type="submit" class="btn btn-sm btn-success" >設為最佳解</button>--}}
+{{--                                          @endif--}}
+{{--                                  </form>--}}
                               @endif
                           @endforeach
                           @if (Route::has('login'))
